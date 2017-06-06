@@ -1,18 +1,5 @@
-## simple convex.jl example
-
-# x = Variable(4)
-# c = [1; 2; 3; 4]
-# A = eye(4)
-# b = [10; 10; 10; 10]
-# p = minimize(dot(c, x)) # or c' * x
-# p.constraints += A * x <= b
-# p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]
-# solve!(p)
-# println(round(p.optval, 2))
-# println(round(x.value, 2))
-# println(evaluate(x[1] + x[4] - x[2]))
-
 library("XRJulia")
+source("check.R")
 ev <- RJulia()
 ev$Command("using Convex")
 
@@ -30,12 +17,19 @@ as.character.tuple <- function(x){
     paste0("(", join(x), ")")
 }
 
+J <- function(x){
+    r <- ev$Send(x)
+    structure(x, Jname = r@.Data,
+              proxy = r,
+              class = "shared")
+}
+
 Variable <- function(size = 1){
     vars <<- vars + 1
     command <- paste0("x", vars, " = Variable(", tuple(size), ")")
     ev$Command(command)
     structure(vars, size = size, 
-              name = paste0("x", vars), 
+              Jname = paste0("x", vars), 
               proxy = ev$Eval(paste0("x", vars)), 
               class = "variable")
 }
@@ -44,8 +38,8 @@ expr <- function(x){
     if (length(x) == 1) {
         r <- try(eval(x, envir = .GlobalEnv), silent = TRUE)
         ## print(r)
-        if (length(r) == 1 && length(attr(r, "class")) == 1 && attr(r, "class") == "variable") {
-            return(eval(parse(text = paste0("quote(", attr(r, "name"), ")"))))
+        if (length(attr(r, "Jname")) == 1) {
+            return(eval(parse(text = paste0("quote(", attr(r, "Jname"), ")"))))
         }
         return(x)
     }
