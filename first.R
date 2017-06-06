@@ -96,10 +96,17 @@ value <- function(...) UseMethod("value")
 
 value.default <- function(...){
     original_exprs <- sys.call()[-1]
-    exprs <- lapply(original_exprs, expr)
-    commands <- paste0("evaluate(", lapply(exprs, deparse), ")")
-    names(commands) <- lapply(original_exprs, deparse)
-    sapply(commands, ev$Eval, .get = TRUE)
+    if (length(original_exprs) > 1) {
+        exprs <- lapply(original_exprs, expr)
+        commands <- paste0("evaluate(", lapply(exprs, deparse), ")")
+        names(commands) <- lapply(original_exprs, deparse)
+        lapply(commands, ev$Eval, .get = TRUE)
+    }
+    else {
+        expr <- expr(original_exprs[[1]])
+        command <- paste0("evaluate(", deparse(expr), ")")
+        ev$Eval(command, .get = TRUE)
+    }
 }
 
 value.problem <- function(p){
