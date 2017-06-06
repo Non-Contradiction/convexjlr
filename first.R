@@ -24,15 +24,32 @@ J <- function(x){
               class = "shared")
 }
 
-Variable <- function(size = 1){
-    vars <<- vars + 1
-    command <- paste0("x", vars, " = Variable(", tuple(size), ")")
-    ev$Command(command)
-    structure(vars, size = size, 
-              Jname = paste0("x", vars), 
-              proxy = ev$Eval(paste0("x", vars)), 
-              class = "variable")
+variable_creator <- function(vtype){
+    force(vtype)
+    function(size = 1, sign = c("None", "Positive", "Negative")){
+        vars <<- vars + 1
+        if (sign[1] == "Positive") {
+            sign_text <- ", Positive()"
+        }
+        else {
+            if (sign[1] == "Negative") {
+                sign_text <- ", Negative()"
+            }
+            else {
+                sign_text <- ""
+            }
+        }
+        command <- paste0("x", vars, " = ", vtype, "(", tuple(size), sign_text, ")")
+        ev$Command(command)
+        structure(vars, size = size, 
+                  Jname = paste0("x", vars), 
+                  proxy = ev$Eval(paste0("x", vars)), 
+                  class = "variable")
+    }
 }
+
+Variable <- variable_creator("Variable")
+Semidefinite <- variable_creator("Semidefinite")
 
 expr <- function(x){
     if (length(x) == 1) {
