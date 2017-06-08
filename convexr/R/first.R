@@ -2,8 +2,16 @@
 .convex$vars <- 0
 .convex$ps <- 0
 
+.check_install <- function(pkgname){
+    command <- paste0('if Pkg.installed("', pkgname, '") == nothing Pkg.add("', pkgname, '") end')
+    .convex$ev$Command(command)
+}
+
 .onLoad <- function(libname, pkgname){
+    stopifnot(XRJulia::findJulia(test = TRUE))
     .convex$ev <- XRJulia::RJulia(.makeNew = TRUE)
+    .check_install("Convex")
+    .check_install("SCS")
     .convex$ev$Command("using Convex")
 }
 
