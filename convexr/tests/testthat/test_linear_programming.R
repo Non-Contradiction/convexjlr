@@ -1,4 +1,4 @@
-source("first.R")
+context("Linear Programming")
 
 ## The original Julia version
 
@@ -27,6 +27,8 @@ solve(p)
 
 ## The R verion through XRJulia directly
 
+ev <- XRJulia::RJulia(.makeNew = TRUE)
+ev$Command("using Convex")
 ev$Command("x = Variable(4)")
 ev$Command("c = [1; 2; 3; 4]")
 ev$Command("A = eye(4)")
@@ -38,7 +40,9 @@ ev$Command("solve!(p)")
 
 ## Compare the results
 
-assert_check(value(p), ev$Eval("p.optval"))
-assert_check(value(x), ev$Eval("x.value", .get = TRUE))
-assert_check(value(x[1] + x[4] - x[2]),
-             ev$Eval("evaluate(x[1] + x[4] - x[2])", .get = TRUE))
+test_that("Results for example of linear programming", {
+    expect_equal(optval(p), ev$Eval("p.optval"))
+    expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
+    expect_equal(value(x[1] + x[4] - x[2]),
+                 ev$Eval("evaluate(x[1] + x[4] - x[2])", .get = TRUE))
+})

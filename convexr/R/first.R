@@ -1,4 +1,4 @@
-.convex <- new.env()
+.convex <- new.env(parent = emptyenv())
 .convex$vars <- 0
 .convex$ps <- 0
 
@@ -27,6 +27,7 @@ as.character.tuple <- function(x){
     paste0("(", join(x), ")")
 }
 
+#'
 #' @export
 J <- function(x){
     r <- .convex$ev$Send(x)
@@ -65,17 +66,16 @@ Variable <- variable_creator("Variable")
 #' @export
 Semidefinite <- variable_creator("Semidefinite")
 
-expr <- function(x){
+expr <- function(x,env){
     if (length(x) == 1) {
-        r <- try(eval(x, envir = .GlobalEnv), silent = TRUE)
-        ## print(r)
+        r <- try(eval(x, envir = env), silent = TRUE)
         if (length(attr(r, "Jname")) == 1) {
             return(eval(parse(text = paste0("quote(", attr(r, "Jname"), ")"))))
         }
         return(x)
     }
     for (i in 1:length(x)) {
-        x[[i]] <- expr(x[[i]])
+        x[[i]] <- expr(x[[i]],env)
     }
     x
 }
@@ -84,7 +84,7 @@ problem_creator <- function(ptype) {
     force(ptype)
     function(...) {
         .convex$ps <- .convex$ps + 1
-        problem <- lapply(sys.call()[-1], expr)
+        problem <- lapply(sys.call()[-1], expr, env = parent.frame())
         target <- problem[[1]]
         constraints <- problem[-1]
         ptext <- join(lapply(problem, deparse))
@@ -118,7 +118,7 @@ solve.problem <- function(p){
 #' @export
 addConstraint <- function(p, ...){
     stopifnot(attr(p, "class") == "problem")
-    constraints <- lapply(sys.call()[-c(1:2)], expr)
+    constraints <- lapply(sys.call()[-c(1:2)], expr, env = parent.frame())
     ## p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]
     command <- paste0(attr(p, "Jname"), ".constraints += [", join(lapply(constraints, deparse), sep = "; "), "]")
     .convex$ev$Command(command)
@@ -127,29 +127,34 @@ addConstraint <- function(p, ...){
     p
 }
 
-#' @export
-value <- function(...) UseMethod("value")
+Jproperty <- function(property){
+    force(property)
+    function(x){
+        stopifnot(length(attr(x, "Jname")) == 1)
+        .convex$ev$Eval(paste0(attr(x, "Jname"), ".", property), .get = TRUE)
+    }
+}
 
 #' @export
-value.default <- function(...){
+status <- Jproperty("status")
+#' @export
+optval <- Jproperty("optval")
+
+#' @export
+value <- function(...){
     original_exprs <- sys.call()[-1]
     if (length(original_exprs) > 1) {
-        exprs <- lapply(original_exprs, expr)
+        exprs <- lapply(original_exprs, expr, env = parent.frame())
         commands <- paste0("evaluate(", lapply(exprs, deparse), ")")
         names(commands) <- lapply(original_exprs, deparse)
         lapply(commands, .convex$ev$Eval, .get = TRUE)
     }
     else {
-        expr <- expr(original_exprs[[1]])
+        expr <- expr(original_exprs[[1]], env = parent.frame())
         command <- paste0("evaluate(", deparse(expr), ")")
         .convex$ev$Eval(command, .get = TRUE)
     }
 }
 
 #' @export
-value.problem <- function(p){
-    command <- paste0("evaluate(", deparse(attr(p, "target")), ")")
-    .convex$ev$Eval(command, .get = TRUE)
-}
-
 evaluate <- value
