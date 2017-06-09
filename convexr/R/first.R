@@ -9,10 +9,12 @@
 
 .onLoad <- function(libname, pkgname){
     stopifnot(XRJulia::findJulia(test = TRUE))
-    .convex$ev <- XRJulia::RJulia(.makeNew = TRUE)
-    .check_install("Convex")
-    .check_install("SCS")
-    .convex$ev$Command("using Convex")
+    if (is.null(.convex$ev)) {
+        .convex$ev <- XRJulia::RJulia()
+        .check_install("Convex")
+        .check_install("SCS")
+        .convex$ev$Command("using Convex")
+    }
 }
 
 join <- function(ls, sep = ", "){

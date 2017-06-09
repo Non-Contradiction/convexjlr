@@ -1,4 +1,5 @@
-source("first.R")
+library(convexr)
+context("Semidefinite Programming 2")
 
 ## The original Julia version
 
@@ -18,6 +19,8 @@ solve(p)
 
 ## The R version with XRJulia directly
 
+ev <- XRJulia::RJulia()
+ev$Command("using Convex")
 ev$Command("x = Variable()")
 ev$Command("y = Variable((2, 2))")
 ev$Command("p = minimize(x + y[1, 1], isposdef(y), x >= 1, y[2, 1] == 1)")
@@ -25,4 +28,6 @@ ev$Command("solve!(p)")
 
 ## Compare the results
 
-assert_check(value(y), ev$Eval("y.value", .get = TRUE))
+test_that("Results for example of another semidefinite programming", {
+    expect_equal(value(y), ev$Eval("evaluate(y)", .get = TRUE))
+})

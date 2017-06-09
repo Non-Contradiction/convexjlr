@@ -1,4 +1,5 @@
-source("first.R")
+library(convexr)
+context("Exponential Cone Programming")
 
 ## The original Julia version
 
@@ -16,6 +17,8 @@ solve(p)
 
 ## The R version with XRJulia directly
 
+ev <- XRJulia::RJulia()
+ev$Command("using Convex")
 ev$Command("x = Variable(4)")
 ev$Command("p = satisfy(norm(x) <= 100, exp(x[1]) <= 5, x[2] >= 7, geomean(x[3], x[4]) >= x[2])")
 ev$Command("using SCS")
@@ -23,4 +26,6 @@ ev$Command("solve!(p, SCSSolver(verbose=0))")
 
 ## Compare the results
 
-assert_check(value(x), ev$Eval("x.value", .get = TRUE))
+test_that("Results for example of exponential cone programming", {
+    expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
+})

@@ -1,4 +1,5 @@
-source("first.R")
+library(convexr)
+context("Second Order Cone Programming")
 
 ## The original Julia version
 
@@ -20,6 +21,8 @@ solve(p)
 
 ## The R version with XRJulia directly
 
+ev <- XRJulia::RJulia()
+ev$Command("using Convex")
 ev$Command("X = Variable(2, 2)")
 ev$Command("y = Variable()")
 ev$Command("p = minimize(vecnorm(X) + y, 2 * X <= 1, X' + y >= 1, X >= 0, y >= 0)")
@@ -27,7 +30,8 @@ ev$Command("solve!(p)")
 
 ## Compare the results
 
-assert_check(value(p), ev$Eval("p.optval"))
-assert_check(value(X), ev$Eval("X.value", .get = TRUE))
-assert_check(value(y), ev$Eval("y.value", .get = TRUE))
-
+test_that("Results for example of second order cone programming", {
+    expect_equal(optval(p), ev$Eval("p.optval"))
+    expect_equal(value(X), ev$Eval("X.value", .get = TRUE))
+    expect_equal(value(y), ev$Eval("evaluate(y)", .get = TRUE))
+})

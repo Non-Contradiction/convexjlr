@@ -1,4 +1,5 @@
-source("first.R")
+library(convexr)
+context("Semidefinite Programming")
 
 ## The original Julia version
 
@@ -15,6 +16,8 @@ solve(p)
 
 ## The R version with XRJulia directly
 
+ev <- XRJulia::RJulia()
+ev$Command("using Convex")
 ev$Command("y = Semidefinite(2)")
 ev$Command("p = maximize(lambdamin(y), trace(y)<=6)")
 ev$Command("using SCS")
@@ -22,4 +25,6 @@ ev$Command("solve!(p, SCSSolver(verbose=0))")
 
 ## Compare the results
 
-assert_check(value(p), ev$Eval("p.optval", .get = TRUE))
+test_that("Results for example of semidefinite programming", {
+    expect_equal(optval(p), ev$Eval("p.optval"))
+})

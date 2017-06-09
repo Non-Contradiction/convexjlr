@@ -1,3 +1,4 @@
+library(convexr)
 context("Linear Programming")
 
 ## The original Julia version
@@ -27,7 +28,7 @@ solve(p)
 
 ## The R verion through XRJulia directly
 
-ev <- XRJulia::RJulia(.makeNew = TRUE)
+ev <- XRJulia::RJulia()
 ev$Command("using Convex")
 ev$Command("x = Variable(4)")
 ev$Command("c = [1; 2; 3; 4]")
