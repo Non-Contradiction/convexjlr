@@ -1,7 +1,7 @@
 Package: convexr
 Type: Package
 Title: A simple wrapper for Convex.jl
-Version: 0.1.0
+Version: 0.2.0
 Author: Changcheng Li
 Maintainer: Changcheng Li <cxl508@psu.edu>
 Description: convexr provides a simple wrapper for Convex.jl,
@@ -14,6 +14,7 @@ Description: convexr provides a simple wrapper for Convex.jl,
 License: Apache-2.0 + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: XRJulia
+Imports: XRJulia,
+    magrittr
 RoxygenNote: 6.0.1
 Suggests: testthat

@@ -29,7 +29,16 @@ as.character.tuple <- function(x){
     paste0("(", join(x), ")")
 }
 
+#' Make a variable to be Julia awared.
 #'
+#' Make a variable to be Julia awared, so it can be further used in
+#' the definition of problem.
+#'
+#' @examples
+#' x <- Variable(4)
+#' b <- J(c(1:4))
+#' p <- minimize(sum())
+#' solve(p)
 #' @export
 J <- function(x){
     r <- .convex$ev$Send(x)
@@ -68,7 +77,7 @@ Variable <- variable_creator("Variable")
 #' @export
 Semidefinite <- variable_creator("Semidefinite")
 
-expr <- function(x,env){
+expr <- function(x, env){
     if (length(x) == 1) {
         r <- try(eval(x, envir = env), silent = TRUE)
         if (length(attr(r, "Jname")) == 1) {
@@ -82,14 +91,24 @@ expr <- function(x,env){
     x
 }
 
+`%>%` <- magrittr::`%>%`
+
+expr_text <- function(x, env){
+    deparse(expr(x, env)) %>%
+        gsub(pattern = "\\*", replacement = ".*") %>%
+        gsub(pattern = "/", replacement = "./") %>%
+        gsub(pattern = "\\^", replacement = ".^") %>%
+        gsub(pattern = "%.\\*%", replacement = "*")
+}
+
 problem_creator <- function(ptype) {
     force(ptype)
     function(...) {
         .convex$ps <- .convex$ps + 1
-        problem <- lapply(sys.call()[-1], expr, env = parent.frame())
+        problem <- lapply(sys.call()[-1], expr_text, env = parent.frame())
         target <- problem[[1]]
         constraints <- problem[-1]
-        ptext <- join(lapply(problem, deparse))
+        ptext <- join(problem)
         ## print(text)
         Jname <- paste0("P_", .convex$ps)
         command <- paste0(Jname, " = ", ptype, "(", ptext, ")")
@@ -120,9 +139,9 @@ solve.problem <- function(p){
 #' @export
 addConstraint <- function(p, ...){
     stopifnot(attr(p, "class") == "problem")
-    constraints <- lapply(sys.call()[-c(1:2)], expr, env = parent.frame())
+    constraints <- lapply(sys.call()[-c(1:2)], expr_text, env = parent.frame())
     ## p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]
-    command <- paste0(attr(p, "Jname"), ".constraints += [", join(lapply(constraints, deparse), sep = "; "), "]")
+    command <- paste0(attr(p, "Jname"), ".constraints += [", join(constraints, sep = "; "), "]")
     .convex$ev$Command(command)
     attr(p, "command") <- append(attr(p, "command"), command)
     attr(p, "constraints") <- append(attr(p, "constraints"), constraints)
@@ -146,14 +165,14 @@ optval <- Jproperty("optval")
 value <- function(...){
     original_exprs <- sys.call()[-1]
     if (length(original_exprs) > 1) {
-        exprs <- lapply(original_exprs, expr, env = parent.frame())
-        commands <- paste0("evaluate(", lapply(exprs, deparse), ")")
+        exprs <- lapply(original_exprs, expr_text, env = parent.frame())
+        commands <- paste0("evaluate(", exprs, ")")
         names(commands) <- lapply(original_exprs, deparse)
         lapply(commands, .convex$ev$Eval, .get = TRUE)
     }
     else {
-        expr <- expr(original_exprs[[1]], env = parent.frame())
-        command <- paste0("evaluate(", deparse(expr), ")")
+        expr <- expr_text(original_exprs[[1]], env = parent.frame())
+        command <- paste0("evaluate(", expr, ")")
         .convex$ev$Eval(command, .get = TRUE)
     }
 }
