@@ -13,8 +13,8 @@ cvx_optim(p)
 \code{cvx_optim} solves optimization problem using Convex.jl.
 }
 \examples{
-x <- Variable(4)
-b <- J(c(1:4))
+x <- Variable(2)
+b <- J(c(1:2))
 p <- minimize(sum((x - b) ^ 2))
 cvx_optim(p)
 }

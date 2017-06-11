@@ -37,14 +37,14 @@ tuple_text <- function(x){
 #'
 #' @param x The R object sent to Julia
 #' @examples
-#' x <- Variable(4)
-#' b <- J(c(1:4))
+#' x <- Variable(2)
+#' b <- J(c(1:2))
 #' p <- minimize(sum((x - b) ^ 2))
 #' @export
 J <- function(x){
     .start()
     r <- .convex$ev$Send(x)
-    structure(x, Jname = r@.Data, proxy = r)
+    structure(x, Jname = r@.Data, proxy = r, class = c(class(x), "shared"))
 }
 
 variable_creator <- function(vtype){
@@ -69,7 +69,8 @@ variable_creator <- function(vtype){
         .convex$ev$Command(command)
         structure(Jname, size = size,
                   Jname = Jname,
-                  proxy = .convex$ev$Eval(Jname))
+                  proxy = .convex$ev$Eval(Jname),
+                  class = "variable")
     }
 }
 
@@ -175,8 +176,8 @@ satisfy <- problem_creator("satisfy")
 #' @param p Optimization problem to be solved.
 #'
 #' @examples
-#' x <- Variable(4)
-#' b <- J(c(1:4))
+#' x <- Variable(2)
+#' b <- J(c(1:2))
 #' p <- minimize(sum((x - b) ^ 2))
 #' cvx_optim(p)
 #' @export
