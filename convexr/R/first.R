@@ -29,7 +29,7 @@ as.character.tuple <- function(x){
     paste0("(", join(x), ")")
 }
 
-#' Make a variable to be of Julia's awareness.
+#' Make a variable to be of Julia's awareness
 #'
 #' Make a variable to be of Julia's awareness, so it can be further used in
 #' the definition of optimization problem.
@@ -38,7 +38,6 @@ as.character.tuple <- function(x){
 #' x <- Variable(4)
 #' b <- J(c(1:4))
 #' p <- minimize(sum((x - b) ^ 2))
-#' solve(p)
 #' @export
 J <- function(x){
     r <- .convex$ev$Send(x)
@@ -79,18 +78,18 @@ variable_creator <- function(vtype){
 #'
 #' @param size variable size.
 #' @param sign whether variable is element-wise positive, element-wise negative
-#' or neither
+#' or neither.
 #' @examples
 #' x <- Variable(4)
 #' X <- Variable(c(4, 4), sign = "Positive")
 #' S <- Semidefinite(4)
-#' @name variable_creator
+#' @name variable_creating
 NULL
 
-#' @rdname variable_creator
+#' @rdname variable_creating
 #' @export
 Variable <- variable_creator("Variable")
-#' @rdname variable_creator
+#' @rdname variable_creating
 #' @export
 Semidefinite <- variable_creator("Semidefinite")
 
@@ -144,7 +143,7 @@ problem_creator <- function(ptype) {
 #' Create optimization problem
 #'
 #' Create different kinds of optimization problems with
-#' targets and constraints
+#' targets and constraints.
 #'
 #' @param ... optimization targets and constraints.
 #' @examples
@@ -153,16 +152,16 @@ problem_creator <- function(ptype) {
 #' p <- minimize(sum((x - b) ^ 2), x >= 0, x <= 3)
 #' p <- maximize(-sum((x - b) ^ 2), x >= 0, x <= 3)
 #' p <- satisfy(sum((x - b) ^ 2) <= 1, x >= 0, x <= 3)
-#' @name problem_creator
+#' @name problem_creating
 NULL
 
-#' @rdname problem_creator
+#' @rdname problem_creating
 #' @export
 minimize <- problem_creator("minimize")
-#' @rdname problem_creator
+#' @rdname problem_creating
 #' @export
 maximize <- problem_creator("maximize")
-#' @rdname problem_creator
+#' @rdname problem_creating
 #' @export
 satisfy <- problem_creator("satisfy")
 
@@ -195,7 +194,6 @@ solve.problem <- function(p){
 #' b <- J(c(1:4))
 #' p <- minimize(sum((x - b) ^ 2))
 #' p <- addConstraint(p, x >= 0, x <= 3)
-#' solve(p)
 #' @export
 addConstraint <- function(p, ...){
     stopifnot(attr(p, "class") == "problem")

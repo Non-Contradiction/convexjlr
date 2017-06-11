@@ -2,7 +2,7 @@
 % Please edit documentation in R/first.R
 \name{J}
 \alias{J}
-\title{Make a variable to be of Julia's awareness.}
+\title{Make a variable to be of Julia's awareness}
 \usage{
 J(x)
 }
@@ -14,5 +14,4 @@ the definition of optimization problem.
 x <- Variable(4)
 b <- J(c(1:4))
 p <- minimize(sum((x - b) ^ 2))
-solve(p)
 }
