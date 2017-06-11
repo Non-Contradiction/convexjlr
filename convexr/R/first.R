@@ -29,15 +29,15 @@ as.character.tuple <- function(x){
     paste0("(", join(x), ")")
 }
 
-#' Make a variable to be Julia awared.
+#' Make a variable to be of Julia's awareness.
 #'
-#' Make a variable to be Julia awared, so it can be further used in
-#' the definition of problem.
+#' Make a variable to be of Julia's awareness, so it can be further used in
+#' the definition of optimization problem.
 #'
 #' @examples
 #' x <- Variable(4)
 #' b <- J(c(1:4))
-#' p <- minimize(sum())
+#' p <- minimize(sum((x - b) ^ 2))
 #' solve(p)
 #' @export
 J <- function(x){
@@ -72,8 +72,25 @@ variable_creator <- function(vtype){
     }
 }
 
+#' Create variable for optimization problem
+#'
+#' Create variable (vector, matrix, semidefinite matrix and etc.)
+#' for optimization problem.
+#'
+#' @param size variable size.
+#' @param sign whether variable is element-wise positive, element-wise negative
+#' or neither
+#' @examples
+#' x <- Variable(4)
+#' X <- Variable(c(4, 4), sign = "Positive")
+#' S <- Semidefinite(4)
+#' @name variable_creator
+NULL
+
+#' @rdname variable_creator
 #' @export
 Variable <- variable_creator("Variable")
+#' @rdname variable_creator
 #' @export
 Semidefinite <- variable_creator("Semidefinite")
 
@@ -124,18 +141,61 @@ problem_creator <- function(ptype) {
     }
 }
 
+#' Create optimization problem
+#'
+#' Create different kinds of optimization problems with
+#' targets and constraints
+#'
+#' @param ... optimization targets and constraints.
+#' @examples
+#' x <- Variable(4)
+#' b <- J(c(1:4))
+#' p <- minimize(sum((x - b) ^ 2), x >= 0, x <= 3)
+#' p <- maximize(-sum((x - b) ^ 2), x >= 0, x <= 3)
+#' p <- satisfy(sum((x - b) ^ 2) <= 1, x >= 0, x <= 3)
+#' @name problem_creator
+NULL
+
+#' @rdname problem_creator
 #' @export
 minimize <- problem_creator("minimize")
+#' @rdname problem_creator
 #' @export
 maximize <- problem_creator("maximize")
+#' @rdname problem_creator
 #' @export
 satisfy <- problem_creator("satisfy")
 
+#' Solve optimization problem
+#'
+#' \code{solve} solves optimization problem using Convex.jl.
+#'
+#' @param p Optimization problem to be solved.
+#'
+#' @examples
+#' x <- Variable(4)
+#' b <- J(c(1:4))
+#' p <- minimize(sum((x - b) ^ 2))
+#' solve(p)
 #' @export
 solve.problem <- function(p){
     .convex$ev$Call("solve!", attr(p, "proxy"))
 }
 
+#' Add constraints to optimization problem
+#'
+#' \code{addConstraint} add additional constraints to optimization problem.
+#'
+#' @param p Optimization problem to add constraints.
+#' @param ... Additional constraints.
+#' @return The optimization problem with the additional constraints.
+#'
+#' @examples
+#' x <- Variable(4)
+#' b <- J(c(1:4))
+#' p <- minimize(sum((x - b) ^ 2))
+#' p <- addConstraint(p, x >= 0, x <= 3)
+#' solve(p)
 #' @export
 addConstraint <- function(p, ...){
     stopifnot(attr(p, "class") == "problem")
@@ -150,17 +210,50 @@ addConstraint <- function(p, ...){
 
 Jproperty <- function(property){
     force(property)
-    function(x){
-        stopifnot(length(attr(x, "Jname")) == 1)
-        .convex$ev$Eval(paste0(attr(x, "Jname"), ".", property), .get = TRUE)
+    function(p){
+        stopifnot(length(attr(p, "Jname")) == 1)
+        .convex$ev$Eval(paste0(attr(p, "Jname"), ".", property), .get = TRUE)
     }
 }
 
+#' Get properties of optimization problem
+#'
+#' Get properties of solved optimization problem,
+#' like the status of problem (optimal, infeasible and etc.),
+#' or the optimal value of the solved optimization problem.
+#'
+#' @param p optimization problem.
+#' @examples
+#' x <- Variable(4)
+#' b <- J(c(1:4))
+#' p <- minimize(sum((x - b) ^ 2))
+#' solve(p)
+#' status(p)
+#' optval(p)
+#' @name property
+NULL
+
+#' @rdname property
 #' @export
 status <- Jproperty("status")
+#' @rdname property
 #' @export
 optval <- Jproperty("optval")
 
+#' Get values of expressions at optimizer
+#'
+#' \code{Value} returns the values of expressions at optimizer
+#' (minimizer, maximizer and etc.).
+#'
+#' @aliases evaluate
+#' @param ... Expressions needed to evaluate.
+#'
+#' @examples
+#' x <- Variable(4)
+#' b <- J(c(1:4))
+#' p <- minimize(sum((x - b) ^ 2))
+#' solve(p)
+#' value(x[1] + x[2], x[3] * x[4])
 #' @export
 value <- function(...){
     original_exprs <- sys.call()[-1]
