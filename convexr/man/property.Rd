@@ -19,10 +19,10 @@ like the status of problem (optimal, infeasible and etc.),
 or the optimal value of the solved optimization problem.
 }
 \examples{
-x <- Variable(4)
-b <- J(c(1:4))
+x <- Variable(2)
+b <- J(c(1:2))
 p <- minimize(sum((x - b) ^ 2))
-solve(p)
+cvx_optim(p)
 status(p)
 optval(p)
 }

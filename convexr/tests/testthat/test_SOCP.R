@@ -17,7 +17,7 @@ context("Second Order Cone Programming")
 X <- Variable(c(2, 2))
 y <- Variable()
 p <- minimize(vecnorm(X) + y, 2 * X <= 1, transpose(X) + y >= 1, X >= 0, y >= 0)
-solve(p)
+cvx_optim(p)
 
 ## The R version with XRJulia directly
 

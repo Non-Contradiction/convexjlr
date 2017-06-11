@@ -1,10 +1,10 @@
 ---
-title: "Solve Convex Optimization Problem by convexjlr"
+title: "Convex Optimization by convexjlr"
 author: "Changcheng Li"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Solve Convex Optimization Problem by convexjlr}
+  %\VignetteIndexEntry{Convex Optimization by convexjlr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

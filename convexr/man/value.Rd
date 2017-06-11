@@ -18,6 +18,6 @@ value(...)
 x <- Variable(4)
 b <- J(c(1:4))
 p <- minimize(sum((x - b) ^ 2))
-solve(p)
-value(x[1] + x[2], x[3] * x[4])
+cvx_optim(p)
+value(x[1] + x[2], x[3] + x[4])
 }

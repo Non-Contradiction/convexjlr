@@ -7,13 +7,18 @@
     .convex$ev$Command(command)
 }
 
-.onLoad <- function(libname, pkgname){
-    stopifnot(XRJulia::findJulia(test = TRUE))
+.start <- function(){
+    ## stopifnot(XRJulia::findJulia(test = TRUE))
     if (is.null(.convex$ev)) {
+        stopifnot(XRJulia::findJulia(test = TRUE))
         .convex$ev <- XRJulia::RJulia()
         .check_install("Convex")
         .check_install("SCS")
         .convex$ev$Command("using Convex")
+        .convex$ev$Command("using SCS")
+        # passing in verbose=0 to hide output from SCS
+        .convex$ev$Command("solver = SCSSolver(verbose=0)")
+        .convex$ev$Command("set_default_solver(solver)")
     }
 }
 
@@ -21,11 +26,7 @@ join <- function(ls, sep = ", "){
     do.call(paste, append(ls, list(sep = sep)))
 }
 
-tuple <- function(x){
-    structure(x, class = "tuple")
-}
-
-as.character.tuple <- function(x){
+tuple_text <- function(x){
     paste0("(", join(x), ")")
 }
 
@@ -34,21 +35,22 @@ as.character.tuple <- function(x){
 #' Make a variable to be of Julia's awareness, so it can be further used in
 #' the definition of optimization problem.
 #'
+#' @param x The R object sent to Julia
 #' @examples
 #' x <- Variable(4)
 #' b <- J(c(1:4))
 #' p <- minimize(sum((x - b) ^ 2))
 #' @export
 J <- function(x){
+    .start()
     r <- .convex$ev$Send(x)
-    structure(x, Jname = r@.Data,
-              proxy = r,
-              class = c(class(x), "shared"))
+    structure(x, Jname = r@.Data, proxy = r)
 }
 
 variable_creator <- function(vtype){
     force(vtype)
     function(size = 1, sign = c("None", "Positive", "Negative")){
+        .start()
         .convex$vars <- .convex$vars + 1
         if (sign[1] == "Positive") {
             sign_text <- ", Positive()"
@@ -62,12 +64,12 @@ variable_creator <- function(vtype){
             }
         }
         Jname <- paste0("X_", .convex$vars)
-        command <- paste0(Jname, " = ", vtype, "(", tuple(size), sign_text, ")")
+        command <- paste0(Jname, " = ", vtype, "(", tuple_text(size), sign_text, ")")
+        ## print(command)
         .convex$ev$Command(command)
         structure(Jname, size = size,
                   Jname = Jname,
-                  proxy = .convex$ev$Eval(Jname),
-                  class = "variable")
+                  proxy = .convex$ev$Eval(Jname))
     }
 }
 
@@ -120,6 +122,7 @@ expr_text <- function(x, env){
 problem_creator <- function(ptype) {
     force(ptype)
     function(...) {
+        .start()
         .convex$ps <- .convex$ps + 1
         problem <- lapply(sys.call()[-1], expr_text, env = parent.frame())
         target <- problem[[1]]
@@ -167,7 +170,7 @@ satisfy <- problem_creator("satisfy")
 
 #' Solve optimization problem
 #'
-#' \code{solve} solves optimization problem using Convex.jl.
+#' \code{cvx_optim} solves optimization problem using Convex.jl.
 #'
 #' @param p Optimization problem to be solved.
 #'
@@ -175,9 +178,9 @@ satisfy <- problem_creator("satisfy")
 #' x <- Variable(4)
 #' b <- J(c(1:4))
 #' p <- minimize(sum((x - b) ^ 2))
-#' solve(p)
+#' cvx_optim(p)
 #' @export
-solve.problem <- function(p){
+cvx_optim <- function(p){
     .convex$ev$Call("solve!", attr(p, "proxy"))
 }
 
@@ -222,10 +225,10 @@ Jproperty <- function(property){
 #'
 #' @param p optimization problem.
 #' @examples
-#' x <- Variable(4)
-#' b <- J(c(1:4))
+#' x <- Variable(2)
+#' b <- J(c(1:2))
 #' p <- minimize(sum((x - b) ^ 2))
-#' solve(p)
+#' cvx_optim(p)
 #' status(p)
 #' optval(p)
 #' @name property
@@ -250,8 +253,8 @@ optval <- Jproperty("optval")
 #' x <- Variable(4)
 #' b <- J(c(1:4))
 #' p <- minimize(sum((x - b) ^ 2))
-#' solve(p)
-#' value(x[1] + x[2], x[3] * x[4])
+#' cvx_optim(p)
+#' value(x[1] + x[2], x[3] + x[4])
 #' @export
 value <- function(...){
     original_exprs <- sys.call()[-1]

@@ -24,7 +24,7 @@ b <- J(rep(10, 4))
 p <- minimize(sum(c * x))
 p <- addConstraint(p, A %*% x <= b)
 p <- addConstraint(p, x >= 1, x <= 10, x[2] <= 5, x[1] + x[4] - x[2] <= 10)
-solve(p)
+cvx_optim(p)
 
 ## The R verion through XRJulia directly
 
