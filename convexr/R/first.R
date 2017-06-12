@@ -35,7 +35,7 @@ tuple_text <- function(x){
 #' Make a variable to be of Julia's awareness, so it can be further used in
 #' the definition of optimization problem.
 #'
-#' @param x The R object sent to Julia
+#' @param x the R object sent to Julia
 #' @examples
 #' x <- Variable(2)
 #' b <- J(c(1:2))
@@ -173,7 +173,8 @@ satisfy <- problem_creator("satisfy")
 #'
 #' \code{cvx_optim} solves optimization problem using Convex.jl.
 #'
-#' @param p Optimization problem to be solved.
+#' @param p optimization problem to be solved.
+#' @return status of optimized problem.
 #'
 #' @examples
 #' x <- Variable(2)
@@ -183,15 +184,16 @@ satisfy <- problem_creator("satisfy")
 #' @export
 cvx_optim <- function(p){
     .convex$ev$Call("solve!", attr(p, "proxy"))
+    status(p)
 }
 
 #' Add constraints to optimization problem
 #'
 #' \code{addConstraint} add additional constraints to optimization problem.
 #'
-#' @param p Optimization problem to add constraints.
-#' @param ... Additional constraints.
-#' @return The optimization problem with the additional constraints.
+#' @param p optimization problem to add constraints.
+#' @param ... additional constraints.
+#' @return the optimization problem with the additional constraints.
 #'
 #' @examples
 #' x <- Variable(4)
@@ -248,7 +250,7 @@ optval <- Jproperty("optval")
 #' (minimizer, maximizer and etc.).
 #'
 #' @aliases evaluate
-#' @param ... Expressions needed to evaluate.
+#' @param ... expressions needed to evaluate.
 #'
 #' @examples
 #' x <- Variable(4)

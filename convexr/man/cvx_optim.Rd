@@ -7,7 +7,10 @@
 cvx_optim(p)
 }
 \arguments{
-\item{p}{Optimization problem to be solved.}
+\item{p}{optimization problem to be solved.}
+}
+\value{
+status of optimized problem.
 }
 \description{
 \code{cvx_optim} solves optimization problem using Convex.jl.

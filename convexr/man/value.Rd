@@ -8,7 +8,7 @@
 value(...)
 }
 \arguments{
-\item{...}{Expressions needed to evaluate.}
+\item{...}{expressions needed to evaluate.}
 }
 \description{
 \code{Value} returns the values of expressions at optimizer

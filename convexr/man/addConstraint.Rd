@@ -7,12 +7,12 @@
 addConstraint(p, ...)
 }
 \arguments{
-\item{p}{Optimization problem to add constraints.}
+\item{p}{optimization problem to add constraints.}
 
-\item{...}{Additional constraints.}
+\item{...}{additional constraints.}
 }
 \value{
-The optimization problem with the additional constraints.
+the optimization problem with the additional constraints.
 }
 \description{
 \code{addConstraint} add additional constraints to optimization problem.
