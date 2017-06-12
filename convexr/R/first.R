@@ -114,6 +114,7 @@ expr <- function(x, env){
 
 expr_text <- function(x, env){
     deparse(expr(x, env)) %>%
+        join(sep = "") %>%
         gsub(pattern = "\\*", replacement = ".*") %>%
         gsub(pattern = "/", replacement = "./") %>%
         gsub(pattern = "\\^", replacement = ".^") %>%
@@ -129,7 +130,7 @@ problem_creator <- function(ptype) {
         target <- problem[[1]]
         constraints <- problem[-1]
         ptext <- join(problem)
-        ## print(text)
+        ## print(ptext)
         Jname <- paste0("P_", .convex$ps)
         command <- paste0(Jname, " = ", ptype, "(", ptext, ")")
         ## print(command)

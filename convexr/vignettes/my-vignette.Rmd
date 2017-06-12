@@ -27,6 +27,96 @@ cvx_optim(p)
 optval(p)
 ```
 
+## Lasso
+
+```{r}
+library(convexr)
+
+lasso2 <- function(x, y, lambda){
+    p <- ncol(x)
+    n <- J(nrow(x))
+    x <- J(x)
+    y <- J(y)
+    lambda <- J(lambda)
+    beta <- Variable(p)
+    p1 <- minimize(sum((y - x %*% beta) ^ 2) / n + lambda * sum(abs(beta)))
+    cvx_optim(p1)
+    value(beta)
+}
+
+n <- 1000
+p <- 100
+Sigma <- outer(1:p, 1:p, function(i, j) 0.5 ^ abs(i - j))
+x <- matrix(rnorm(n * p), n, p) %*% chol(Sigma)
+beta0 <- rep(0, p)
+beta0[1:4] <- c(5, 1, 0, 2)
+y <- x %*% beta0 + 0.2 * rnorm(n)
+
+betahat <- round(lasso2(x, y, 0.5), 4)
+betahat[1:4]
+
+## You can see that the rest elements of betahat are all zero.
+all(betahat[5:p] == 0)
+```
+
+## Smallest Circle
+
+```{r}
+library(convexr)
+
+center <- function(x, y){
+    x <- J(x)
+    y <- J(y)
+    p <- Variable(2)
+    p1 <- minimize(maximum((x - p[1]) ^ 2 + (y - p[2]) ^ 2))
+    value(p)
+}
+
+n <- 20
+x <- rnorm(n)
+y <- rnorm(n)
+
+p <- center(x, y)
+p
+plot(x, y, asp = 1)
+plotrix::draw.circle(p[1], p[2], radius = sqrt(max((x - p[1]) ^ 2 + (y - p[2]) ^ 2)))
+```
+
+
+## Support Vector Machine
+
+```{r}
+library(convexr)
+
+svm <- function(x, y, lambda){
+    p <- ncol(x)
+    n <- J(nrow(x))
+    x <- J(x)
+    y <- J(y)
+    lambda <- J(lambda)
+    w <- Variable(p)
+    b <- Variable()
+    p1 <- minimize(sum(pos(1 - y * (x %*% w - b))) / n + lambda * sum(w ^ 2))
+    cvx_optim(p1)
+    list(w = value(w), b = value(b))
+}
+
+n <- 100
+p <- 2
+Sigma <- outer(1:p, 1:p, function(i, j) 0.5 ^ abs(i - j))
+x1 <- 0.2 * matrix(rnorm(n / 2 * p), n / 2, p) %*% chol(Sigma) + outer(rep(1, n / 2), rep(0, p))
+x2 <- 0.2 * matrix(rnorm(n / 2 * p), n / 2, p) %*% chol(Sigma) + outer(rep(1, n / 2), rep(1, p))
+x <- rbind(x1, x2)
+y <- c(rep(1, n / 2), rep(-1, n / 2))
+
+r <- svm(x, y, 0.5)
+r
+
+
+```
+
+## Sparse Logistic Regression
+
 ## Vignette Info
 
 Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
@@ -67,4 +157,4 @@ knitr::kable(head(mtcars, 10))
 Also a quote using `>`:
 
 > "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+([via](http://convexjl.readthedocs.io/en/stable/))
