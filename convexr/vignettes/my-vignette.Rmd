@@ -18,20 +18,15 @@ Vignettes are long form documentation commonly included in packages. Because the
 - Has a smaller default figure size
 - Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
 
+The vignette will walk you through several examples using comvex optimization
+
 ```{r}
 library(convexr)
-X <- Variable(c(2, 2))
-y <- Variable()
-p <- minimize(vecnorm(X) + y, 2 * X <= 1, transpose(X) + y >= 1, X >= 0, y >= 0)
-cvx_optim(p)
-optval(p)
 ```
 
 ## Lasso
 
 ```{r}
-library(convexr)
-
 lasso2 <- function(x, y, lambda){
     p <- ncol(x)
     n <- J(nrow(x))
@@ -39,9 +34,10 @@ lasso2 <- function(x, y, lambda){
     y <- J(y)
     lambda <- J(lambda)
     beta <- Variable(p)
-    p1 <- minimize(sum((y - x %*% beta) ^ 2) / n + lambda * sum(abs(beta)))
+    b <- Variable()
+    p1 <- minimize(sum((y - x %*% beta - b) ^ 2) / n + lambda * sum(abs(beta)))
     cvx_optim(p1)
-    value(beta)
+    list(coef = value(beta), intercept = value(b))
 }
 
 n <- 1000
@@ -52,7 +48,7 @@ beta0 <- rep(0, p)
 beta0[1:4] <- c(5, 1, 0, 2)
 y <- x %*% beta0 + 0.2 * rnorm(n)
 
-betahat <- round(lasso2(x, y, 0.5), 4)
+betahat <- round(lasso2(x, y, 0.5)$coef, 4)
 betahat[1:4]
 
 ## You can see that the rest elements of betahat are all zero.
@@ -62,13 +58,16 @@ all(betahat[5:p] == 0)
 ## Smallest Circle
 
 ```{r}
-library(convexr)
+if (!requireNamespace("plotrix", quietly = TRUE)) {
+    stop("Package plotrix needed for this section of vignette to build. Please install it.")
+}
 
 center <- function(x, y){
     x <- J(x)
     y <- J(y)
     p <- Variable(2)
     p1 <- minimize(maximum((x - p[1]) ^ 2 + (y - p[2]) ^ 2))
+    cvx_optim(p1)
     value(p)
 }
 
@@ -86,8 +85,6 @@ plotrix::draw.circle(p[1], p[2], radius = sqrt(max((x - p[1]) ^ 2 + (y - p[2]) ^
 ## Support Vector Machine
 
 ```{r}
-library(convexr)
-
 svm <- function(x, y, lambda){
     p <- ncol(x)
     n <- J(nrow(x))
@@ -111,11 +108,36 @@ y <- c(rep(1, n / 2), rep(-1, n / 2))
 
 r <- svm(x, y, 0.5)
 r
-
+plot(x, col = c(rep("red", n / 2), rep("blue", n / 2)))
+abline(r$b / r$w[2], -r$w[1] / r$w[2])
 
 ```
 
-## Sparse Logistic Regression
+## Logistic Regression
+
+```{r}
+logistic <- function(x, y){
+    p <- ncol(x)
+    n <- J(nrow(x))
+    x <- J(x)
+    y <- J(y)
+    beta <- Variable(p)
+    p1 <- maximize(sum(y * (x %*% beta)) - sum(logisticloss(x %*% beta)))
+    cvx_optim(p1)
+    value(beta)
+}
+
+n <- 200
+p <- 2
+Sigma <- outer(1:p, 1:p, function(i, j) 0.5 ^ abs(i - j))
+x <- matrix(rnorm(n * p), n, p) %*% chol(Sigma)
+beta0 <- c(1, -1)
+p0 <- 1 / (1 + exp(-x %*% beta0))
+y <- runif(n) < p0
+
+logistic(x, y)
+
+```
 
 ## Vignette Info
 
