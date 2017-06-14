@@ -52,17 +52,11 @@ variable_creator <- function(vtype){
     function(size = 1, sign = c("None", "Positive", "Negative")){
         .start()
         .convex$vars <- .convex$vars + 1
-        if (sign[1] == "Positive") {
-            sign_text <- ", Positive()"
-        }
-        else {
-            if (sign[1] == "Negative") {
-                sign_text <- ", Negative()"
-            }
-            else {
-                sign_text <- ""
-            }
-        }
+        sign <- match.arg(sign)
+        sign_text <- switch(sign,
+                            Positive = ", Positive()",
+                            Negative = ", Negative()",
+                            None = "")
         Jname <- paste0("X_", .convex$vars)
         command <- paste0(Jname, " = ", vtype, "(", tuple_text(size), sign_text, ")")
         ## print(command)

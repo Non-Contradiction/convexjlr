@@ -1,9 +1,9 @@
 Package: convexr
 Type: Package
-Title: A simple wrapper for Convex.jl
+Title: An R package for Disciplined Convex Programming through Convex.jl
 Version: 0.2.0
-Author: Changcheng Li
-Maintainer: Changcheng Li <cxl508@psu.edu>
+Authors@R: person("Changcheng Li", email = "cxl508@psu.edu",
+    role = c("aut", "cre"))
 Description: convexr provides a simple wrapper for Convex.jl,
     which makes it easy to describe and solve convex optimization problems in R.
     The problems can be dealt with include:
@@ -22,3 +22,6 @@ Suggests: testthat,
     rmarkdown,
     plotrix
 VignetteBuilder: knitr
+SystemRequirements: Julia >= 0.5.0,
+    Convex.jl (will install automatically into Julia if not founded)
+    SCS.jl (will install automatically into Julia if not found)
