@@ -35,7 +35,9 @@ lasso2 <- function(x, y, lambda){
     lambda <- J(lambda)
     beta <- Variable(p)
     b <- Variable()
-    p1 <- minimize(sum((y - x %*% beta - b) ^ 2) / n + lambda * sum(abs(beta)))
+    MSE <- Expr(sum((y - x %*% beta - b) ^ 2) / n)
+    penalty <- Expr(lambda * sum(abs(beta)))
+    p1 <- minimize(MSE + penalty)
     cvx_optim(p1)
     list(coef = value(beta), intercept = value(b))
 }
