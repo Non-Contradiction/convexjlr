@@ -1,4 +1,4 @@
-library(convexr)
+library(convexjlr)
 context("Semidefinite Programming")
 
 ## The original Julia version

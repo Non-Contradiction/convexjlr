@@ -1,4 +1,4 @@
-Package: convexr
+Package: convexjlr
 Type: Package
 Title: An R package for Disciplined Convex Programming using Convex.jl
 Version: 0.3.0

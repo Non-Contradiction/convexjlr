@@ -1,4 +1,4 @@
-library(convexr)
+library(convexjlr)
 context("Exponential Cone Programming")
 
 ## The original Julia version

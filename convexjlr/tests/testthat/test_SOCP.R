@@ -1,4 +1,4 @@
-library(convexr)
+library(convexjlr)
 context("Second Order Cone Programming")
 
 ## The original Julia version

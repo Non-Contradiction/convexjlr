@@ -97,6 +97,9 @@ expr <- function(x, env){
         if (length(attr(r, "Jname")) == 1) {
             return(eval(parse(text = paste0("quote(", attr(r, "Jname"), ")"))))
         }
+        if (is.numeric(r) & length(r) == 1) {
+            return(r + 0)
+        }
         return(x)
     }
     for (i in 1:length(x)) {

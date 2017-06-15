@@ -1,4 +1,4 @@
-library(convexr)
+library(convexjlr)
 context("Linear Programming")
 
 ## The original Julia version
