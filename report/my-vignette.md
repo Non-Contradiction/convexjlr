@@ -1,7 +1,5 @@
 Convex Optimization by convexjlr
 ================
-Changcheng Li
-2017-06-15
 
 The aim of package `convexjlr` is to provide optimization results rapidly and reliably in `R` once you formulate your problem as a convex problem. Having this in mind, we write this vignette in a problem-oriented style. The vignette will walk you through several examples using package `convexjlr`:
 
@@ -81,7 +79,7 @@ betahat <- round(lasso(x, y, 0.5)$coef, 4)
 betahat[1:4]
 ```
 
-    ## [1] 4.8321 0.8979 0.0000 1.7863
+    ## [1] 4.8447 0.8604 0.0000 1.8151
 
 ``` r
 ## You can see that the rest elements of betahat are all zero.
@@ -138,8 +136,8 @@ logistic_regression(x, y)
 ```
 
     ##           [,1]
-    ## [1,]  1.090590
-    ## [2,] -1.045032
+    ## [1,]  1.090276
+    ## [2,] -1.185583
 
 Support Vector Machine
 ----------------------
@@ -191,11 +189,11 @@ r
 
     ## $w
     ##            [,1]
-    ## [1,] -0.4736998
-    ## [2,] -0.5096728
+    ## [1,] -0.4955766
+    ## [2,] -0.4756763
     ## 
     ## $b
-    ## [1] -0.4907435
+    ## [1] -0.4692786
 
 ``` r
 ## We can scatter-plot the points and 
@@ -249,9 +247,9 @@ p <- center(x, y)
 p
 ```
 
-    ##            [,1]
-    ## [1,] -0.4317345
-    ## [2,]  0.4850061
+    ##           [,1]
+    ## [1,] 0.1809804
+    ## [2,] 0.7023285
 
 ``` r
 ## Draw the points and the smallest circle that covers all of them.

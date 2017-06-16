@@ -1,5 +1,7 @@
 ---
 title: "Convex Optimization by convexjlr"
+author: "Changcheng Li"
+date: "`r Sys.Date()`"
 output: rmarkdown::github_document
 ---
 
