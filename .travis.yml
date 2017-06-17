@@ -1,12 +1,13 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
+language: Julia
 language: r
 r:
   - oldrel
   - release
   - devel
 script:
-- cd ./convexjlr/
+- cd $TRAVIS_BUILD_DIR/convexjlr/
 - R CMD build .
 - R CMD check *tar.gz
 sudo: false
