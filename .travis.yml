@@ -6,8 +6,8 @@ r:
   - oldrel
   - release
   - devel
+before_install: cd convexjlr
 script:
-- cd $TRAVIS_BUILD_DIR/convexjlr/
 - R CMD build .
 - R CMD check *tar.gz
 sudo: false
