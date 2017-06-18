@@ -8,22 +8,25 @@ context("Semidefinite Programming")
 # solve!(p, SCSSolver(verbose=0))
 # p.optval
 
-## The R version with convexjl.R
+if (setup()) {
 
-y <- Semidefinite(2)
-p <- maximize(lambdamin(y), trace(y) <= 6)
-cvx_optim(p)
+    ## The R version with convexjl.R
 
-## The R version with XRJulia directly
+    y <- Semidefinite(2)
+    p <- maximize(lambdamin(y), trace(y) <= 6)
+    cvx_optim(p)
 
-ev <- XRJulia::RJulia()
-ev$Command("using Convex")
-ev$Command("y = Semidefinite(2)")
-ev$Command("p = maximize(lambdamin(y), trace(y)<=6)")
-ev$Command("solve!(p)")
+    ## The R version with XRJulia directly
 
-## Compare the results
+    ev <- XRJulia::RJulia()
+    ev$Command("using Convex")
+    ev$Command("y = Semidefinite(2)")
+    ev$Command("p = maximize(lambdamin(y), trace(y)<=6)")
+    ev$Command("solve!(p)")
 
-test_that("Results for example of semidefinite programming", {
-    expect_equal(optval(p), ev$Eval("p.optval"))
-})
+    ## Compare the results
+
+    test_that("Results for example of semidefinite programming", {
+        expect_equal(optval(p), ev$Eval("p.optval"))
+    })
+}

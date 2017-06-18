@@ -15,35 +15,38 @@ context("Linear Programming")
 # println(round(x.value, 2))
 # println(evaluate(x[1] + x[4] - x[2]))
 
-## The R version with convexjl.R
+if (setup()) {
 
-x <- Variable(4)
-c <- J(c(1:4))
-A <- J(diag(4))
-b <- J(rep(10, 4))
-p <- minimize(sum(c * x))
-p <- addConstraint(p, A %*% x <= b)
-p <- addConstraint(p, x >= 1, x <= 10, x[2] <= 5, x[1] + x[4] - x[2] <= 10)
-cvx_optim(p)
+    ## The R version with convexjl.R
 
-## The R verion through XRJulia directly
+    x <- Variable(4)
+    c <- J(c(1:4))
+    A <- J(diag(4))
+    b <- J(rep(10, 4))
+    p <- minimize(sum(c * x))
+    p <- addConstraint(p, A %*% x <= b)
+    p <- addConstraint(p, x >= 1, x <= 10, x[2] <= 5, x[1] + x[4] - x[2] <= 10)
+    cvx_optim(p)
 
-ev <- XRJulia::RJulia()
-ev$Command("using Convex")
-ev$Command("x = Variable(4)")
-ev$Command("c = [1; 2; 3; 4]")
-ev$Command("A = eye(4)")
-ev$Command("b = [10; 10; 10; 10]")
-ev$Command("p = minimize(dot(c, x)) # or c' * x")
-ev$Command("p.constraints += A * x <= b")
-ev$Command("p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]")
-ev$Command("solve!(p)")
+    ## The R verion through XRJulia directly
 
-## Compare the results
+    ev <- XRJulia::RJulia()
+    ev$Command("using Convex")
+    ev$Command("x = Variable(4)")
+    ev$Command("c = [1; 2; 3; 4]")
+    ev$Command("A = eye(4)")
+    ev$Command("b = [10; 10; 10; 10]")
+    ev$Command("p = minimize(dot(c, x)) # or c' * x")
+    ev$Command("p.constraints += A * x <= b")
+    ev$Command("p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]")
+    ev$Command("solve!(p)")
 
-test_that("Results for example of linear programming", {
-    expect_equal(optval(p), ev$Eval("p.optval"))
-    expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
-    expect_equal(value(x[1] + x[4] - x[2]),
-                 ev$Eval("evaluate(x[1] + x[4] - x[2])", .get = TRUE))
-})
+    ## Compare the results
+
+    test_that("Results for example of linear programming", {
+        expect_equal(optval(p), ev$Eval("p.optval"))
+        expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
+        expect_equal(value(x[1] + x[4] - x[2]),
+                     ev$Eval("evaluate(x[1] + x[4] - x[2])", .get = TRUE))
+    })
+}

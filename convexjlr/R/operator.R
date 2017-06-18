@@ -96,7 +96,7 @@ logisticloss <- function(x){
 #' @param x input vector.
 #' @param p a number greater than 1.
 #' @export
-norm <- function(x, p){
+norm <- function(x, p = 2){
     sum(x ^ p) ^ (1 / p)
 }
 
@@ -107,7 +107,7 @@ norm <- function(x, p){
 #' @param x input matrix.
 #' @param p a number greater than 1.
 #' @export
-vecnorm <- function(x, p){
+vecnorm <- function(x, p = 2){
     norm(vec(x), p)
 }
 

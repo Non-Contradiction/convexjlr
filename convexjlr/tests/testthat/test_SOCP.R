@@ -12,26 +12,29 @@ context("Second Order Cone Programming")
 # println(y.value)
 # p.optval
 
-## The R version with convexjl.R
+if (setup()) {
 
-X <- Variable(c(2, 2))
-y <- Variable()
-p <- minimize(vecnorm(X) + y, 2 * X <= 1, transpose(X) + y >= 1, X >= 0, y >= 0)
-cvx_optim(p)
+    ## The R version with convexjl.R
 
-## The R version with XRJulia directly
+    X <- Variable(c(2, 2))
+    y <- Variable()
+    p <- minimize(vecnorm(X) + y, 2 * X <= 1, t(X) + y >= 1, X >= 0, y >= 0)
+    cvx_optim(p)
 
-ev <- XRJulia::RJulia()
-ev$Command("using Convex")
-ev$Command("X = Variable(2, 2)")
-ev$Command("y = Variable()")
-ev$Command("p = minimize(vecnorm(X) + y, 2 * X <= 1, X' + y >= 1, X >= 0, y >= 0)")
-ev$Command("solve!(p)")
+    ## The R version with XRJulia directly
 
-## Compare the results
+    ev <- XRJulia::RJulia()
+    ev$Command("using Convex")
+    ev$Command("X = Variable(2, 2)")
+    ev$Command("y = Variable()")
+    ev$Command("p = minimize(vecnorm(X) + y, 2 * X <= 1, X' + y >= 1, X >= 0, y >= 0)")
+    ev$Command("solve!(p)")
 
-test_that("Results for example of second order cone programming", {
-    expect_equal(optval(p), ev$Eval("p.optval"))
-    expect_equal(value(X), ev$Eval("X.value", .get = TRUE))
-    expect_equal(value(y), ev$Eval("evaluate(y)", .get = TRUE))
-})
+    ## Compare the results
+
+    test_that("Results for example of second order cone programming", {
+        expect_equal(optval(p), ev$Eval("p.optval"))
+        expect_equal(value(X), ev$Eval("X.value", .get = TRUE))
+        expect_equal(value(y), ev$Eval("evaluate(y)", .get = TRUE))
+    })
+}

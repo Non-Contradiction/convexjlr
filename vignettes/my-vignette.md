@@ -1,14 +1,7 @@
----
-title: "Convex Optimization by convexjlr"
-author: "Changcheng Li"
-date: "`r Sys.Date()`"
-output:
-  rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Convex Optimization by convexjlr}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+-   [Lasso](#lasso)
+-   [Logistic Regression](#logistic-regression)
+-   [Support Vector Machine](#support-vector-machine)
+-   [Smallest Circle](#smallest-circle)
 
 The aim of package `convexjlr` is to provide optimization results
 rapidly and reliably in `R` once you formulate your problem as a convex
@@ -16,10 +9,10 @@ problem. Having this in mind, we write this vignette in a
 problem-oriented style. The vignette will walk you through several
 examples using package `convexjlr`:
 
--   [Lasso](#lasso)
--   [Logistic Regression](#logistic-regression)
--   [Support Vector Machine](#support-vector-machine)
--   [Smallest Circle](#smallest-circle)
+-   Lasso;
+-   Logistic regression;
+-   Support Vector Machine (SVM);
+-   Smallest circle covering multiple points.
 
 Although these problems already have mature solutions, the purpose here
 is to show the wide application of convex optimization and how you can
@@ -118,7 +111,7 @@ built.
 
     betahat[1:4]
 
-    ## [1] 4.8359 0.8924 0.0000 1.8016
+    ## [1] 4.8423 0.8857 0.0000 1.8091
 
     ## You can see that the rest elements of betahat are all zero.
     all(betahat[5:p] == 0)
@@ -184,8 +177,8 @@ we have just built.
     logistic_regression(x, y)
 
     ##            [,1]
-    ## [1,]  0.8808122
-    ## [2,] -0.8500256
+    ## [1,]  1.2662956
+    ## [2,] -0.9864228
 
 Support Vector Machine
 ----------------------
@@ -243,18 +236,18 @@ built.
 
     ## $w
     ##            [,1]
-    ## [1,] -0.5078823
-    ## [2,] -0.5206515
+    ## [1,] -0.5201398
+    ## [2,] -0.5224893
     ## 
     ## $b
-    ## [1] -0.4842125
+    ## [1] -0.5126724
 
     ## We can scatter-plot the points and 
     ## draw the classification hyperplane returned by the function svm.
     plot(x, col = c(rep("red", n / 2), rep("blue", n / 2)))
     abline(r$b / r$w[2], -r$w[1] / r$w[2])
 
-![](output_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+![](my-vignette_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
 Smallest Circle
 ---------------
@@ -302,11 +295,11 @@ built.
     p
 
     ##             [,1]
-    ## [1,] -0.09577334
-    ## [2,] -0.14409191
+    ## [1,] -0.03420745
+    ## [2,]  0.90069245
 
     ## Draw the points and the smallest circle that covers all of them.
     plot(x, y, asp = 1)
     plotrix::draw.circle(p[1], p[2], radius = sqrt(max((x - p[1]) ^ 2 + (y - p[2]) ^ 2)))
 
-![](output_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+![](my-vignette_files/figure-markdown_strict/unnamed-chunk-9-1.png)
