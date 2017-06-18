@@ -264,8 +264,8 @@ satisfy <- problem_creator("satisfy")
 #' @return status of optimized problem.
 #'
 #' @examples
-#' x <- Variable(2)
-#' b <- J(c(1:2))
+#' x <- Variable()
+#' b <- 1
 #' p <- minimize(sum((x - b) ^ 2))
 #' cvx_optim(p)
 #' @export
