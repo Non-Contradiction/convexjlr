@@ -4,7 +4,7 @@
 \alias{norm}
 \title{p-norm of x}
 \usage{
-norm(x, p)
+norm(x, p = 2)
 }
 \arguments{
 \item{x}{input vector.}

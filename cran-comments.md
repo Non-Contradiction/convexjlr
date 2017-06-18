@@ -8,8 +8,11 @@ There were no ERRORs or WARNINGs.
 
 There was 1 NOTE:
 
-* checking dependencies in R code ... NOTE
-  Namespace in Imports field not imported from: 'R6'
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Changcheng Li <cxl508@psu.edu>'
+New submission
+
+This is my first submission.
 
 ## Downstream dependencies
-There are currently no downstream dependencies for this package
+There are currently no downstream dependencies for this package.

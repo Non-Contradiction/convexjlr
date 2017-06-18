@@ -160,7 +160,7 @@ expr <- function(x, env){
     x
 }
 
-`%>%` <- magrittr::`%>%`
+#' @import magrittr
 
 expr_text <- function(x, env){
     deparse(expr(x, env)) %>%

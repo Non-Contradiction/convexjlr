@@ -4,7 +4,7 @@
 \alias{vecnorm}
 \title{p-norm of vector representation of x}
 \usage{
-vecnorm(x, p)
+vecnorm(x, p = 2)
 }
 \arguments{
 \item{x}{input matrix.}
