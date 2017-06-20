@@ -17,14 +17,9 @@
 
 .check_install <- function(pkgname){
     if (.check(pkgname)) {return(TRUE)}
-    if (interactive()) {
-        cat(paste0("Do you wish to install Julia package: ", pkgname, "\n"))
-        yesorno <- readline(prompt = "Yes or No ")
-        yesorno <- match.arg(yesorno, c("No", "Yes"))
-        switch(yesorno,
-               Yes = {cat("You wish to install the package.\n"); .install(pkgname)},
-               No = cat("You do not wish to install the package.\n"))
-    }
+    message("convexjlr needs to install Julia package ", pkgname, ".")
+    message("We will install it for you.")
+    .install(pkgname)
     return(.check(pkgname))
 }
 
@@ -33,17 +28,20 @@
 .start <- function(){
     ## stopifnot(XRJulia::findJulia(test = TRUE))
     if (!.convex$status) {
+        message("Doing initialization. It may take some time. Please wait.")
         if (XRJulia::findJulia(test = TRUE)) {
             .convex$ev <- XRJulia::RJulia()
-            .convex$status <- all(.check_installs(c("Convex", "SCS")))
-            if (.convex$status) {
+            if (all(.check_installs(c("Convex", "SCS")))) {
                 .convex$ev$Command("using Convex")
                 .convex$ev$Command("using SCS")
                 # passing in verbose=0 to hide output from SCS
                 .convex$ev$Command("solver = SCSSolver(verbose=0)")
                 .convex$ev$Command("set_default_solver(solver)")
+                .convex$status <- .convex$ev$Eval("true")
             }
+            else {message("Package installation is not successful.")}
         }
+        else {message("Julia installation is not found.")}
     }
     return(.convex$status)
 }
@@ -86,7 +84,7 @@ J <- function(x){
         structure(x, Jname = r@.Data, proxy = r, class = c(class(x), "shared"))
     }
     else {
-        cat("Julia start failed")
+        message("Julia start failed")
         FALSE
     }
 }
@@ -111,7 +109,7 @@ variable_creator <- function(vtype){
                       class = "variable")
         }
         else {
-            cat("Julia start failed")
+            message("Julia start failed")
             FALSE
         }
     }
@@ -197,7 +195,7 @@ Expr <- function(x){
                   class = "expr")
     }
     else {
-        cat("Julia start failed")
+        message("Julia start failed")
         FALSE
     }
 }
@@ -225,7 +223,7 @@ problem_creator <- function(ptype) {
                       class = "problem")
         }
         else {
-            cat("Julia start failed")
+            message("Julia start failed")
             FALSE
         }
     }
@@ -275,7 +273,7 @@ cvx_optim <- function(p){
         status(p)
     }
     else {
-        cat("Julia start failed")
+        message("Julia start failed")
         FALSE
     }
 }
@@ -306,7 +304,7 @@ addConstraint <- function(p, ...){
         p
     }
     else {
-        cat("Julia start failed")
+        message("Julia start failed")
         FALSE
     }
 }
@@ -319,7 +317,7 @@ Jproperty <- function(property){
             .convex$ev$Eval(paste0(attr(p, "Jname"), ".", property), .get = TRUE)
         }
         else {
-            cat("Julia start failed")
+            message("Julia start failed")
             FALSE
         }
     }
@@ -380,7 +378,7 @@ value <- function(...){
         }
     }
     else {
-        cat("Julia start failed")
+        message("Julia start failed")
         FALSE
     }
 }
