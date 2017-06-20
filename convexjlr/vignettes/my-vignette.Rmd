@@ -62,6 +62,12 @@ To use package `convexjlr`, we first need to attach it:
     ## 
     ##     norm
 
+    setup()
+
+    ## Doing initialization. It may take some time. Please wait.
+
+    ## [1] TRUE
+
 Lasso
 -----
 

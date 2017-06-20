@@ -21,7 +21,9 @@ Create variable (vector, matrix, semidefinite matrix and etc.)
 for optimization problem.
 }
 \examples{
-x <- Variable(4)
-X <- Variable(c(4, 4), sign = "Positive")
-S <- Semidefinite(4)
+if (setup()) {
+    x <- Variable(4)
+    X <- Variable(c(4, 4), sign = "Positive")
+    S <- Semidefinite(4)
+}
 }

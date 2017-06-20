@@ -54,6 +54,9 @@
 #' if the packages are not found, it will ask user to install them.
 #' Finally, it will try to load the Julia packages and do the neccessary initial setup.
 #'
+#' @examples
+#' setup()
+#'
 #' @export
 setup <- function(){
     .start()
@@ -74,44 +77,32 @@ tuple_text <- function(x){
 #'
 #' @param x the R object sent to Julia
 #' @examples
-#' x <- Variable(2)
-#' b <- J(c(1:2))
-#' p <- minimize(sum((x - b) ^ 2))
+#' if (setup()) {
+#'     b <- J(c(1:2))
+#' }
 #' @export
 J <- function(x){
-    if (.start()) {
-        r <- .convex$ev$Send(x)
-        structure(x, Jname = r@.Data, proxy = r, class = c(class(x), "shared"))
-    }
-    else {
-        message("Julia start failed")
-        FALSE
-    }
+    r <- .convex$ev$Send(x)
+    structure(x, Jname = r@.Data, proxy = r, class = c(class(x), "shared"))
 }
 
 variable_creator <- function(vtype){
     force(vtype)
     function(size = 1, sign = c("None", "Positive", "Negative")){
-        if (.start()) {
-            .convex$vars <- .convex$vars + 1
-            sign <- match.arg(sign)
-            sign_text <- switch(sign,
-                                Positive = ", Positive()",
-                                Negative = ", Negative()",
-                                None = "")
-            Jname <- paste0("X_", .convex$vars)
-            command <- paste0(Jname, " = ", vtype, "(", tuple_text(size), sign_text, ")")
-            ## print(command)
-            .convex$ev$Command(command)
-            structure(Jname, size = size,
-                      Jname = Jname,
-                      proxy = .convex$ev$Eval(Jname),
-                      class = "variable")
-        }
-        else {
-            message("Julia start failed")
-            FALSE
-        }
+        .convex$vars <- .convex$vars + 1
+        sign <- match.arg(sign)
+        sign_text <- switch(sign,
+                            Positive = ", Positive()",
+                            Negative = ", Negative()",
+                            None = "")
+        Jname <- paste0("X_", .convex$vars)
+        command <- paste0(Jname, " = ", vtype, "(", tuple_text(size), sign_text, ")")
+        ## print(command)
+        .convex$ev$Command(command)
+        structure(Jname, size = size,
+                  Jname = Jname,
+                  proxy = .convex$ev$Eval(Jname),
+                  class = "variable")
     }
 }
 
@@ -124,9 +115,11 @@ variable_creator <- function(vtype){
 #' @param sign whether variable is element-wise positive, element-wise negative
 #' or neither.
 #' @examples
-#' x <- Variable(4)
-#' X <- Variable(c(4, 4), sign = "Positive")
-#' S <- Semidefinite(4)
+#' if (setup()) {
+#'     x <- Variable(4)
+#'     X <- Variable(c(4, 4), sign = "Positive")
+#'     S <- Semidefinite(4)
+#' }
 #' @name variable_creating
 NULL
 
@@ -176,56 +169,46 @@ expr_text <- function(x, env){
 #' @param x expression to be created.
 #'
 #' @examples
-#' x <- Variable(2)
-#' x1 <- Expr(x + 1)
+#' if (setup()) {
+#'     x <- Variable(2)
+#'     x1 <- Expr(x + 1)
+#' }
 #' @export
 Expr <- function(x){
-    if (.start()) {
-        .convex$exprs <- .convex$exprs + 1
-        expression_text <- expr_text(sys.call()[[2]], env = parent.frame())
-        ## print(ptext)
-        Jname <- paste0("EX_", .convex$exprs)
-        command <- paste0(Jname, " = ", expression_text)
-        ## print(command)
-        .convex$ev$Command(command)
-        structure(Jname, expr = expression_text,
-                  command = command,
-                  Jname = Jname,
-                  proxy = .convex$ev$Eval(Jname),
-                  class = "expr")
-    }
-    else {
-        message("Julia start failed")
-        FALSE
-    }
+    .convex$exprs <- .convex$exprs + 1
+    expression_text <- expr_text(sys.call()[[2]], env = parent.frame())
+    ## print(ptext)
+    Jname <- paste0("EX_", .convex$exprs)
+    command <- paste0(Jname, " = ", expression_text)
+    ## print(command)
+    .convex$ev$Command(command)
+    structure(Jname, expr = expression_text,
+              command = command,
+              Jname = Jname,
+              proxy = .convex$ev$Eval(Jname),
+              class = "expr")
 }
 
 problem_creator <- function(ptype) {
     force(ptype)
     function(...) {
-        if (.start()) {
-            .convex$ps <- .convex$ps + 1
-            problem <- lapply(sys.call()[-1], expr_text, env = parent.frame())
-            target <- problem[[1]]
-            constraints <- problem[-1]
-            ptext <- join(problem)
-            ## print(ptext)
-            Jname <- paste0("P_", .convex$ps)
-            command <- paste0(Jname, " = ", ptype, "(", ptext, ")")
-            ## print(command)
-            .convex$ev$Command(command)
-            structure(Jname, problem_type = ptype,
-                      target = target,
-                      constraints = constraints,
-                      command = command,
-                      Jname = Jname,
-                      proxy = .convex$ev$Eval(Jname),
-                      class = "problem")
-        }
-        else {
-            message("Julia start failed")
-            FALSE
-        }
+        .convex$ps <- .convex$ps + 1
+        problem <- lapply(sys.call()[-1], expr_text, env = parent.frame())
+        target <- problem[[1]]
+        constraints <- problem[-1]
+        ptext <- join(problem)
+        ## print(ptext)
+        Jname <- paste0("P_", .convex$ps)
+        command <- paste0(Jname, " = ", ptype, "(", ptext, ")")
+        ## print(command)
+        .convex$ev$Command(command)
+        structure(Jname, problem_type = ptype,
+                  target = target,
+                  constraints = constraints,
+                  command = command,
+                  Jname = Jname,
+                  proxy = .convex$ev$Eval(Jname),
+                  class = "problem")
     }
 }
 
@@ -236,11 +219,13 @@ problem_creator <- function(ptype) {
 #'
 #' @param ... optimization targets and constraints.
 #' @examples
-#' x <- Variable(4)
-#' b <- J(c(1:4))
-#' p <- minimize(sum((x - b) ^ 2), x >= 0, x <= 3)
-#' p <- maximize(-sum((x - b) ^ 2), x >= 0, x <= 3)
-#' p <- satisfy(sum((x - b) ^ 2) <= 1, x >= 0, x <= 3)
+#' if (setup()) {
+#'     x <- Variable(4)
+#'     b <- J(c(1:4))
+#'     p <- minimize(sum((x - b) ^ 2), x >= 0, x <= 3)
+#'     p <- maximize(-sum((x - b) ^ 2), x >= 0, x <= 3)
+#'     p <- satisfy(sum((x - b) ^ 2) <= 1, x >= 0, x <= 3)
+#' }
 #' @name problem_creating
 NULL
 
@@ -262,20 +247,16 @@ satisfy <- problem_creator("satisfy")
 #' @return status of optimized problem.
 #'
 #' @examples
-#' x <- Variable()
-#' b <- 1
-#' p <- minimize(sum((x - b) ^ 2))
-#' cvx_optim(p)
+#' if (setup()) {
+#'     x <- Variable()
+#'     b <- 1
+#'     p <- minimize(sum((x - b) ^ 2))
+#'     cvx_optim(p)
+#' }
 #' @export
 cvx_optim <- function(p){
-    if (.start()) {
-        .convex$ev$Call("solve!", attr(p, "proxy"))
-        status(p)
-    }
-    else {
-        message("Julia start failed")
-        FALSE
-    }
+    .convex$ev$Call("solve!", attr(p, "proxy"))
+    status(p)
 }
 
 #' Add constraints to optimization problem
@@ -287,39 +268,29 @@ cvx_optim <- function(p){
 #' @return the optimization problem with the additional constraints.
 #'
 #' @examples
-#' x <- Variable(4)
-#' b <- J(c(1:4))
-#' p <- minimize(sum((x - b) ^ 2))
-#' p <- addConstraint(p, x >= 0, x <= 3)
+#' if (setup()) {
+#'     x <- Variable(4)
+#'     b <- J(c(1:4))
+#'     p <- minimize(sum((x - b) ^ 2))
+#'     p <- addConstraint(p, x >= 0, x <= 3)
+#' }
 #' @export
 addConstraint <- function(p, ...){
-    if (.start()) {
-        stopifnot(attr(p, "class") == "problem")
-        constraints <- lapply(sys.call()[-c(1:2)], expr_text, env = parent.frame())
-        ## p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]
-        command <- paste0(attr(p, "Jname"), ".constraints += [", join(constraints, sep = "; "), "]")
-        .convex$ev$Command(command)
-        attr(p, "command") <- append(attr(p, "command"), command)
-        attr(p, "constraints") <- append(attr(p, "constraints"), constraints)
-        p
-    }
-    else {
-        message("Julia start failed")
-        FALSE
-    }
+    stopifnot(attr(p, "class") == "problem")
+    constraints <- lapply(sys.call()[-c(1:2)], expr_text, env = parent.frame())
+    ## p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]
+    command <- paste0(attr(p, "Jname"), ".constraints += [", join(constraints, sep = "; "), "]")
+    .convex$ev$Command(command)
+    attr(p, "command") <- append(attr(p, "command"), command)
+    attr(p, "constraints") <- append(attr(p, "constraints"), constraints)
+    p
 }
 
 Jproperty <- function(property){
     force(property)
     function(p){
-        if (.start()) {
-            stopifnot(length(attr(p, "Jname")) == 1)
-            .convex$ev$Eval(paste0(attr(p, "Jname"), ".", property), .get = TRUE)
-        }
-        else {
-            message("Julia start failed")
-            FALSE
-        }
+        stopifnot(length(attr(p, "Jname")) == 1)
+        .convex$ev$Eval(paste0(attr(p, "Jname"), ".", property), .get = TRUE)
     }
 }
 
@@ -331,12 +302,14 @@ Jproperty <- function(property){
 #'
 #' @param p optimization problem.
 #' @examples
-#' x <- Variable(2)
-#' b <- J(c(1:2))
-#' p <- minimize(sum((x - b) ^ 2))
-#' cvx_optim(p)
-#' status(p)
-#' optval(p)
+#' if (setup()) {
+#'     x <- Variable(2)
+#'     b <- J(c(1:2))
+#'     p <- minimize(sum((x - b) ^ 2))
+#'     cvx_optim(p)
+#'     status(p)
+#'     optval(p)
+#' }
 #' @name property
 NULL
 
@@ -356,30 +329,26 @@ optval <- Jproperty("optval")
 #' @param ... expressions needed to evaluate.
 #'
 #' @examples
-#' x <- Variable(4)
-#' b <- J(c(1:4))
-#' p <- minimize(sum((x - b) ^ 2))
-#' cvx_optim(p)
-#' value(x[1] + x[2], x[3] + x[4])
+#' if (setup()) {
+#'     x <- Variable(4)
+#'     b <- J(c(1:4))
+#'     p <- minimize(sum((x - b) ^ 2))
+#'     cvx_optim(p)
+#'     value(x[1] + x[2], x[3] + x[4])
+#' }
 #' @export
 value <- function(...){
-    if (.start()) {
-        original_exprs <- sys.call()[-1]
-        if (length(original_exprs) > 1) {
-            exprs <- lapply(original_exprs, expr_text, env = parent.frame())
-            commands <- paste0("evaluate(", exprs, ")")
-            names(commands) <- lapply(original_exprs, deparse)
-            lapply(commands, .convex$ev$Eval, .get = TRUE)
-        }
-        else {
-            expr <- expr_text(original_exprs[[1]], env = parent.frame())
-            command <- paste0("evaluate(", expr, ")")
-            .convex$ev$Eval(command, .get = TRUE)
-        }
+    original_exprs <- sys.call()[-1]
+    if (length(original_exprs) > 1) {
+        exprs <- lapply(original_exprs, expr_text, env = parent.frame())
+        commands <- paste0("evaluate(", exprs, ")")
+        names(commands) <- lapply(original_exprs, deparse)
+        lapply(commands, .convex$ev$Eval, .get = TRUE)
     }
     else {
-        message("Julia start failed")
-        FALSE
+        expr <- expr_text(original_exprs[[1]], env = parent.frame())
+        command <- paste0("evaluate(", expr, ")")
+        .convex$ev$Eval(command, .get = TRUE)
     }
 }
 

@@ -13,6 +13,8 @@ Expr(x)
 \code{Expr} create expressions, which can be used later for problem creation.
 }
 \examples{
-x <- Variable(2)
-x1 <- Expr(x + 1)
+if (setup()) {
+    x <- Variable(2)
+    x1 <- Expr(x + 1)
+}
 }

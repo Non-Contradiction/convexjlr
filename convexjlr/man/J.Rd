@@ -14,7 +14,7 @@ Make a variable to be of Julia's awareness, so it can be further used in
 the definition of optimization problem.
 }
 \examples{
-x <- Variable(2)
-b <- J(c(1:2))
-p <- minimize(sum((x - b) ^ 2))
+if (setup()) {
+    b <- J(c(1:2))
+}
 }

@@ -1,19 +1,30 @@
 Convex Optimization by convexjlr
 ================
 
-`convexjlr` is an `R` package for [Disciplined Convex Programming (DCP)](http://dcp.stanford.edu/) by providing a high level wrapper for [Convex.jl](https://github.com/JuliaOpt/Convex.jl). The aim is to provide optimization results rapidly and reliably in `R` once you formulate your problem as a convex problem. `convexjlr` can solve linear programs, second order cone programs, semidefinite programs, exponential cone programs, mixed-integer linear programs, and some other DCP-compliant convex programs through `Convex.jl`.
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+`convexjlr` is an `R` package for [Disciplined Convex Programming (DCP)](http://dcp.stanford.edu/) by providing a high level wrapper for Julia package [Convex.jl](https://github.com/JuliaOpt/Convex.jl). The aim is to provide optimization results rapidly and reliably in `R` once you formulate your problem as a convex problem. `convexjlr` can solve linear programs, second order cone programs, semidefinite programs, exponential cone programs, mixed-integer linear programs, and some other DCP-compliant convex programs through `Convex.jl`.
 
 **Installation**:
+
+`convexjlr` is on CRAN now! To use package `convexjlr`, you first have to install Julia <https://julialang.org/> on your computer, and then you can install `convexjlr` just like any other R packages.
 
 We hope you use `convexjlr` to solve your own problems. If you would like to share your experience on using `convexjlr` or have any questions about `convexjlr`, don't hesitate to contact me: <cxl508@psu.edu>.
 
 Quick Example
 -------------
 
-We will show a short example for `convexjlr` in solving linear regression problem. To use package `convexjlr`, we first need to attach it:
+We will show a short example for `convexjlr` in solving linear regression problem. To use package `convexjlr`, we first need to attach it and do the initial setip:
 
 ``` r
 library(convexjlr)
+#> 
+#> Attaching package: 'convexjlr'
+#> The following object is masked from 'package:base':
+#> 
+#>     norm
+setup()
+#> Doing initialization. It may take some time. Please wait.
+#> [1] TRUE
 ```
 
 And this is our linear regression function using `convexjlr`:
@@ -53,16 +64,15 @@ beta0 <- c(5, 1, 0, 2, 0)
 y <- x %*% beta0 + 0.2 * rnorm(n)
 
 linear_regression(x, y)$coef
+#>               [,1]
+#> [1,]  5.0106926977
+#> [2,]  1.0004624728
+#> [3,]  0.0017320126
+#> [4,]  2.0011197395
+#> [5,] -0.0002073275
 ```
-
-    ##              [,1]
-    ## [1,]  5.001721342
-    ## [2,]  1.006083286
-    ## [3,] -0.007552431
-    ## [4,]  2.011244424
-    ## [5,]  0.004382787
 
 More Examples
 -------------
 
-More examples (including using `convexjlr` for Lasso, logistic regression and Support Vector Machine) can be found in the pakage vignette or on the github page: <https://github.com/Non-Contradiction/Convexjl.R/blob/master/report/my-vignette.md>
+More examples (including using `convexjlr` for Lasso, logistic regression and Support Vector Machine) can be found in the pakage vignette or on the github page: <https://github.com/Non-Contradiction/convexjlr>

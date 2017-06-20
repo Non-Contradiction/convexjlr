@@ -1,7 +1,7 @@
 Package: convexjlr
 Type: Package
 Title: Disciplined Convex Programming in R using Convex.jl
-Version: 0.5.0
+Version: 0.5.1
 Authors@R: person("Changcheng Li", email = "cxl508@psu.edu",
     role = c("aut", "cre"))
 Description: Package convexjlr provides a simple high-level wrapper for
@@ -25,4 +25,4 @@ Suggests: testthat,
     plotrix
 VignetteBuilder: knitr
 SystemRequirements: Julia >= 0.5.0, Convex.jl, SCS.jl
-URL: https://github.com/Non-Contradiction/Convexjl.R
+URL: https://github.com/Non-Contradiction/convexjlr

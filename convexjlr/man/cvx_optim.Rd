@@ -16,8 +16,10 @@ status of optimized problem.
 \code{cvx_optim} solves optimization problem using Convex.jl.
 }
 \examples{
-x <- Variable()
-b <- 1
-p <- minimize(sum((x - b) ^ 2))
-cvx_optim(p)
+if (setup()) {
+    x <- Variable()
+    b <- 1
+    p <- minimize(sum((x - b) ^ 2))
+    cvx_optim(p)
+}
 }

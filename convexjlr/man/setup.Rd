@@ -13,3 +13,7 @@ Secondly it will check for the Julia packages Convex and SCS,
 if the packages are not found, it will ask user to install them.
 Finally, it will try to load the Julia packages and do the neccessary initial setup.
 }
+\examples{
+setup()
+
+}

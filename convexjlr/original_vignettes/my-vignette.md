@@ -44,7 +44,8 @@ optimization problems and in using `convexjlr`.
     can give you more imformation for `Convex.jl`, which `convexjlr` is
     built upon.
 
-To use package `convexjlr`, we first need to attach it:
+To use package `convexjlr`, we first need to attach it and do some
+initial setup:
 
     library(convexjlr)
 
@@ -54,6 +55,12 @@ To use package `convexjlr`, we first need to attach it:
     ## The following object is masked from 'package:base':
     ## 
     ##     norm
+
+    setup()
+
+    ## Doing initialization. It may take some time. Please wait.
+
+    ## [1] TRUE
 
 Lasso
 -----
@@ -108,10 +115,9 @@ built.
     y <- x %*% beta0 + 0.2 * rnorm(n)
 
     betahat <- round(lasso(x, y, 0.5)$coef, 4)
-
     betahat[1:4]
 
-    ## [1] 4.8423 0.8857 0.0000 1.8091
+    ## [1] 4.8530 0.8683 0.0000 1.8056
 
     ## You can see that the rest elements of betahat are all zero.
     all(betahat[5:p] == 0)
@@ -177,8 +183,8 @@ we have just built.
     logistic_regression(x, y)
 
     ##            [,1]
-    ## [1,]  1.2662956
-    ## [2,] -0.9864228
+    ## [1,]  0.9690352
+    ## [2,] -0.9759722
 
 Support Vector Machine
 ----------------------
@@ -236,11 +242,11 @@ built.
 
     ## $w
     ##            [,1]
-    ## [1,] -0.5201398
-    ## [2,] -0.5224893
+    ## [1,] -0.5496040
+    ## [2,] -0.5111969
     ## 
     ## $b
-    ## [1] -0.5126724
+    ## [1] -0.5246915
 
     ## We can scatter-plot the points and 
     ## draw the classification hyperplane returned by the function svm.
@@ -294,9 +300,9 @@ built.
     p <- center(x, y)
     p
 
-    ##             [,1]
-    ## [1,] -0.03420745
-    ## [2,]  0.90069245
+    ##            [,1]
+    ## [1,] -0.2667849
+    ## [2,]  0.2875975
 
     ## Draw the points and the smallest circle that covers all of them.
     plot(x, y, asp = 1)

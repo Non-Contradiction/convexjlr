@@ -38,10 +38,11 @@ is a good starting point.
 - [The page for Disciplined Convex Programming](http://dcp.stanford.edu/) can teach you more about DCP, which is the basis for `Convex.jl` and thus `convexjlr`.
 - [Github page for `Convex.jl`](https://github.com/JuliaOpt/Convex.jl) can give you more imformation for `Convex.jl`, which `convexjlr` is built upon.
 
-To use package `convexjlr`, we first need to attach it:
+To use package `convexjlr`, we first need to attach it and do some initial setup:
 
 ```{r}
 library(convexjlr)
+setup()
 ```
 
 ## Lasso

@@ -21,9 +21,11 @@ Create different kinds of optimization problems with
 targets and constraints.
 }
 \examples{
-x <- Variable(4)
-b <- J(c(1:4))
-p <- minimize(sum((x - b) ^ 2), x >= 0, x <= 3)
-p <- maximize(-sum((x - b) ^ 2), x >= 0, x <= 3)
-p <- satisfy(sum((x - b) ^ 2) <= 1, x >= 0, x <= 3)
+if (setup()) {
+    x <- Variable(4)
+    b <- J(c(1:4))
+    p <- minimize(sum((x - b) ^ 2), x >= 0, x <= 3)
+    p <- maximize(-sum((x - b) ^ 2), x >= 0, x <= 3)
+    p <- satisfy(sum((x - b) ^ 2) <= 1, x >= 0, x <= 3)
+}
 }
