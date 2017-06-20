@@ -5,7 +5,6 @@ r:
   - oldrel
   - release
   - devel
-before_install: cd convexjlr
 script:
 - R CMD build .
 - R CMD check *tar.gz

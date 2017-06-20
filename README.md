@@ -1,4 +1,4 @@
-Convex Optimization by convexjlr
+Convex Optimization in R by convexjlr
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -64,12 +64,12 @@ beta0 <- c(5, 1, 0, 2, 0)
 y <- x %*% beta0 + 0.2 * rnorm(n)
 
 linear_regression(x, y)$coef
-#>               [,1]
-#> [1,]  5.0106926977
-#> [2,]  1.0004624728
-#> [3,]  0.0017320126
-#> [4,]  2.0011197395
-#> [5,] -0.0002073275
+#>             [,1]
+#> [1,] 4.998312910
+#> [2,] 1.002886430
+#> [3,] 0.003071815
+#> [4,] 1.989776899
+#> [5,] 0.019197631
 ```
 
 More Examples
