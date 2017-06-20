@@ -10,7 +10,7 @@
 }
 
 .install <- function(pkgname){
-    command <- paste0('Pkg.add("', pkgname, '") end')
+    command <- paste0('Pkg.add("', pkgname, '")')
     .convex$ev$Command(command)
     TRUE
 }
@@ -18,12 +18,12 @@
 .check_install <- function(pkgname){
     if (.check(pkgname)) {return(TRUE)}
     if (interactive()) {
-        cat(paste0("Do you wish to install Julia package: ", pkgname))
-        yesorno <- readline(prompt = "Yes or No")
+        cat(paste0("Do you wish to install Julia package: ", pkgname, "\n"))
+        yesorno <- readline(prompt = "Yes or No ")
         yesorno <- match.arg(yesorno, c("No", "Yes"))
         switch(yesorno,
-               Yes = {cat("You wish to install the package."); .install(pkgname)},
-               No = cat("You do not wish to install the package."))
+               Yes = {cat("You wish to install the package.\n"); .install(pkgname)},
+               No = cat("You do not wish to install the package.\n"))
     }
     return(.check(pkgname))
 }
