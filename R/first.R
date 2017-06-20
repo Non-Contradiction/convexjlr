@@ -39,11 +39,11 @@
                 .convex$ev$Command("set_default_solver(solver)")
                 .convex$status <- .convex$ev$Eval("true")
             }
-            else {message("Package installation is not successful.")}
+            else {message("Packages' installation is not successful.")}
         }
         else {message("Julia installation is not found.")}
     }
-    return(.convex$status)
+    .convex$status
 }
 
 #' Doing the setup for the package convexjlr
@@ -59,7 +59,8 @@
 #'
 #' @export
 setup <- function(){
-    .start()
+    try(.start(), silent = TRUE)
+    .convex$status
 }
 
 join <- function(ls, sep = ", "){
