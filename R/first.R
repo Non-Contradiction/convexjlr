@@ -18,7 +18,7 @@
 .check_install <- function(pkgname){
     if (.check(pkgname)) {return(TRUE)}
     message("convexjlr needs to install Julia package ", pkgname, ".")
-    message("We will install it for you.")
+    message("It will be installed into Julia.")
     .install(pkgname)
     return(.check(pkgname))
 }
@@ -51,7 +51,7 @@
 #' This function does the setup for the package convexjlr.
 #' Firstly it will try to establish the connect to Julia via the XRJulia interface,
 #' Secondly it will check for the Julia packages Convex and SCS,
-#' if the packages are not found, it will ask user to install them.
+#' if the packages are not found, it tries to install them into Julia.
 #' Finally, it will try to load the Julia packages and do the neccessary initial setup.
 #'
 #' @examples
