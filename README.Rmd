@@ -4,7 +4,7 @@ output: rmarkdown::github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/Non-Contradiction/convexjlr)
+[![Build Status](https://travis-ci.org/Non-Contradiction/convexjlr.svg?branch=master)](https://travis-ci.org/Non-Contradiction/convexjlr)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
