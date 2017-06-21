@@ -59,7 +59,7 @@
 #'
 #' @export
 setup <- function(){
-    try(.start(), silent = TRUE)
+    try(.start(), silent = FALSE)
     .convex$status
 }
 
