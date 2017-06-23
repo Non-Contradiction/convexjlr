@@ -6,3 +6,4 @@
 ^README-.*\.png$
 ^original_vignettes$
 ^report$
+^examples$
