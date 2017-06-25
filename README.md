@@ -10,6 +10,14 @@ Convex Optimization in R by convexjlr
 
 `convexjlr` is on CRAN now! To use package `convexjlr`, you first have to install Julia <https://julialang.org/> on your computer, and then you can install `convexjlr` just like any other R packages.
 
+Note: if you have the latest Julia version (v0.6.0) installed, then you have to use the latest version of `XRJulia`, which is a dependency of `convexjlr` package. You can install the latest version of `XRJulia` like this:
+
+``` r
+devtools::install_github("johnmchambers/XRJulia")
+```
+
+And there are several backward incompatible issues in Julia v0.6.0 and corresponding version of `Convex.jl`, so if you are using Julia v0.6.0, please use `convexjlr` with care. Corresponding updates will be in next release.
+
 We hope you use `convexjlr` to solve your own problems. If you would like to share your experience on using `convexjlr` or have any questions about `convexjlr`, don't hesitate to contact me: <cxl508@psu.edu>.
 
 Quick Example
@@ -66,12 +74,12 @@ beta0 <- c(5, 1, 0, 2, 0)
 y <- x %*% beta0 + 0.2 * rnorm(n)
 
 linear_regression(x, y)$coef
-#>             [,1]
-#> [1,] 4.994584866
-#> [2,] 0.996571904
-#> [3,] 0.010318488
-#> [4,] 1.990104492
-#> [5,] 0.006280056
+#>              [,1]
+#> [1,]  5.002618437
+#> [2,]  1.007556607
+#> [3,] -0.004274693
+#> [4,]  1.991767034
+#> [5,]  0.004927757
 ```
 
 More Examples

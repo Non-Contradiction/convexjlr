@@ -26,6 +26,19 @@ once you formulate your problem as a convex problem.
 <https://julialang.org/> on your computer, and then you can install `convexjlr` just like
 any other R packages.
 
+Note: if you have the latest Julia version (v0.6.0) installed, then you have to use the
+latest version of `XRJulia`, which is a dependency of `convexjlr` package.
+You can install the latest version of `XRJulia` like this:
+
+```{r, eval = FALSE}
+devtools::install_github("johnmchambers/XRJulia")
+```
+
+And there are several backward incompatible issues in Julia v0.6.0 and corresponding
+version of `Convex.jl`,
+so if you are using Julia v0.6.0, please use `convexjlr` with care.
+Corresponding updates will be in next release.
+
 We hope you use `convexjlr` to solve your own problems.
 If you would like to share your experience on using `convexjlr` or have any questions about `convexjlr`, 
 don't hesitate to contact me: <cxl508@psu.edu>.
