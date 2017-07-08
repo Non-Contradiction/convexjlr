@@ -5,6 +5,8 @@ output: rmarkdown::github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 [![Build Status](https://travis-ci.org/Non-Contradiction/convexjlr.svg?branch=master)](https://travis-ci.org/Non-Contradiction/convexjlr)
+[![](http://cranlogs.r-pkg.org/badges/convexjlr)](http://cran.rstudio.com/web/packages/convexjlr/index.html)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/convexjlr)](http://cran.rstudio.com/web/packages/convexjlr/index.html)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(

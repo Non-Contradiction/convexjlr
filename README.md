@@ -2,7 +2,7 @@ Convex Optimization in R by convexjlr
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/Non-Contradiction/convexjlr.svg?branch=master)](https://travis-ci.org/Non-Contradiction/convexjlr)
+[![Build Status](https://travis-ci.org/Non-Contradiction/convexjlr.svg?branch=master)](https://travis-ci.org/Non-Contradiction/convexjlr) [![](http://cranlogs.r-pkg.org/badges/convexjlr)](http://cran.rstudio.com/web/packages/convexjlr/index.html) [![](https://cranlogs.r-pkg.org/badges/grand-total/convexjlr)](http://cran.rstudio.com/web/packages/convexjlr/index.html)
 
 `convexjlr` is an `R` package for [Disciplined Convex Programming (DCP)](http://dcp.stanford.edu/) by providing a high level wrapper for Julia package [Convex.jl](https://github.com/JuliaOpt/Convex.jl). The aim is to provide optimization results rapidly and reliably in `R` once you formulate your problem as a convex problem. `convexjlr` can solve linear programs, second order cone programs, semidefinite programs, exponential cone programs, mixed-integer linear programs, and some other DCP-compliant convex programs through `Convex.jl`.
 
@@ -75,11 +75,11 @@ y <- x %*% beta0 + 0.2 * rnorm(n)
 
 linear_regression(x, y)$coef
 #>              [,1]
-#> [1,]  5.002618437
-#> [2,]  1.007556607
-#> [3,] -0.004274693
-#> [4,]  1.991767034
-#> [5,]  0.004927757
+#> [1,]  4.993507932
+#> [2,]  1.004590205
+#> [3,] -0.008016862
+#> [4,]  1.994881418
+#> [5,]  0.015634163
 ```
 
 More Examples
