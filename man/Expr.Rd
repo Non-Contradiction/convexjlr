@@ -13,7 +13,8 @@ Expr(x)
 \code{Expr} create expressions, which can be used later for problem creation.
 }
 \examples{
-if (convex_setup()) {
+\dontrun{
+    convex_setup()
     x <- Variable(2)
     x1 <- Expr(x + 1)
 }

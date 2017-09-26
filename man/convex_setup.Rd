@@ -14,6 +14,7 @@ if the packages are not found, it tries to install them into Julia.
 Finally, it will try to load the Julia packages and do the neccessary initial setup.
 }
 \examples{
+\dontrun{
 convex_setup()
-
+}
 }

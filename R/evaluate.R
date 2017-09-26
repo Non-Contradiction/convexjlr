@@ -7,7 +7,8 @@
 #' @param ... expressions needed to evaluate.
 #'
 #' @examples
-#' if (convex_setup()) {
+#' \dontrun{
+#'     convex_setup()
 #'     x <- Variable(4)
 #'     b <- J(c(1:4))
 #'     p <- minimize(sum((x - b) ^ 2))

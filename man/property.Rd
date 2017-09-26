@@ -19,7 +19,8 @@ like the status of problem (optimal, infeasible and etc.),
 or the optimal value of the solved optimization problem.
 }
 \examples{
-if (convex_setup()) {
+\dontrun{
+    convex_setup()
     x <- Variable(2)
     b <- J(c(1:2))
     p <- minimize(sum((x - b) ^ 2))

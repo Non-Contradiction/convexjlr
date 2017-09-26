@@ -16,7 +16,8 @@ status of optimized problem.
 \code{cvx_optim} solves optimization problem using Convex.jl.
 }
 \examples{
-if (convex_setup()) {
+\dontrun{
+    convex_setup()
     x <- Variable()
     b <- 1
     p <- minimize(sum((x - b) ^ 2))

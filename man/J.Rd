@@ -14,7 +14,8 @@ Make a variable to be of Julia's awareness, so it can be further used in
 the definition of optimization problem.
 }
 \examples{
-if (convex_setup()) {
+\dontrun{
+    convex_setup()
     b <- J(c(1:2))
 }
 }

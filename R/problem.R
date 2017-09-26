@@ -27,7 +27,8 @@ problem_creator <- function(ptype) {
 #'
 #' @param ... optimization targets and constraints.
 #' @examples
-#' if (convex_setup()) {
+#' \dontrun{
+#'     convex_setup()
 #'     x <- Variable(4)
 #'     b <- J(c(1:4))
 #'     p <- minimize(sum((x - b) ^ 2), x >= 0, x <= 3)
@@ -55,7 +56,8 @@ satisfy <- problem_creator("satisfy")
 #' @return status of optimized problem.
 #'
 #' @examples
-#' if (convex_setup()) {
+#' \dontrun{
+#'     convex_setup()
 #'     x <- Variable()
 #'     b <- 1
 #'     p <- minimize(sum((x - b) ^ 2))
@@ -76,7 +78,8 @@ cvx_optim <- function(p){
 #' @return the optimization problem with the additional constraints.
 #'
 #' @examples
-#' if (convex_setup()) {
+#' \dontrun{
+#'     convex_setup()
 #'     x <- Variable(4)
 #'     b <- J(c(1:4))
 #'     p <- minimize(sum((x - b) ^ 2))
@@ -110,7 +113,8 @@ Jproperty <- function(property){
 #'
 #' @param p optimization problem.
 #' @examples
-#' if (convex_setup()) {
+#' \dontrun{
+#'     convex_setup()
 #'     x <- Variable(2)
 #'     b <- J(c(1:2))
 #'     p <- minimize(sum((x - b) ^ 2))

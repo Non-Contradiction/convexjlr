@@ -18,7 +18,8 @@ the optimization problem with the additional constraints.
 \code{addConstraint} add additional constraints to optimization problem.
 }
 \examples{
-if (convex_setup()) {
+\dontrun{
+    convex_setup()
     x <- Variable(4)
     b <- J(c(1:4))
     p <- minimize(sum((x - b) ^ 2))

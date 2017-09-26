@@ -21,7 +21,8 @@ Create variable (vector, matrix, semidefinite matrix and etc.)
 for optimization problem.
 }
 \examples{
-if (convex_setup()) {
+\dontrun{
+    convex_setup()
     x <- Variable(4)
     X <- Variable(c(4, 4), sign = "Positive")
     S <- Semidefinite(4)
