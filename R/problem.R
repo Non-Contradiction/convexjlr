@@ -64,7 +64,7 @@ satisfy <- problem_creator("satisfy")
 #' }
 #' @export
 cvx_optim <- function(p){
-    .convex$ev$Call("solve!", attr(p, "proxy"))
+    .convex$ev$Command(paste0("solve!(", attr(p, "Jname"), ")"))
     status(p)
 }
 
