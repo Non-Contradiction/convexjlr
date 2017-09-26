@@ -16,7 +16,6 @@ problem_creator <- function(ptype) {
                   constraints = constraints,
                   command = command,
                   Jname = Jname,
-                  proxy = .convex$ev$Eval(Jname),
                   class = "problem")
     }
 }

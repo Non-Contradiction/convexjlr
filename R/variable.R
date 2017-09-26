@@ -19,7 +19,7 @@ tuple_text <- function(x){
 #' @export
 J <- function(x){
     r <- .convex$ev$Send(x)
-    structure(x, Jname = r@.Data, proxy = r, class = c(class(x), "shared"))
+    structure(x, Jname = r@.Data, class = c(class(x), "shared"))
 }
 
 variable_creator <- function(vtype){
@@ -37,7 +37,6 @@ variable_creator <- function(vtype){
         .convex$ev$Command(command)
         structure(Jname, size = size,
                   Jname = Jname,
-                  proxy = .convex$ev$Eval(Jname),
                   class = "variable")
     }
 }

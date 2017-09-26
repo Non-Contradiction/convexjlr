@@ -21,6 +21,5 @@ Expr <- function(x){
     structure(Jname, expr = expression_text,
               command = command,
               Jname = Jname,
-              proxy = .convex$ev$Eval(Jname),
               class = "expr")
 }
