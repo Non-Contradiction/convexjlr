@@ -13,7 +13,7 @@ tuple_text <- function(x){
 #'
 #' @param x the R object sent to Julia
 #' @examples
-#' if (setup()) {
+#' if (convex_setup()) {
 #'     b <- J(c(1:2))
 #' }
 #' @export
@@ -51,7 +51,7 @@ variable_creator <- function(vtype){
 #' @param sign whether variable is element-wise positive, element-wise negative
 #' or neither.
 #' @examples
-#' if (setup()) {
+#' if (convex_setup()) {
 #'     x <- Variable(4)
 #'     X <- Variable(c(4, 4), sign = "Positive")
 #'     S <- Semidefinite(4)

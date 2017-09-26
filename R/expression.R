@@ -5,7 +5,7 @@
 #' @param x expression to be created.
 #'
 #' @examples
-#' if (setup()) {
+#' if (convex_setup()) {
 #'     x <- Variable(2)
 #'     x1 <- Expr(x + 1)
 #' }

@@ -10,3 +10,4 @@
 
 * Added a `NEWS.md` file to track changes to the package.
 * Re-organize tests.
+* Deprecate `setup`, should use `convex_setup`.

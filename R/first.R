@@ -46,6 +46,17 @@
     .convex$status
 }
 
+#' Doing the setup for the package convexjlr (deprecated)
+#'
+#' The function is deprecated, should use convex_setup instead.
+#'
+#' @export
+setup <- function(){
+    .Deprecated("convex_setup")
+    try(.start(), silent = FALSE)
+    .convex$status
+}
+
 #' Doing the setup for the package convexjlr
 #'
 #' This function does the setup for the package convexjlr.
@@ -55,10 +66,10 @@
 #' Finally, it will try to load the Julia packages and do the neccessary initial setup.
 #'
 #' @examples
-#' setup()
+#' convex_setup()
 #'
 #' @export
-setup <- function(){
+convex_setup <- function(){
     try(.start(), silent = FALSE)
     .convex$status
 }
