@@ -1,7 +1,8 @@
 Package: convexjlr
 Type: Package
 Title: Disciplined Convex Programming in R using 'Convex.jl'
-Version: 0.5.1
+Version: 0.5.1.9000
+Date: 2017-09-25
 Authors@R: person("Changcheng Li", email = "cxl508@psu.edu",
     role = c("aut", "cre"))
 Description: Package convexjlr provides a simple high-level wrapper for
