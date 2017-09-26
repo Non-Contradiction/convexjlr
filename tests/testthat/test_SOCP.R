@@ -12,7 +12,9 @@ context("Second Order Cone Programming")
 # println(y.value)
 # p.optval
 
-if (setup()) {
+test_that("Results for example of second order cone programming", {
+    skip_on_cran()
+    setup()
 
     ## The R version with convexjl.R
 
@@ -32,9 +34,7 @@ if (setup()) {
 
     ## Compare the results
 
-    test_that("Results for example of second order cone programming", {
-        expect_equal(optval(p), ev$Eval("p.optval"))
-        expect_equal(value(X), ev$Eval("X.value", .get = TRUE))
-        expect_equal(value(y), ev$Eval("evaluate(y)", .get = TRUE))
-    })
-}
+    expect_equal(optval(p), ev$Eval("p.optval"))
+    expect_equal(value(X), ev$Eval("X.value", .get = TRUE))
+    expect_equal(value(y), ev$Eval("evaluate(y)", .get = TRUE))
+})

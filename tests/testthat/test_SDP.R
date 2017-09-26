@@ -8,7 +8,9 @@ context("Semidefinite Programming")
 # solve!(p, SCSSolver(verbose=0))
 # p.optval
 
-if (setup()) {
+test_that("Results for example of semidefinite programming", {
+    skip_on_cran()
+    setup()
 
     ## The R version with convexjl.R
 
@@ -26,7 +28,6 @@ if (setup()) {
 
     ## Compare the results
 
-    test_that("Results for example of semidefinite programming", {
-        expect_equal(optval(p), ev$Eval("p.optval"))
-    })
-}
+
+    expect_equal(optval(p), ev$Eval("p.optval"))
+})

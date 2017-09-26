@@ -15,7 +15,9 @@ context("Linear Programming")
 # println(round(x.value, 2))
 # println(evaluate(x[1] + x[4] - x[2]))
 
-if (setup()) {
+test_that("Results for example of linear programming", {
+    skip_on_cran()
+    setup()
 
     ## The R version with convexjl.R
 
@@ -43,10 +45,8 @@ if (setup()) {
 
     ## Compare the results
 
-    test_that("Results for example of linear programming", {
-        expect_equal(optval(p), ev$Eval("p.optval"))
-        expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
-        expect_equal(value(x[1] + x[4] - x[2]),
-                     ev$Eval("evaluate(x[1] + x[4] - x[2])", .get = TRUE))
-    })
-}
+    expect_equal(optval(p), ev$Eval("p.optval"))
+    expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
+    expect_equal(value(x[1] + x[4] - x[2]),
+                 ev$Eval("evaluate(x[1] + x[4] - x[2])", .get = TRUE))
+})

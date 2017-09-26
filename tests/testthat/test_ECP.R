@@ -9,7 +9,9 @@ context("Exponential Cone Programming")
 # println(p.status)
 # x.value
 
-if (setup()) {
+test_that("Results for example of exponential cone programming", {
+    skip_on_cran()
+    setup()
 
     ## The R version with convexjl.R
 
@@ -27,7 +29,5 @@ if (setup()) {
 
     ## Compare the results
 
-    test_that("Results for example of exponential cone programming", {
-        expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
-    })
-}
+    expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
+})
