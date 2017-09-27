@@ -1,5 +1,5 @@
 library(convexjlr)
-context("Semidefinite Programming")
+context("Semidefinite Programming with JuliaCall")
 
 ## The original Julia version
 
@@ -8,9 +8,9 @@ context("Semidefinite Programming")
 # solve!(p, SCSSolver(verbose=0))
 # p.optval
 
-test_that("Results for example of semidefinite programming", {
+test_that("Results for example of semidefinite programming with JuliaCall", {
     skip_on_cran()
-    convex_setup()
+    convex_setup(backend = "JuliaCall")
 
     ## The R version with convexjl.R
 
