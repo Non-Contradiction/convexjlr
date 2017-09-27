@@ -19,8 +19,16 @@ tuple_text <- function(x){
 #' }
 #' @export
 J <- function(x){
-    r <- .convex$ev$Send(x)
-    structure(x, Jname = r@.Data, class = c(class(x), "shared"))
+    if (.convex$backend == "XRJulia") {
+        r <- .convex$ev$Send(x)
+        return(structure(x, Jname = r@.Data, class = c(class(x), "shared")))
+    }
+    else {
+        .convex$objs <- .convex$objs + 1
+        Jname <- paste0("Obj_", .convex$objs)
+        .convex$ev$assign(Jname, x)
+        return(structure(x, Jname = Jname, class = c(class(x), "shared")))
+    }
 }
 
 variable_creator <- function(vtype){

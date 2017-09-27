@@ -2,6 +2,7 @@
 .convex$vars <- 0
 .convex$ps <- 0
 .convex$exprs <- 0
+.convex$objs <- 0
 .convex$status <- FALSE
 
 .check <- function(pkgname){
@@ -25,24 +26,34 @@
 
 .check_installs <- Vectorize(.check_install)
 
-.start <- function(){
-    ## stopifnot(XRJulia::findJulia(test = TRUE))
-    if (!.convex$status) {
-        message("Doing initialization. It may take some time. Please wait.")
-        if (XRJulia::findJulia(test = TRUE)) {
-            .convex$ev <- XRJulia::RJulia()
-            if (all(.check_installs(c("Convex", "SCS")))) {
-                .convex$ev$Command("using Convex")
-                .convex$ev$Command("using SCS")
-                # passing in verbose=0 to hide output from SCS
-                .convex$ev$Command("solver = SCSSolver(verbose=0)")
-                .convex$ev$Command("set_default_solver(solver)")
-                .convex$status <- .convex$ev$Eval("true")
-            }
-            else {message("Packages' installation is not successful.")}
-        }
-        else {message("Julia installation is not found.")}
+.start <- function(backend = c("XRJulia", "JuliaCall")){
+    backend <- match.arg(backend, c("XRJulia", "JuliaCall"))
+    .convex$backend <- backend
+    message("Doing initialization. It may take some time. Please wait.")
+    ## evaluator initialization
+    if (backend == "XRJulia") {
+        stopifnot(XRJulia::findJulia(test = TRUE))
+        .convex$ev <- XRJulia::RJulia()
     }
+    if (backend == "JuliaCall") {
+        .convex$ev <- JuliaCall::julia_setup()
+        .convex$ev$Command <- .convex$ev$command
+        .convex$ev$Eval <-
+            function(cmd, .get = FALSE) {
+                .convex$ev$eval_string(cmd)
+            }
+    }
+
+    ## Packages
+    if (all(.check_installs(c("Convex", "SCS")))) {
+        .convex$ev$Command("using Convex")
+        .convex$ev$Command("using SCS")
+        # passing in verbose=0 to hide output from SCS
+        .convex$ev$Command("solver = SCSSolver(verbose=0);")
+        .convex$ev$Command("set_default_solver(solver);")
+        .convex$status <- .convex$ev$Eval("true")
+    }
+    else {message("Packages' installation is not successful.")}
     .convex$status
 }
 
@@ -65,11 +76,14 @@ setup <- function(){
 #' if the packages are not found, it tries to install them into Julia.
 #' Finally, it will try to load the Julia packages and do the neccessary initial setup.
 #'
-#' @examples
-#' convex_setup()
+#' @param backend whether to use XRJulia or JuliaCall as backend
 #'
+#' @examples
+#' \dontrun{
+#' convex_setup()
+#' }
 #' @export
-convex_setup <- function(){
-    try(.start(), silent = FALSE)
+convex_setup <- function(backend = c("XRJulia", "JuliaCall")){
+    try(.start(backend = backend), silent = FALSE)
     .convex$status
 }
