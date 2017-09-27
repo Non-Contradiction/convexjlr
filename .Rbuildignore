@@ -8,3 +8,4 @@
 ^report$
 ^examples$
 ^rsconnect$
+^appveyor\.yml$
