@@ -11,3 +11,20 @@
 * Added a `NEWS.md` file to track changes to the package.
 * Re-organize tests.
 * Deprecate `setup`, should use `convex_setup`.
+
+# convexjlr 0.6.0.9000
+
+* Supports multiple ways to connect to `julia`, one way is through package `XRJulia`,
+  and the other way is to use package `JuliaCall`. The difference is as follows:
+  - `XRJulia` connects to `julia`, which is the default for `convexjlr`,
+    the advantage is the simplicity of the installation process, once you have a working
+    R and working julia, it should be okay to use `convexjlr` in this way. Note that
+    if you have the latest Julia version (v0.6.0) installed, then you have to use the
+    latest version of `XRJulia`.
+  - `JuliaCall` embeds `julia` in R,
+    the advantage is the performance, for example,
+    if your convex problem involves large matrice or long vectors,
+    you may wish to use `JuliaCall` backend for `convexjlr`;
+    the disadvantage is the installation process, since embedding `julia` needs
+    compilations.
+    
