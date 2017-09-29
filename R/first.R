@@ -36,12 +36,23 @@
         .convex$ev <- XRJulia::RJulia()
     }
     if (backend == "JuliaCall") {
+        ## check is JuliaCall is installed
+        if (!requireNamespace("JuliaCall", quietly = TRUE)) {
+            stop("Package JuliaCall needed for using this backend. Please install it.")
+        }
         .convex$ev <- JuliaCall::julia_setup()
         .convex$ev$Command <- .convex$ev$command
         .convex$ev$Eval <-
             function(cmd, .get = FALSE) {
                 .convex$ev$eval_string(cmd)
             }
+        ## if using earlier version of JuliaCall, we need to define the assign function
+        ## to use later.
+        if (is.null(.convex$ev$assign)) {
+            .convex$ev$Command("function assign(name, x) eval(Main, Expr(:(=), Symbol(name), x)) end")
+            .convex$ev$assign <-
+                function(x, value) .convex$ev$call("assign", x, value, need_return = FALSE)
+        }
     }
 
     ## Packages
