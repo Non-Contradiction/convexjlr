@@ -3,7 +3,7 @@
 Convex Optimization in R by convexjlr
 =====================================
 
-[![Travis-CI Build Status](https://travis-ci.org/Non-Contradiction/convexjlr.svg?branch=master)](https://travis-ci.org/Non-Contradiction/convexjlr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Non-Contradiction/convexjlr?branch=master&svg=true)](https://ci.appveyor.com/project/Non-Contradiction/JuliaCall) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/convexjlr)](https://cran.r-project.org/package=convexjlr) [![](http://cranlogs.r-pkg.org/badges/convexjlr)](http://cran.rstudio.com/web/packages/convexjlr/index.html) [![](https://cranlogs.r-pkg.org/badges/grand-total/convexjlr)](http://cran.rstudio.com/web/packages/convexjlr/index.html)
+[![Travis-CI Build Status](https://travis-ci.org/Non-Contradiction/convexjlr.svg?branch=master)](https://travis-ci.org/Non-Contradiction/convexjlr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Non-Contradiction/convexjlr?branch=master&svg=true)](https://ci.appveyor.com/project/Non-Contradiction/JuliaCall) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/convexjlr)](https://cran.r-project.org/package=convexjlr) [![](http://cranlogs.r-pkg.org/badges/convexjlr)](https://cran.r-project.org/package=convexjlr) [![](https://cranlogs.r-pkg.org/badges/grand-total/convexjlr)](https://cran.r-project.org/package=convexjlr)
 
 `convexjlr` is an `R` package for [Disciplined Convex Programming (DCP)](http://dcp.stanford.edu/) by providing a high level wrapper for Julia package [Convex.jl](https://github.com/JuliaOpt/Convex.jl). The aim is to provide optimization results rapidly and reliably in `R` once you formulate your problem as a convex problem. `convexjlr` can solve linear programs, second order cone programs, semidefinite programs, exponential cone programs, mixed-integer linear programs, and some other DCP-compliant convex programs through `Convex.jl`.
 
@@ -30,7 +30,7 @@ We will show a short example for `convexjlr` in solving linear regression proble
 ``` r
 library(convexjlr)
 #> 
-#> 载入程辑包：'convexjlr'
+#> Attaching package: 'convexjlr'
 #> The following object is masked from 'package:base':
 #> 
 #>     norm

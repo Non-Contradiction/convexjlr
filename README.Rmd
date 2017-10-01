@@ -9,8 +9,8 @@ output: rmarkdown::github_document
 [![Travis-CI Build Status](https://travis-ci.org/Non-Contradiction/convexjlr.svg?branch=master)](https://travis-ci.org/Non-Contradiction/convexjlr)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Non-Contradiction/convexjlr?branch=master&svg=true)](https://ci.appveyor.com/project/Non-Contradiction/JuliaCall)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/convexjlr)](https://cran.r-project.org/package=convexjlr)
-[![](http://cranlogs.r-pkg.org/badges/convexjlr)](http://cran.rstudio.com/web/packages/convexjlr/index.html)
-[![](https://cranlogs.r-pkg.org/badges/grand-total/convexjlr)](http://cran.rstudio.com/web/packages/convexjlr/index.html)
+[![](http://cranlogs.r-pkg.org/badges/convexjlr)](https://cran.r-project.org/package=convexjlr)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/convexjlr)](https://cran.r-project.org/package=convexjlr)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
