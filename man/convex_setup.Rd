@@ -12,9 +12,10 @@ convex_setup(backend = c("XRJulia", "JuliaCall"))
 \description{
 This function does the setup for the package convexjlr.
 Firstly it will try to establish the connect to Julia via the XRJulia interface,
+or try to embed julia in R through JuliaCall.
 Secondly it will check for the Julia packages Convex and SCS,
 if the packages are not found, it tries to install them into Julia.
-Finally, it will try to load the Julia packages and do the neccessary initial setup.
+Finally, it will try to load the Julia packages and do the necessary initial setup.
 }
 \examples{
 \dontrun{
