@@ -75,7 +75,7 @@
       <h1>Convex Optimization by convexjlr</h1>
                         <h4 class="author">Changcheng Li</h4>
             
-            <h4 class="date">2017-09-30</h4>
+            <h4 class="date">2017-10-01</h4>
           </div>
 
     
@@ -156,7 +156,7 @@ y &lt;-<span class="st"> </span>x <span class="op">%*%</span><span class="st"> <
 
 betahat &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">lasso</span>(x, y, <span class="fl">0.5</span>)<span class="op">$</span>coef, <span class="dv">4</span>)
 betahat[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
-<pre><code>## [1] 4.8320 0.8879 0.0000 1.8060</code></pre>
+<pre><code>## [1] 4.8063 0.8879 0.0000 1.8072</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## You can see that the rest elements of betahat are all zero.
 <span class="kw">all</span>(betahat[<span class="dv">5</span><span class="op">:</span>p] <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
@@ -196,9 +196,9 @@ p0 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">/</s
 y &lt;-<span class="st"> </span><span class="kw">runif</span>(n) <span class="op">&lt;</span><span class="st"> </span>p0
 
 <span class="kw">logistic_regression</span>(x, y)</code></pre></div>
-<pre><code>##            [,1]
-## [1,]  0.9857917
-## [2,] -1.2269446</code></pre>
+<pre><code>##           [,1]
+## [1,]  1.088600
+## [2,] -1.162567</code></pre>
 </div>
 <div id="support-vector-machine" class="section level2">
 <h2 class="hasAnchor">
@@ -240,11 +240,11 @@ r &lt;-<span class="st"> </span><span class="kw">svm</span>(x, y, <span class="f
 r</code></pre></div>
 <pre><code>## $w
 ##            [,1]
-## [1,] -0.5056958
-## [2,] -0.4695257
+## [1,] -0.5067705
+## [2,] -0.5092681
 ## 
 ## $b
-## [1] -0.4568165</code></pre>
+## [1] -0.4571706</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## We can scatter-plot the points and 
 ## draw the classification hyperplane returned by the function svm.
 <span class="kw">plot</span>(x, <span class="dt">col =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">"red"</span>, n <span class="op">/</span><span class="st"> </span><span class="dv">2</span>), <span class="kw">rep</span>(<span class="st">"blue"</span>, n <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)))
@@ -284,9 +284,9 @@ y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n)
 
 p &lt;-<span class="st"> </span><span class="kw">center</span>(x, y)
 p</code></pre></div>
-<pre><code>##           [,1]
-## [1,] 0.4258853
-## [2,] 0.5063800</code></pre>
+<pre><code>##             [,1]
+## [1,] -0.42846144
+## [2,]  0.07785675</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Draw the points and the smallest circle that covers all of them.
 <span class="kw">plot</span>(x, y, <span class="dt">asp =</span> <span class="dv">1</span>)
 plotrix<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/plotrix/topics/draw.circle">draw.circle</a></span>(p[<span class="dv">1</span>], p[<span class="dv">2</span>], <span class="dt">radius =</span> <span class="kw">sqrt</span>(<span class="kw">max</span>((x <span class="op">-</span><span class="st"> </span>p[<span class="dv">1</span>]) <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span>p[<span class="dv">2</span>]) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)))</code></pre></div>

@@ -12,17 +12,13 @@ Installation
 
 `convexjlr` is on CRAN now! To use package `convexjlr`, you first have to install Julia <https://julialang.org/> on your computer, and then you can install `convexjlr` just like any other R packages.
 
-Note: the development version of `convexjlr` supports multiple ways to connect to `julia`, one way is through package `XRJulia` and the other way is to use package `JuliaCall`. The difference is as follows:
+Note: `convexjlr` supports multiple ways to connect to `julia`, one way is through package `XRJulia` and the other way is to use package `JuliaCall`. The differences are as follows:
 
--   `XRJulia` connects to `julia`, which is the default way for `convexjlr`, the advantage is the simplicity of the installation process, once you have a working R and working julia, it should be okay to use `convexjlr` in this way. Note that if you have the latest Julia version (v0.6.0) installed, then you have to use the latest version of `XRJulia`. You can install the latest version of `XRJulia` like this:
+-   `XRJulia` connects to `julia`, which is the default way for `convexjlr`, the advantage is the simplicity of the installation process, once you have a working R and working `julia`, it should be okay to use `convexjlr` in this way. Note that if you have the latest `julia` version (v0.6.0) installed, then you have to use the latest version of `XRJulia` on github: `devtools::install_github("johnmchambers/XRJulia")`.
 
-``` r
-devtools::install_github("johnmchambers/XRJulia")
-```
+-   `JuliaCall` embeds `julia` in R, the advantage is the performance, for example, if your convex problem involves large matrice or long vectors, you may wish to use `JuliaCall` backend for `convexjlr`; the disadvantage is the installation process, since embedding `julia` needs compilations, on some types of machines the installation process may be more complicated than `XRJulia`.
 
--   `JuliaCall` embeds `julia` in R, the advantage is the performance, for example, if your convex problem involves large matrice or long vectors, you may wish to use `JuliaCall` backend for `convexjlr`; the disadvantage is the installation process, since embedding `julia` needs compilations, on some types of machines it is not very simple comparing to `XRJulia`.
-
-And there are several backward incompatible issues in Julia v0.6.0 and corresponding version of `Convex.jl`, so if you are using Julia v0.6.0, please use `convexjlr` with care. I'm currently working on the documentation on this. Corresponding updates will be in next release.
+And there are several backward incompatible issues in `julia` v0.6 and `julia` v0.5 and corresponding version of `Convex.jl`, so if you are using `julia` v0.6, please use `convexjlr` with care.
 
 We hope you use `convexjlr` to solve your own problems. If you would like to share your experience on using `convexjlr` or have any questions about `convexjlr`, don't hesitate to contact me: <cxl508@psu.edu>.
 
@@ -38,9 +34,7 @@ library(convexjlr)
 #> The following object is masked from 'package:base':
 #> 
 #>     norm
-## If you are using newer versions of convexjlr,
-## and you wish to use JuliaCall backend for performance,
-## do setup in this way.
+## If you wish to use JuliaCall backend for performance
 convex_setup(backend = "JuliaCall")
 #> Doing initialization. It may take some time. Please wait.
 #> Julia at location /Applications/Julia-0.6.app/Contents/Resources/julia/bin will be used.
@@ -50,8 +44,6 @@ convex_setup(backend = "JuliaCall")
 #> Loading setup script for JuliaCall...
 #> Finish loading setup script for JuliaCall.
 #> [1] TRUE
-## For current release version of convexjlr,
-# setup()
 ```
 
 And this is our linear regression function using `convexjlr`:
@@ -68,8 +60,6 @@ linear_regression <- function(x, y){
     beta <- Variable(p)
     b <- Variable()
     ## MSE is mean square error.
-    ## Previously we used MSE <- Expr(sum((y - x %*% beta - b) ^ 2)/ n)
-    ## which is not okay now because of julia update.
     MSE <- Expr(sumsquares(y - x %*% beta - b) / n)
     ## In linear regression, we want to minimize MSE.
     p1 <- minimize(MSE)

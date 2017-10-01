@@ -86,17 +86,12 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p><code>convexjlr</code> is on CRAN now! To use package <code>convexjlr</code>, you first have to install Julia <a href="https://julialang.org/" class="uri">https://julialang.org/</a> on your computer, and then you can install <code>convexjlr</code> just like any other R packages.</p>
-<p>Note: the development version of <code>convexjlr</code> supports multiple ways to connect to <code>julia</code>, one way is through package <code>XRJulia</code> and the other way is to use package <code>JuliaCall</code>. The difference is as follows:</p>
+<p>Note: <code>convexjlr</code> supports multiple ways to connect to <code>julia</code>, one way is through package <code>XRJulia</code> and the other way is to use package <code>JuliaCall</code>. The differences are as follows:</p>
 <ul>
-<li>
-<code>XRJulia</code> connects to <code>julia</code>, which is the default way for <code>convexjlr</code>, the advantage is the simplicity of the installation process, once you have a working R and working julia, it should be okay to use <code>convexjlr</code> in this way. Note that if you have the latest Julia version (v0.6.0) installed, then you have to use the latest version of <code>XRJulia</code>. You can install the latest version of <code>XRJulia</code> like this:</li>
+<li><p><code>XRJulia</code> connects to <code>julia</code>, which is the default way for <code>convexjlr</code>, the advantage is the simplicity of the installation process, once you have a working R and working <code>julia</code>, it should be okay to use <code>convexjlr</code> in this way. Note that if you have the latest <code>julia</code> version (v0.6.0) installed, then you have to use the latest version of <code>XRJulia</code> on github: <code><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">devtools::install_github("johnmchambers/XRJulia")</a></code>.</p></li>
+<li><p><code>JuliaCall</code> embeds <code>julia</code> in R, the advantage is the performance, for example, if your convex problem involves large matrice or long vectors, you may wish to use <code>JuliaCall</code> backend for <code>convexjlr</code>; the disadvantage is the installation process, since embedding <code>julia</code> needs compilations, on some types of machines the installation process may be more complicated than <code>XRJulia</code>.</p></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"johnmchambers/XRJulia"</span>)</code></pre></div>
-<ul>
-<li>
-<code>JuliaCall</code> embeds <code>julia</code> in R, the advantage is the performance, for example, if your convex problem involves large matrice or long vectors, you may wish to use <code>JuliaCall</code> backend for <code>convexjlr</code>; the disadvantage is the installation process, since embedding <code>julia</code> needs compilations, on some types of machines it is not very simple comparing to <code>XRJulia</code>.</li>
-</ul>
-<p>And there are several backward incompatible issues in Julia v0.6.0 and corresponding version of <code>Convex.jl</code>, so if you are using Julia v0.6.0, please use <code>convexjlr</code> with care. I’m currently working on the documentation on this. Corresponding updates will be in next release.</p>
+<p>And there are several backward incompatible issues in <code>julia</code> v0.6 and <code>julia</code> v0.5 and corresponding version of <code>Convex.jl</code>, so if you are using <code>julia</code> v0.6, please use <code>convexjlr</code> with care.</p>
 <p>We hope you use <code>convexjlr</code> to solve your own problems. If you would like to share your experience on using <code>convexjlr</code> or have any questions about <code>convexjlr</code>, don’t hesitate to contact me: <a href="mailto:cxl508@psu.edu">cxl508@psu.edu</a>.</p>
 </div>
 <div id="quick-example" class="section level2">
@@ -109,9 +104,7 @@
 <span class="co">#&gt; The following object is masked from 'package:base':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     norm</span>
-## If you are using newer versions of convexjlr,
-## and you wish to use JuliaCall backend for performance,
-## do setup in this way.
+## If you wish to use JuliaCall backend for performance
 <span class="kw"><a href="reference/convex_setup.html">convex_setup</a></span>(<span class="dt">backend =</span> <span class="st">"JuliaCall"</span>)
 <span class="co">#&gt; Doing initialization. It may take some time. Please wait.</span>
 <span class="co">#&gt; Julia at location /Applications/Julia-0.6.app/Contents/Resources/julia/bin will be used.</span>
@@ -120,9 +113,7 @@
 <span class="co">#&gt; Finish Julia initiation.</span>
 <span class="co">#&gt; Loading setup script for JuliaCall...</span>
 <span class="co">#&gt; Finish loading setup script for JuliaCall.</span>
-<span class="co">#&gt; [1] TRUE</span>
-## For current release version of convexjlr,
-<span class="co"># setup()</span></code></pre></div>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>And this is our linear regression function using <code>convexjlr</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linear_regression &lt;-<span class="st"> </span><span class="cf">function</span>(x, y){
     p &lt;-<span class="st"> </span><span class="kw">ncol</span>(x)
@@ -135,8 +126,6 @@
     beta &lt;-<span class="st"> </span><span class="kw"><a href="reference/variable_creating.html">Variable</a></span>(p)
     b &lt;-<span class="st"> </span><span class="kw"><a href="reference/variable_creating.html">Variable</a></span>()
     ## MSE is mean square error.
-    ## Previously we used MSE &lt;- Expr(sum((y - x %*% beta - b) ^ 2)/ n)
-    ## which is not okay now because of julia update.
     MSE &lt;-<span class="st"> </span><span class="kw"><a href="reference/Expr.html">Expr</a></span>(<span class="kw"><a href="reference/sumsquares.html">sumsquares</a></span>(y <span class="op">-</span><span class="st"> </span>x <span class="op">%*%</span><span class="st"> </span>beta <span class="op">-</span><span class="st"> </span>b) <span class="op">/</span><span class="st"> </span>n)
     ## In linear regression, we want to minimize MSE.
     p1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/problem_creating.html">minimize</a></span>(MSE)
