@@ -42,6 +42,9 @@ optimization problems and in using `convexjlr`.
 To use package `convexjlr`, we first need to attach it and do some
 initial setup:
 
+    ## sed seed for reproduciblity
+    set.seed(123)
+
     library(convexjlr)
 
     ## 
@@ -124,7 +127,7 @@ built.
     betahat <- round(lasso(x, y, 0.5)$coef, 4)
     betahat[1:4]
 
-    ## [1] 4.8409 0.8912 0.0000 1.8039
+    ## [1] 4.8216 0.9073 0.0000 1.8121
 
     ## You can see that the rest elements of betahat are all zero.
     all(betahat[5:p] == 0)
@@ -190,8 +193,8 @@ we have just built.
     logistic_regression(x, y)
 
     ##            [,1]
-    ## [1,]  1.0933602
-    ## [2,] -0.9876126
+    ## [1,]  0.9723159
+    ## [2,] -0.9953264
 
 Support Vector Machine
 ----------------------
@@ -249,11 +252,11 @@ built.
 
     ## $w
     ##            [,1]
-    ## [1,] -0.4988324
-    ## [2,] -0.4686886
+    ## [1,] -0.4799765
+    ## [2,] -0.4828068
     ## 
     ## $b
-    ## [1] -0.5099407
+    ## [1] -0.4648332
 
     ## We can scatter-plot the points and 
     ## draw the classification hyperplane returned by the function svm.
@@ -308,8 +311,8 @@ built.
     p
 
     ##            [,1]
-    ## [1,] 0.37018680
-    ## [2,] 0.03074106
+    ## [1,] -0.4637779
+    ## [2,]  0.2347155
 
     ## Draw the points and the smallest circle that covers all of them.
     plot(x, y, asp = 1)

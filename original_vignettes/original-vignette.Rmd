@@ -35,6 +35,9 @@ is a good starting point.
 To use package `convexjlr`, we first need to attach it and do some initial setup:
 
 ```{r}
+## sed seed for reproduciblity
+set.seed(123)
+
 library(convexjlr)
 convex_setup(backend = "JuliaCall")
 ```
