@@ -12,5 +12,5 @@ vignette: >
 ---
 
 ```{r, results='asis', echo=FALSE}
-cat(paste(readLines("my-vignette.md"), collapse = "\n"))
+cat(paste(readLines("original-vignette.md"), collapse = "\n"))
 ```

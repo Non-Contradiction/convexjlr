@@ -124,7 +124,7 @@ built.
     betahat <- round(lasso(x, y, 0.5)$coef, 4)
     betahat[1:4]
 
-    ## [1] 4.8335 0.9237 0.0000 1.7808
+    ## [1] 4.8409 0.8912 0.0000 1.8039
 
     ## You can see that the rest elements of betahat are all zero.
     all(betahat[5:p] == 0)
@@ -189,9 +189,9 @@ we have just built.
 
     logistic_regression(x, y)
 
-    ##           [,1]
-    ## [1,]  1.236687
-    ## [2,] -1.260311
+    ##            [,1]
+    ## [1,]  1.0933602
+    ## [2,] -0.9876126
 
 Support Vector Machine
 ----------------------
@@ -248,19 +248,19 @@ built.
     r
 
     ## $w
-    ##           [,1]
-    ## [1,] -0.507331
-    ## [2,] -0.522471
+    ##            [,1]
+    ## [1,] -0.4988324
+    ## [2,] -0.4686886
     ## 
     ## $b
-    ## [1] -0.4844526
+    ## [1] -0.5099407
 
     ## We can scatter-plot the points and 
     ## draw the classification hyperplane returned by the function svm.
     plot(x, col = c(rep("red", n / 2), rep("blue", n / 2)))
     abline(r$b / r$w[2], -r$w[1] / r$w[2])
 
-![](my-vignette_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+![](original-vignette_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
 Smallest Circle
 ---------------
@@ -308,11 +308,11 @@ built.
     p
 
     ##            [,1]
-    ## [1,] -0.1187885
-    ## [2,]  0.4262476
+    ## [1,] 0.37018680
+    ## [2,] 0.03074106
 
     ## Draw the points and the smallest circle that covers all of them.
     plot(x, y, asp = 1)
     plotrix::draw.circle(p[1], p[2], radius = sqrt(max((x - p[1]) ^ 2 + (y - p[2]) ^ 2)))
 
-![](my-vignette_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+![](original-vignette_files/figure-markdown_strict/unnamed-chunk-9-1.png)
