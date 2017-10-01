@@ -1,11 +1,11 @@
 Package: convexjlr
 Type: Package
 Title: Disciplined Convex Programming in R using 'Convex.jl'
-Version: 0.6.0.9000
-Date: 2017-09-29
+Version: 0.6.1
+Date: 2017-10-01
 Authors@R: person("Changcheng Li", email = "cxl508@psu.edu",
     role = c("aut", "cre"))
-Description: Package convexjlr provides a simple high-level wrapper for
+Description: Provides a simple high-level wrapper for
     'Julia' package 'Convex.jl' (see <https://github.com/JuliaOpt/Convex.jl> for
     more information),
     which makes it easy to describe and solve convex optimization problems in R.
@@ -18,12 +18,13 @@ License: Apache License | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: XRJulia,
+    JuliaCall,
     magrittr
 RoxygenNote: 6.0.1
 Suggests: testthat,
     knitr,
     rmarkdown,
-    JuliaCall
+    plotrix
 VignetteBuilder: knitr
 SystemRequirements: Julia >= 0.5.0, Convex.jl, SCS.jl
 URL: https://github.com/Non-Contradiction/convexjlr
