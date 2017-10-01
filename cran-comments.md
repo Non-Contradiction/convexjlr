@@ -1,17 +1,14 @@
 ## Test environments
-* local OS X install, R 3.4.0
-* ubuntu 12.04 (on travis-ci), R 3.3.0 and R-devel
+* local OS X install, R 3.4.1
+* ubuntu 14.04 (on travis-ci), R 3.4.1
+* OS X 10.12 (on travis-ci), R 3.4.1
+* windows (on appveyor), R 3.4.1
 * win-builder (devel and release)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-Days since last update: 2
-
-* I'm really really sorry. This is a patch version which corrects
-  a serious bug which happens occasionally.
+0 errors | 0 warnings | 0 note
 
 ## Reverse dependencies
 
-This is a new package, so there are no reverse dependencies.
+There are no reverse dependencies yet.
