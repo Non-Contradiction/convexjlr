@@ -10,7 +10,7 @@ env:
 
 julia:
   - 0.5
-#  - 0.6
+  - 0.6
 
 notifications:
   email: false
