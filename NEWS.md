@@ -27,4 +27,7 @@
     you may wish to use `JuliaCall` backend for `convexjlr`;
     the disadvantage is the installation process, since embedding `julia` needs
     compilations.
-    
+
+# convexjlr 0.6.1
+
+* The second release on CRAN.
