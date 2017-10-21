@@ -31,3 +31,7 @@
 # convexjlr 0.6.1
 
 * The second release on CRAN.
+
+# convexjlr 0.6.1.9000
+
+* Fix deprecation warnings from `JuliaCall` backend.
