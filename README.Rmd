@@ -39,10 +39,7 @@ Note: `convexjlr` supports multiple ways to connect to `julia`, one way is throu
 
 - `XRJulia` connects to `julia`, which is the default way for `convexjlr`,
   the advantage is the simplicity of the installation process, once you have a working
-  R and working `julia`, it should be okay to use `convexjlr` in this way. Note that
-  if you have the latest `julia` version (v0.6.0) installed, then you have to use the
-  latest version of `XRJulia` on github:
-  `devtools::install_github("johnmchambers/XRJulia")`.
+  R and working `julia`, it should be okay to use `convexjlr` in this way.
 
 - `JuliaCall` embeds `julia` in R,
   the advantage is the performance, for example, if your convex problem involves large matrice or long vectors, you may wish to use `JuliaCall` backend for `convexjlr`;
