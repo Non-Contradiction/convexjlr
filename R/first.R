@@ -44,7 +44,7 @@
         .convex$ev$Command <- .convex$ev$command
         .convex$ev$Eval <-
             function(cmd, .get = FALSE) {
-                .convex$ev$eval_string(cmd)
+                .convex$ev$eval(cmd)
             }
         ## if using earlier version of JuliaCall, we need to define the assign function
         ## to use later.
