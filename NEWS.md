@@ -35,3 +35,5 @@
 # convexjlr 0.6.1.9000
 
 * Fix deprecation warnings from `JuliaCall` backend.
+* Fix some little bugs.
+* Add the option in `convex_setup` to set the path to `julia` binary.
