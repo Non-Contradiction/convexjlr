@@ -105,8 +105,8 @@ setup <- function(){
 #' }
 #' @export
 convex_setup <- function(backend = c("XRJulia", "JuliaCall"), JULIA_HOME = NULL){
-    options("JULIA_BIN") <- JULIA_HOME
-    options("JULIA_HOME") <- JULIA_HOME
+    options(JULIA_BIN = JULIA_HOME)
+    options(JULIA_HOME = JULIA_HOME)
     try(.start(backend = backend), silent = FALSE)
     .convex$status
 }
