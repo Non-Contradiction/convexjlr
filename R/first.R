@@ -96,13 +96,17 @@ setup <- function(){
 #' Finally, it will try to load the Julia packages and do the necessary initial setup.
 #'
 #' @param backend whether to use XRJulia or JuliaCall as backend
+#' @param JULIA_HOME the path to julia binary,
+#'     if not set, convexjlr will try to use the julia in path.
 #'
 #' @examples
 #' \dontrun{
 #' convex_setup()
 #' }
 #' @export
-convex_setup <- function(backend = c("XRJulia", "JuliaCall")){
+convex_setup <- function(backend = c("XRJulia", "JuliaCall"), JULIA_HOME = NULL){
+    options("JULIA_BIN") <- JULIA_HOME
+    options("JULIA_HOME") <- JULIA_HOME
     try(.start(backend = backend), silent = FALSE)
     .convex$status
 }

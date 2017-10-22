@@ -4,10 +4,13 @@
 \alias{convex_setup}
 \title{Doing the setup for the package convexjlr}
 \usage{
-convex_setup(backend = c("XRJulia", "JuliaCall"))
+convex_setup(backend = c("XRJulia", "JuliaCall"), JULIA_HOME = NULL)
 }
 \arguments{
 \item{backend}{whether to use XRJulia or JuliaCall as backend}
+
+\item{JULIA_HOME}{the path to julia binary,
+if not set, convexjlr will try to use the julia in path.}
 }
 \description{
 This function does the setup for the package convexjlr.
