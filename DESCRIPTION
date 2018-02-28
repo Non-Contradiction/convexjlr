@@ -1,8 +1,8 @@
 Package: convexjlr
 Type: Package
 Title: Disciplined Convex Programming in R using 'Convex.jl'
-Version: 0.6.1.9000
-Date: 2017-10-21
+Version: 0.6.2.9000
+Date: 2018-2-27
 Authors@R: person("Changcheng Li", email = "cxl508@psu.edu",
     role = c("aut", "cre"))
 Description: Provides a simple high-level wrapper for
@@ -14,11 +14,12 @@ Description: Provides a simple high-level wrapper for
     second-order cone programs,
     semidefinite programs,
     exponential cone programs.
+Depends: R (>= 3.4.0)
 License: Apache License | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: XRJulia,
-    JuliaCall,
+    JuliaCall (>= 0.12.1),
     magrittr
 RoxygenNote: 6.0.1
 Suggests: testthat,
@@ -26,5 +27,5 @@ Suggests: testthat,
     rmarkdown,
     plotrix
 VignetteBuilder: knitr
-SystemRequirements: Julia >= 0.5.0, Convex.jl, SCS.jl
+SystemRequirements: Julia (>= 0.6.0), Convex.jl, SCS.jl
 URL: https://github.com/Non-Contradiction/convexjlr
