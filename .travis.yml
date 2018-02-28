@@ -28,4 +28,5 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export R_LD_LIBRARY_PATH="$(R RHOME)/lib:$HOME/julia/lib/julia"; fi
 
   - julia -e 'Pkg.add("Convex")'
+  - julia -e 'Pkg.add("SCS")'
   - julia -e 'using Convex'
