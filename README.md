@@ -1,31 +1,56 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-Convex Optimization in R by convexjlr
-=====================================
 
-[![Travis-CI Build Status](https://travis-ci.org/Non-Contradiction/convexjlr.svg?branch=master)](https://travis-ci.org/Non-Contradiction/convexjlr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Non-Contradiction/convexjlr?branch=master&svg=true)](https://ci.appveyor.com/project/Non-Contradiction/JuliaCall) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/convexjlr)](https://cran.r-project.org/package=convexjlr) [![](http://cranlogs.r-pkg.org/badges/convexjlr)](https://cran.r-project.org/package=convexjlr) [![](https://cranlogs.r-pkg.org/badges/grand-total/convexjlr)](https://cran.r-project.org/package=convexjlr)
+# Convex Optimization in R by convexjlr
 
-`convexjlr` is an `R` package for [Disciplined Convex Programming (DCP)](http://dcp.stanford.edu/) by providing a high level wrapper for Julia package [Convex.jl](https://github.com/JuliaOpt/Convex.jl). The aim is to provide optimization results rapidly and reliably in `R` once you formulate your problem as a convex problem. `convexjlr` can solve linear programs, second order cone programs, semidefinite programs, exponential cone programs, mixed-integer linear programs, and some other DCP-compliant convex programs through `Convex.jl`.
+[![Travis-CI Build
+Status](https://travis-ci.org/Non-Contradiction/convexjlr.svg?branch=master)](https://travis-ci.org/Non-Contradiction/convexjlr)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/Non-Contradiction/convexjlr?branch=master&svg=true)](https://ci.appveyor.com/project/Non-Contradiction/convexjlr)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/convexjlr)](https://cran.r-project.org/package=convexjlr)
+[![](http://cranlogs.r-pkg.org/badges/convexjlr)](https://cran.r-project.org/package=convexjlr)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/convexjlr)](https://cran.r-project.org/package=convexjlr)
 
-Installation
-------------
+`convexjlr` is an `R` package for [Disciplined Convex Programming
+(DCP)](http://dcp.stanford.edu/) by providing a high level wrapper for
+Julia package [Convex.jl](https://github.com/JuliaOpt/Convex.jl). The
+aim is to provide optimization results rapidly and reliably in `R` once
+you formulate your problem as a convex problem. `convexjlr` can solve
+linear programs, second order cone programs, semidefinite programs,
+exponential cone programs, mixed-integer linear programs, and some other
+DCP-compliant convex programs through `Convex.jl`.
 
-`convexjlr` is on CRAN now! To use package `convexjlr`, you first have to install Julia <https://julialang.org/> on your computer, and then you can install `convexjlr` just like any other R packages.
+## Installation
 
-Note: `convexjlr` supports multiple ways to connect to `julia`, one way is through package `XRJulia` and the other way is to use package `JuliaCall`. The differences are as follows:
+`convexjlr` is on CRAN now\! To use package `convexjlr`, you first have
+to install Julia <https://julialang.org/> on your computer, and then you
+can install `convexjlr` just like any other R packages.
 
--   `XRJulia` connects to `julia`, which is the default way for `convexjlr`, the advantage is the simplicity of the installation process, once you have a working R and working `julia`, it should be okay to use `convexjlr` in this way.
+Note: `convexjlr` supports multiple ways to connect to `julia`, one way
+is through package `XRJulia` and the other way is to use package
+`JuliaCall`. The differences are as follows:
 
--   `JuliaCall` embeds `julia` in R, the advantage is the performance, for example, if your convex problem involves large matrice or long vectors, you may wish to use `JuliaCall` backend for `convexjlr`; the disadvantage is the installation process, since embedding `julia` needs compilations, on some types of machines the installation process may be more complicated than `XRJulia`.
+  - `XRJulia` connects to `julia`, which is the default way for
+    `convexjlr`, the advantage is the simplicity of the installation
+    process, once you have a working R and working `julia`, it should be
+    okay to use `convexjlr` in this way.
 
-And there are several backward incompatible issues in `julia` v0.6 and `julia` v0.5 and corresponding version of `Convex.jl`, so if you are using `julia` v0.6, please use `convexjlr` with care.
+  - `JuliaCall` embeds `julia` in R, the advantage is the performance,
+    for example, if your convex problem involves large matrice or long
+    vectors, you may wish to use `JuliaCall` backend for `convexjlr`;
+    the disadvantage is the installation process, since embedding
+    `julia` needs compilations, on some types of machines the
+    installation process may be more complicated than `XRJulia`.
 
-We hope you use `convexjlr` to solve your own problems. If you would like to share your experience on using `convexjlr` or have any questions about `convexjlr`, don't hesitate to contact me: <cxl508@psu.edu>.
+We hope you use `convexjlr` to solve your own problems. If you would
+like to share your experience on using `convexjlr` or have any questions
+about `convexjlr`, don’t hesitate to contact me: <cxl508@psu.edu>.
 
-Quick Example
--------------
+## Quick Example
 
-We will show a short example for `convexjlr` in solving linear regression problem. To use package `convexjlr`, we first need to attach it and do the initial setup:
+We will show a short example for `convexjlr` in solving linear
+regression problem. To use package `convexjlr`, we first need to attach
+it and do the initial setup:
 
 ``` r
 library(convexjlr)
@@ -37,8 +62,7 @@ library(convexjlr)
 ## If you wish to use JuliaCall backend for performance
 convex_setup(backend = "JuliaCall")
 #> Doing initialization. It may take some time. Please wait.
-#> Julia at location /Applications/Julia-0.6.app/Contents/Resources/julia/bin will be used.
-#> Julia version 0.6.0 found.
+#> Julia version 0.6.2 at location /Applications/Julia-0.6.app/Contents/Resources/julia/bin will be used.
 #> Julia initiation...
 #> Finish Julia initiation.
 #> Loading setup script for JuliaCall...
@@ -68,9 +92,12 @@ linear_regression <- function(x, y){
 }
 ```
 
-In the function, `x` is the predictor matrix, `y` is the response we have. And the `linear_regression` function will return the coefficient and intercept solved by `cvx_optim`.
+In the function, `x` is the predictor matrix, `y` is the response we
+have. And the `linear_regression` function will return the coefficient
+and intercept solved by `cvx_optim`.
 
-Now we can see a little example using the `linear_regression` function we have just built.
+Now we can see a little example using the `linear_regression` function
+we have just built.
 
 ``` r
 n <- 1000
@@ -91,7 +118,9 @@ linear_regression(x, y)$coef
 #> [5,]  0.004306522
 ```
 
-More Examples
--------------
+## More Examples
 
-More examples (including using `convexjlr` for Lasso, logistic regression and Support Vector Machine) can be found in the pakage vignette or on the github page: <https://github.com/Non-Contradiction/convexjlr>
+More examples (including using `convexjlr` for Lasso, logistic
+regression and Support Vector Machine) can be found in the pakage
+vignette or on the github page:
+<https://github.com/Non-Contradiction/convexjlr>
