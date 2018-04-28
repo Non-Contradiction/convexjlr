@@ -13,6 +13,8 @@
 .install <- function(pkgname){
     command <- paste0('Pkg.add("', pkgname, '")')
     .convex$ev$Command(command)
+    command <- paste0('Pkg.checkout("', pkgname, '")')
+    .convex$ev$Command(command)
     TRUE
 }
 
@@ -41,7 +43,7 @@
             stop("Package JuliaCall needed for using this backend. Please install it.")
         }
         .convex$ev <- JuliaCall::julia_setup()
-        .convex$ev$Command <- .convex$ev$command
+        .convex$ev$Command <- function(cmd) .convex$ev$command(cmd, show_value = FALSE)
         .convex$ev$Eval <-
             function(cmd, .get = FALSE) {
                 .convex$ev$eval(cmd)
@@ -57,7 +59,6 @@
 
     ## Packages
     if (all(.check_installs(c("Convex", "SCS")))) {
-        .convex$ev$Command('Pkg.checkout("Convex")')
         ## if use JuliaCall backend, use julia_library instead
         if (backend == "JuliaCall") {
             JuliaCall::julia_library("Convex")
