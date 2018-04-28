@@ -13,8 +13,6 @@
 .install <- function(pkgname){
     command <- paste0('Pkg.add("', pkgname, '")')
     .convex$ev$Command(command)
-    command <- paste0('Pkg.checkout("', pkgname, '")')
-    .convex$ev$Command(command)
     TRUE
 }
 
