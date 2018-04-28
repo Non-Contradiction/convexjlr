@@ -1,3 +1,9 @@
+# convexjlr 0.7.0
+
+* Remove deprecated `setup` function.
+* Use `JuliaCall` as the default backend.
+* Install newer version of `Convex.jl` to work with `julia` 0.6.
+
 # convexjlr 0.6.1.9000
 
 * Fix deprecation warnings from `JuliaCall` backend.
