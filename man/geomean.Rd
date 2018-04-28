@@ -12,5 +12,5 @@ geomean(x, y)
 \item{y}{input vector, y > 0.}
 }
 \description{
-Geometrix mean of x and y.
+Geometric mean of x and y.
 }

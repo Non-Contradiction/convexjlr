@@ -144,7 +144,7 @@ square <- function(x){
 
 #' Geometric mean of x and y
 #'
-#' Geometrix mean of x and y.
+#' Geometric mean of x and y.
 #'
 #' @param x input vector, x > 0.
 #' @param y input vector, y > 0.
