@@ -4,7 +4,7 @@
 \alias{convex_setup}
 \title{Doing the setup for the package convexjlr}
 \usage{
-convex_setup(backend = c("XRJulia", "JuliaCall"), JULIA_HOME = NULL)
+convex_setup(backend = c("JuliaCall", "XRJulia"), JULIA_HOME = NULL)
 }
 \arguments{
 \item{backend}{whether to use XRJulia or JuliaCall as backend}

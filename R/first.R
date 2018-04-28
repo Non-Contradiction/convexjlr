@@ -26,8 +26,8 @@
 
 .check_installs <- Vectorize(.check_install)
 
-.start <- function(backend = c("XRJulia", "JuliaCall")){
-    backend <- match.arg(backend, c("XRJulia", "JuliaCall"))
+.start <- function(backend = c("JuliaCall", "XRJulia")){
+    backend <- match.arg(backend, c("JuliaCall", "XRJulia"))
     .convex$backend <- backend
     message("Doing initialization. It may take some time. Please wait.")
     ## evaluator initialization
@@ -57,6 +57,7 @@
 
     ## Packages
     if (all(.check_installs(c("Convex", "SCS")))) {
+        .convex$ev$Command('Pkg.checkout("Convex")')
         ## if use JuliaCall backend, use julia_library instead
         if (backend == "JuliaCall") {
             JuliaCall::julia_library("Convex")
@@ -72,17 +73,6 @@
         .convex$status <- .convex$ev$Eval("true")
     }
     else {message("Packages' installation is not successful.")}
-    .convex$status
-}
-
-#' Doing the setup for the package convexjlr (deprecated)
-#'
-#' The function is deprecated, should use convex_setup instead.
-#'
-#' @export
-setup <- function(){
-    .Deprecated("convex_setup")
-    try(.start(), silent = FALSE)
     .convex$status
 }
 
@@ -104,7 +94,7 @@ setup <- function(){
 #' convex_setup()
 #' }
 #' @export
-convex_setup <- function(backend = c("XRJulia", "JuliaCall"), JULIA_HOME = NULL){
+convex_setup <- function(backend = c("JuliaCall", "XRJulia"), JULIA_HOME = NULL){
     options(JULIA_BIN = JULIA_HOME)
     options(JULIA_HOME = JULIA_HOME)
     try(.start(backend = backend), silent = FALSE)
