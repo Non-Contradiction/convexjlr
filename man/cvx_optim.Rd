@@ -4,10 +4,14 @@
 \alias{cvx_optim}
 \title{Solve optimization problem}
 \usage{
-cvx_optim(p)
+cvx_optim(p, max_iters = 20000)
 }
 \arguments{
 \item{p}{optimization problem to be solved.}
+
+\item{max_iters}{the maximal iteration times of the convex problem solver,
+users may need to increase the maximal iteration times
+if the optimal can't be achieved with the default 20000.}
 }
 \value{
 status of optimized problem.
