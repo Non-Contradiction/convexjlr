@@ -53,6 +53,10 @@ satisfy <- problem_creator("satisfy")
 #' \code{cvx_optim} solves optimization problem using Convex.jl.
 #'
 #' @param p optimization problem to be solved.
+#' @param max_iters the maximal iteration times of the convex problem solver,
+#'  users may need to increase the maximal iteration times
+#'  if the optimal can't be achieved with the default 20000.
+#'
 #' @return status of optimized problem.
 #'
 #' @examples
@@ -64,8 +68,9 @@ satisfy <- problem_creator("satisfy")
 #'     cvx_optim(p)
 #' }
 #' @export
-cvx_optim <- function(p){
-    .convex$ev$Command(paste0("solve!(", attr(p, "Jname"), ")"))
+cvx_optim <- function(p, max_iters = 20000){
+    iters_cmd <- paste0("SCSSolver(max_iters =", max_iters, ")")
+    .convex$ev$Command(paste0("solve!(", attr(p, "Jname"), ", ", iters_cmd, ")"))
     status(p)
 }
 
