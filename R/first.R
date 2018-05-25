@@ -97,5 +97,18 @@ convex_setup <- function(backend = c("JuliaCall", "XRJulia"), JULIA_HOME = NULL)
     options(JULIA_BIN = JULIA_HOME)
     options(JULIA_HOME = JULIA_HOME)
     try(.start(backend = backend), silent = FALSE)
+    def_func()
     .convex$status
+}
+
+def_func <- function(){
+    cmd <- "function diag1(x)
+                if length(size(x)) == 2 && size(x, 2) > 1
+                    return(diag(x))
+                else
+                    return(diagm(x))
+                end
+            end;"
+
+    .convex$ev$Command(cmd)
 }

@@ -4,6 +4,10 @@ expr <- function(x, env){
         if (x == quote(pmin)) {return(quote(min))}
         if (x == quote(kronecker)) {return(quote(kron))}
         if (x == quote(t)) {return(quote(transpose))}
+
+        ## special handling, the function is defined in def_func in first.R
+        if (x == quote(diag)) {return(quote(diag1))}
+
         r <- try(eval(x, envir = env), silent = TRUE)
         if (length(attr(r, "Jname")) == 1) {
             return(eval(parse(text = paste0("quote(", attr(r, "Jname"), ")"))))
