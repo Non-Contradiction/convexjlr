@@ -1,3 +1,7 @@
+# convexjlr 0.7.0.9000
+
+* The users can set maximal iteration times for the convex problem solver in `cvx_optim`.
+
 # convexjlr 0.7.0
 
 * Remove deprecated `setup` function.
