@@ -1,5 +1,5 @@
 library(convexjlr)
-context("Linear Programming")
+context("Linear Programming with XRJulia backend")
 
 ## The original Julia version
 
@@ -15,9 +15,9 @@ context("Linear Programming")
 # println(round(x.value, 2))
 # println(evaluate(x[1] + x[4] - x[2]))
 
-test_that("Results for example of linear programming", {
+test_that("Results for example of linear programming with XRJulia", {
     skip_on_cran()
-    convex_setup()
+    convex_setup(backend = "XRJulia")
 
     ## The R version with convexjl.R
 

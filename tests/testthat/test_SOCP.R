@@ -1,5 +1,5 @@
 library(convexjlr)
-context("Second Order Cone Programming")
+context("Second Order Cone Programming with XRJulia backend")
 
 ## The original Julia version
 
@@ -12,9 +12,9 @@ context("Second Order Cone Programming")
 # println(y.value)
 # p.optval
 
-test_that("Results for example of second order cone programming", {
+test_that("Results for example of second order cone programming with XRJulia", {
     skip_on_cran()
-    convex_setup()
+    convex_setup(backend = "XRJulia")
 
     ## The R version with convexjl.R
 
