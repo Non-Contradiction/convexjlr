@@ -4,14 +4,15 @@
 \alias{cvx_optim}
 \title{Solve optimization problem}
 \usage{
-cvx_optim(p, max_iters = 20000)
+cvx_optim(p, solver = c("SCS", "ECOS"), ...)
 }
 \arguments{
 \item{p}{optimization problem to be solved.}
 
-\item{max_iters}{the maximal iteration times of the convex problem solver,
-users may need to increase the maximal iteration times
-if the optimal can't be achieved with the default 20000.}
+\item{solver}{convex problem solver to be used. Currently `convexjlr` supports `SCS` and `ECOS`,
+with `SCS` solver as the default.}
+
+\item{...}{the optional solver options, like the maximal iteration times.}
 }
 \value{
 status of optimized problem.
