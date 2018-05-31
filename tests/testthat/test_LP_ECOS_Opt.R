@@ -46,8 +46,9 @@ test_that("Results for example of linear programming in ECOS with options", {
 
     ## Compare the results
 
-    expect_equal(optval(p), ev$Eval("p.optval"))
-    expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
+    expect_equal(optval(p), ev$Eval("p.optval"), tolerance = 1e-4)
+    expect_equal(value(x), ev$Eval("x.value", .get = TRUE), tolerance = 1e-4)
     expect_equal(value(x[1] + x[4] - x[2]),
-                 ev$Eval("evaluate(x[1] + x[4] - x[2])", .get = TRUE))
+                 ev$Eval("evaluate(x[1] + x[4] - x[2])", .get = TRUE),
+                 tolerance = 1e-4)
 })
