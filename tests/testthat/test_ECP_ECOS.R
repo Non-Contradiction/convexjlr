@@ -1,5 +1,5 @@
 library(convexjlr)
-context("Exponential Cone Programming with JuliaCall")
+context("Exponential Cone Programming with JuliaCall in ECOS solver")
 
 ## The original Julia version
 
@@ -9,7 +9,7 @@ context("Exponential Cone Programming with JuliaCall")
 # println(p.status)
 # x.value
 
-test_that("Results for example of exponential cone programming with JuliaCall", {
+test_that("Results for example of exponential cone programming in ECOS", {
     skip_on_cran()
     convex_setup(backend = "JuliaCall")
 

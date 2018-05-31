@@ -1,5 +1,5 @@
 library(convexjlr)
-context("Semidefinite Programming with JuliaCall")
+context("Semidefinite Programming with JuliaCall in ECOS solver")
 
 ## The original Julia version
 
@@ -8,7 +8,7 @@ context("Semidefinite Programming with JuliaCall")
 # solve!(p, SCSSolver(verbose=0))
 # p.optval
 
-test_that("Results for example of semidefinite programming with JuliaCall", {
+test_that("Results for example of semidefinite programming in ECOS", {
     skip_on_cran()
     convex_setup(backend = "JuliaCall")
 

@@ -1,5 +1,5 @@
 library(convexjlr)
-context("Linear Programming with JuliaCall")
+context("Linear Programming with JuliaCall in ECOS solver")
 
 ## The original Julia version
 
@@ -15,7 +15,7 @@ context("Linear Programming with JuliaCall")
 # println(round(x.value, 2))
 # println(evaluate(x[1] + x[4] - x[2]))
 
-test_that("Results for example of linear programming with JuliaCall", {
+test_that("Results for example of linear programming in ECOS", {
     skip_on_cran()
     convex_setup(backend = "JuliaCall")
 

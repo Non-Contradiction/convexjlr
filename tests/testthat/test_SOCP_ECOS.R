@@ -1,5 +1,5 @@
 library(convexjlr)
-context("Second Order Cone Programming with JuliaCall")
+context("Second Order Cone Programming with JuliaCall in ECOS solver")
 
 ## The original Julia version
 
@@ -12,7 +12,7 @@ context("Second Order Cone Programming with JuliaCall")
 # println(y.value)
 # p.optval
 
-test_that("Results for example of second order cone programming with JuliaCall", {
+test_that("Results for example of second order cone programming in ECOS", {
     skip_on_cran()
     convex_setup(backend = "JuliaCall")
 
