@@ -27,5 +27,5 @@ Suggests: testthat,
     rmarkdown,
     plotrix
 VignetteBuilder: knitr
-SystemRequirements: Julia (>= 0.6.0), Convex.jl, SCS.jl
+SystemRequirements: Julia (>= 0.6.0), Convex.jl, SCS.jl, ECOS.jl
 URL: https://github.com/Non-Contradiction/convexjlr
