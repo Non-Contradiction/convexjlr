@@ -56,15 +56,17 @@
     }
 
     ## Packages
-    if (all(.check_installs(c("Convex", "SCS")))) {
+    if (all(.check_installs(c("Convex", "SCS", "ECOS")))) {
         ## if use JuliaCall backend, use julia_library instead
         if (backend == "JuliaCall") {
             JuliaCall::julia_library("Convex")
             JuliaCall::julia_library("SCS")
+            JuliaCall::julia_library("ECOS")
         }
         else {
             .convex$ev$Command("using Convex")
             .convex$ev$Command("using SCS")
+            .convex$ev$Command("using ECOS")
         }
         # passing in verbose=0 to hide output from SCS
         # .convex$ev$Command("solver = SCSSolver(verbose=0);")
