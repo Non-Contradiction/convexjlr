@@ -67,8 +67,8 @@
             .convex$ev$Command("using SCS")
         }
         # passing in verbose=0 to hide output from SCS
-        .convex$ev$Command("solver = SCSSolver(verbose=0);")
-        .convex$ev$Command("set_default_solver(solver);")
+        # .convex$ev$Command("solver = SCSSolver(verbose=0);")
+        # .convex$ev$Command("set_default_solver(solver);")
         .convex$status <- .convex$ev$Eval("true")
     }
     else {message("Packages' installation is not successful.")}
