@@ -23,9 +23,10 @@ test_that("Results for example of exponential cone programming in ECOS", {
 
     ev <- XRJulia::RJulia()
     ev$Command("using Convex")
+    ev$Command("using ECOS")
     ev$Command("x = Variable(4)")
     ev$Command("p = satisfy(norm(x) <= 100, exp(x[1]) <= 5, x[2] >= 7, geomean(x[3], x[4]) >= x[2])")
-    ev$Command("solve!(p)")
+    ev$Command("solve!(p, ECOSSolver())")
 
     ## Compare the results
 
