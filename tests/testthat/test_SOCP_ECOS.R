@@ -34,7 +34,7 @@ test_that("Results for example of second order cone programming in ECOS", {
 
     ## Compare the results
 
-    expect_equal(optval(p), ev$Eval("p.optval"))
-    expect_equal(value(X), ev$Eval("X.value", .get = TRUE))
-    expect_equal(value(y), ev$Eval("evaluate(y)", .get = TRUE))
+    expect_equal(optval(p), ev$Eval("p.optval"), tolerance = 1e-3)
+    expect_equal(value(X), ev$Eval("X.value", .get = TRUE), tolerance = 1e-3)
+    expect_equal(value(y), ev$Eval("evaluate(y)", .get = TRUE), tolerance = 1e-3)
 })
