@@ -78,13 +78,13 @@ cvx_optim <- function(p, solver = c("SCS", "ECOS"), ...){
 SCSSolver <- function(max_iters = 2500, verbose = 1,
                       eps = 1e-3, alpha = 1.8,
                       scale = 5.0, normalize = 1){
-    deparse(match.call())
+    deparse(match.call(), width.cutoff = 500)
 }
 
 ECOSSolver <- function(maxit = 100, verbose = 1,
                       feastol = 1e-7, abstol = 1e-7, reltol = 1e-6,
                       festol_inacc = 1e-4, abstol_inacc = 5e-5, reltol_inacc = 5e-5){
-    deparse(match.call())
+    deparse(match.call(), width.cutoff = 500)
 }
 
 #' Add constraints to optimization problem
