@@ -56,6 +56,10 @@ satisfy <- problem_creator("satisfy")
 #' @param solver convex problem solver to be used. Currently `convexjlr` supports `SCS` and `ECOS`,
 #'   with `SCS` solver as the default.
 #' @param ... the optional solver options, like the maximal iteration times.
+#'   For the solver options, you can see
+#'   <http://www.cvxpy.org/tutorial/advanced/index.html#setting-solver-options>
+#'   for reference.
+#' @md
 #'
 #' @return status of optimized problem.
 #'

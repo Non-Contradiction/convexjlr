@@ -9,10 +9,13 @@ cvx_optim(p, solver = c("SCS", "ECOS"), ...)
 \arguments{
 \item{p}{optimization problem to be solved.}
 
-\item{solver}{convex problem solver to be used. Currently `convexjlr` supports `SCS` and `ECOS`,
-with `SCS` solver as the default.}
+\item{solver}{convex problem solver to be used. Currently \code{convexjlr} supports \code{SCS} and \code{ECOS},
+with \code{SCS} solver as the default.}
 
-\item{...}{the optional solver options, like the maximal iteration times.}
+\item{...}{the optional solver options, like the maximal iteration times.
+For the solver options, you can see
+\url{http://www.cvxpy.org/tutorial/advanced/index.html#setting-solver-options}
+for reference.}
 }
 \value{
 status of optimized problem.
