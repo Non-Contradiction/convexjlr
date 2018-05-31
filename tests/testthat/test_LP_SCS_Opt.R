@@ -28,7 +28,7 @@ test_that("Results for example of linear programming in SCS with options", {
     p <- minimize(sum(c * x))
     p <- addConstraint(p, A %*% x <= b)
     p <- addConstraint(p, x >= 1, x <= 10, x[2] <= 5, x[1] + x[4] - x[2] <= 10)
-    cvx_optim(p, solver = "SCS", max_iters = 2000, verbose = 0, eps = 1e-7, alpha = 2.5, scale = 2.6)
+    cvx_optim(p, solver = "SCS", max_iters = 2000, verbose = 0, eps = 1e-7, alpha = 1.5, scale = 2.6)
 
     ## The R verion through XRJulia directly
 
