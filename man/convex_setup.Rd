@@ -4,10 +4,11 @@
 \alias{convex_setup}
 \title{Doing the setup for the package convexjlr}
 \usage{
-convex_setup(backend = c("JuliaCall", "XRJulia"), JULIA_HOME = NULL)
+convex_setup(backend = c("JuliaCall"), JULIA_HOME = NULL)
 }
 \arguments{
-\item{backend}{whether to use XRJulia or JuliaCall as backend}
+\item{backend}{the backend to use, only JuliaCall is supported currently,
+for compatability with both Julia 0.6 and 1.0.}
 
 \item{JULIA_HOME}{the path to julia binary,
 if not set, convexjlr will try to use the julia in path.}

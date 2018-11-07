@@ -18,10 +18,9 @@ Depends: R (>= 3.4.0)
 License: Apache License | file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: XRJulia,
-    JuliaCall (>= 0.12.1),
+Imports: JuliaCall (>= 0.12.1),
     magrittr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: testthat,
     knitr,
     rmarkdown,
