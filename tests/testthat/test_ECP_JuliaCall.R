@@ -21,13 +21,16 @@ test_that("Results for example of exponential cone programming with JuliaCall", 
 
     ## The R version with XRJulia directly
 
-    ev <- XRJulia::RJulia()
-    ev$Command("using Convex")
-    ev$Command("x = Variable(4)")
-    ev$Command("p = satisfy(norm(x) <= 100, exp(x[1]) <= 5, x[2] >= 7, geomean(x[3], x[4]) >= x[2])")
-    ev$Command("solve!(p)")
+    # ev <- XRJulia::RJulia()
+
+    ## The R version with JuliaCall directly
+    ev <- JuliaCall::julia_setup()
+    ev$command("using Convex")
+    ev$command("x = Variable(4)")
+    ev$command("p = satisfy(norm(x) <= 100, exp(x[1]) <= 5, x[2] >= 7, geomean(x[3], x[4]) >= x[2])")
+    ev$command("solve!(p)")
 
     ## Compare the results
 
-    expect_equal(value(x), ev$Eval("x.value", .get = TRUE))
+    expect_equal(value(x), ev$eval("x.value")) ## , .get = TRUE))
 })

@@ -33,22 +33,25 @@ test_that("Results for example of linear programming in ECOS with options", {
 
     ## The R verion through XRJulia directly
 
-    ev <- XRJulia::RJulia()
-    ev$Command("using Convex")
-    ev$Command("x = Variable(4)")
-    ev$Command("c = [1; 2; 3; 4]")
-    ev$Command("A = eye(4)")
-    ev$Command("b = [10; 10; 10; 10]")
-    ev$Command("p = minimize(dot(c, x)) # or c' * x")
-    ev$Command("p.constraints += A * x <= b")
-    ev$Command("p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]")
-    ev$Command("solve!(p)")
+    # ev <- XRJulia::RJulia()
+
+    ## The R version through JuliaCall directly
+    ev <- JuliaCall::julia_setup()
+    ev$command("using Convex")
+    ev$command("x = Variable(4)")
+    ev$command("c = [1; 2; 3; 4]")
+    ev$command("A = eye(4)")
+    ev$command("b = [10; 10; 10; 10]")
+    ev$command("p = minimize(dot(c, x)) # or c' * x")
+    ev$command("p.constraints += A * x <= b")
+    ev$command("p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]")
+    ev$command("solve!(p)")
 
     ## Compare the results
 
-    expect_equal(optval(p), ev$Eval("p.optval"), tolerance = 1e-4)
-    expect_equal(value(x), ev$Eval("x.value", .get = TRUE), tolerance = 1e-4)
+    expect_equal(optval(p), ev$eval("p.optval"), tolerance = 1e-4)
+    expect_equal(value(x), ev$eval("x.value"), tolerance = 1e-4)
     expect_equal(value(x[1] + x[4] - x[2]),
-                 ev$Eval("evaluate(x[1] + x[4] - x[2])", .get = TRUE),
+                 ev$eval("evaluate(x[1] + x[4] - x[2])"),
                  tolerance = 1e-4)
 })

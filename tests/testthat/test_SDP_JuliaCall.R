@@ -20,14 +20,18 @@ test_that("Results for example of semidefinite programming with JuliaCall", {
 
     ## The R version with XRJulia directly
 
-    ev <- XRJulia::RJulia()
-    ev$Command("using Convex")
-    ev$Command("y = Semidefinite(2)")
-    ev$Command("p = maximize(lambdamin(y), trace(y)<=6)")
-    ev$Command("solve!(p)")
+    # ev <- XRJulia::RJulia()
+
+    ## The R version with JuliaCall directly
+
+    ev <- JuliaCall::julia_setup()
+    ev$command("using Convex")
+    ev$command("y = Semidefinite(2)")
+    ev$command("p = maximize(lambdamin(y), trace(y)<=6)")
+    ev$command("solve!(p)")
 
     ## Compare the results
 
 
-    expect_equal(optval(p), ev$Eval("p.optval"))
+    expect_equal(optval(p), ev$eval("p.optval"))
 })

@@ -25,16 +25,20 @@ test_that("Results for example of second order cone programming in ECOS", {
 
     ## The R version with XRJulia directly
 
-    ev <- XRJulia::RJulia()
-    ev$Command("using Convex")
-    ev$Command("X = Variable(2, 2)")
-    ev$Command("y = Variable()")
-    ev$Command("p = minimize(vecnorm(X) + y, 2 * X <= 1, X' + y >= 1, X >= 0, y >= 0)")
-    ev$Command("solve!(p)")
+    # ev <- XRJulia::RJulia()
+
+    ## The R version with JuliaCall directly
+
+    ev <- JuliaCall::julia_setup()
+    ev$command("using Convex")
+    ev$command("X = Variable(2, 2)")
+    ev$command("y = Variable()")
+    ev$command("p = minimize(vecnorm(X) + y, 2 * X <= 1, X' + y >= 1, X >= 0, y >= 0)")
+    ev$command("solve!(p)")
 
     ## Compare the results
 
-    expect_equal(optval(p), ev$Eval("p.optval"), tolerance = 1e-3)
-    expect_equal(value(X), ev$Eval("X.value", .get = TRUE), tolerance = 1e-3)
-    expect_equal(value(y), ev$Eval("evaluate(y)", .get = TRUE), tolerance = 1e-3)
+    expect_equal(optval(p), ev$eval("p.optval"), tolerance = 1e-3)
+    expect_equal(value(X), ev$eval("X.value"), tolerance = 1e-3)
+    expect_equal(value(y), ev$eval("evaluate(y)"), tolerance = 1e-3)
 })
