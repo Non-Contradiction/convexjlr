@@ -34,7 +34,7 @@ test_that("Results for example of second order cone programming in ECOS", {
     ev$command("X = Variable(2, 2)")
     ev$command("y = Variable()")
     ev$command("p = minimize(norm(vec(X)) + y, 2 * X <= 1, X' + y >= 1, X >= 0, y >= 0)")
-    ev$command("solve!(p)")
+    ev$command("solve!(p, ECOSSolver())")
 
     ## Compare the results
 
