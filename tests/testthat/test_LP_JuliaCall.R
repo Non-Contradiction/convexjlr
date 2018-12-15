@@ -40,7 +40,7 @@ test_that("Results for example of linear programming with JuliaCall", {
     ev$command("using Convex")
     ev$command("x = Variable(4)")
     ev$command("c = [1; 2; 3; 4]")
-    ev$command("A = eye(4)")
+    ev$command("A = Matrix(Diagonal(ones(4)))")
     ev$command("b = [10; 10; 10; 10]")
     ev$command("p = minimize(dot(c, x)) # or c' * x")
     ev$command("p.constraints += A * x <= b")
