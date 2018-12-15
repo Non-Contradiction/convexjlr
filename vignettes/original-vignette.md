@@ -16,13 +16,13 @@ use `convexjlr` to deal with them easily and extendably.
 Some of the examples here are of statistics nature (like Lasso and
 logistic regression), and some of the examples here are of
 machine-learning nature (like SVM), they may be appealing to readers
-with certain backgrounds. If you don't know either of this, don't be
+with certain backgrounds. If you don’t know either of this, don’t be
 afraid, the smallest circle problem requires no certain background
 knowledge.
 
 We hope you can get ideas for how to use `convexjlr` to solve your own
 problems by reading these examples. If you would like to share your
-experience on using `convexjlr`, don't hesitate to contact me:
+experience on using `convexjlr`, don’t hesitate to contact me:
 <cxl508@psu.edu>.
 
 Knowledge for convex optimization is not neccessary for using
@@ -58,13 +58,7 @@ initial setup:
 
     ## Doing initialization. It may take some time. Please wait.
 
-    ## Julia at location /Applications/Julia-0.6.app/Contents/Resources/julia/bin will be used.
-
-    ## Julia version 0.6.0 found.
-
-    ## Julia initiation...
-
-    ## Finish Julia initiation.
+    ## Julia version 1.0.2 at location /Applications/Julia-1.0.app/Contents/Resources/julia/bin will be used.
 
     ## Loading setup script for JuliaCall...
 
@@ -127,7 +121,7 @@ built.
     betahat <- round(lasso(x, y, 0.5)$coef, 4)
     betahat[1:4]
 
-    ## [1] 4.8216 0.9073 0.0000 1.8121
+    ## [1] 4.8192 0.9062 0.0000 1.8094
 
     ## You can see that the rest elements of betahat are all zero.
     all(betahat[5:p] == 0)
@@ -193,8 +187,8 @@ we have just built.
     logistic_regression(x, y)
 
     ##            [,1]
-    ## [1,]  0.9723159
-    ## [2,] -0.9953264
+    ## [1,]  0.9723167
+    ## [2,] -0.9953277
 
 Support Vector Machine
 ----------------------
@@ -252,11 +246,11 @@ built.
 
     ## $w
     ##            [,1]
-    ## [1,] -0.4799765
-    ## [2,] -0.4828068
+    ## [1,] -0.4798997
+    ## [2,] -0.4827123
     ## 
     ## $b
-    ## [1] -0.4648332
+    ## [1] -0.4261342
 
     ## We can scatter-plot the points and 
     ## draw the classification hyperplane returned by the function svm.
@@ -311,8 +305,8 @@ built.
     p
 
     ##            [,1]
-    ## [1,] -0.4637779
-    ## [2,]  0.2347155
+    ## [1,] -0.4686643
+    ## [2,]  0.2271158
 
     ## Draw the points and the smallest circle that covers all of them.
     plot(x, y, asp = 1)
