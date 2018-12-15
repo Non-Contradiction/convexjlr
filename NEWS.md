@@ -1,3 +1,7 @@
+# convexjlr 0.8.0.9000
+* Updates for `Julia` v0.7 and v1.0.
+* Drop `XRJulia` support, as it does not work with `Julia` v0.7 and v1.0.
+
 # convexjlr 0.7.1.9000
 
 * Default `SCS` solver doesn't have `verbose = FALSE` default option any more.
