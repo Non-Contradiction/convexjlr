@@ -17,7 +17,7 @@ test_that("Results for example of exponential cone programming with JuliaCall", 
 
     x <- Variable(4)
     p <- satisfy(norm(x) <= 100, exp(x[1]) <= 5, x[2] >= 7, geomean(x[3], x[4]) >= x[2])
-    cvx_optim(p)
+    cvx_optim(p, solver = "SCS")
 
     ## The R version with XRJulia directly
 
@@ -28,7 +28,7 @@ test_that("Results for example of exponential cone programming with JuliaCall", 
     ev$command("using Convex")
     ev$command("x = Variable(4)")
     ev$command("p = satisfy(norm(x) <= 100, exp(x[1]) <= 5, x[2] >= 7, geomean(x[3], x[4]) >= x[2])")
-    ev$command("solve!(p)")
+    ev$command("solve!(p, SCSSolver())")
 
     ## Compare the results
 
