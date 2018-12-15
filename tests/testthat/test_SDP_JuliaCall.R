@@ -28,7 +28,7 @@ test_that("Results for example of semidefinite programming with JuliaCall", {
     ev$command("using Convex")
     ev$command("y = Semidefinite(2)")
     ev$command("p = maximize(lambdamin(y), trace(y)<=6)")
-    ev$command("solve!(p)")
+    ev$command("solve!(p, SCSSolver())")
 
     ## Compare the results
 
