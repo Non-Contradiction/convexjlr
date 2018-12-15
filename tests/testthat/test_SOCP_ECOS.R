@@ -20,7 +20,7 @@ test_that("Results for example of second order cone programming in ECOS", {
 
     X <- Variable(c(2, 2))
     y <- Variable()
-    p <- minimize(vecnorm(X) + y, 2 * X <= 1, t(X) + y >= 1, X >= 0, y >= 0)
+    p <- minimize(norm(vec(X)) + y, 2 * X <= 1, t(X) + y >= 1, X >= 0, y >= 0)
     cvx_optim(p, solver = "ECOS")
 
     ## The R version with XRJulia directly
@@ -33,7 +33,7 @@ test_that("Results for example of second order cone programming in ECOS", {
     ev$command("using Convex")
     ev$command("X = Variable(2, 2)")
     ev$command("y = Variable()")
-    ev$command("p = minimize(vecnorm(X) + y, 2 * X <= 1, X' + y >= 1, X >= 0, y >= 0)")
+    ev$command("p = minimize(norm(vec(X)) + y, 2 * X <= 1, X' + y >= 1, X >= 0, y >= 0)")
     ev$command("solve!(p)")
 
     ## Compare the results

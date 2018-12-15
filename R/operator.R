@@ -102,12 +102,15 @@ norm <- function(x, p = 2){
 
 #' p-norm of vector representation of x
 #'
-#' p-norm of vector representation of x.
+#' p-norm of vector representation of x, which is deprecated,
+#' use `norm(vec(x), p=2)` instead.
 #'
+#' @md
 #' @param x input matrix.
 #' @param p a number greater than 1.
 #' @export
 vecnorm <- function(x, p = 2){
+    .Deprecated(msg = "`vecnorm(x, p=2)` is deprecated, use `norm(vec(x), p=2)` instead.")
     norm(vec(x), p)
 }
 

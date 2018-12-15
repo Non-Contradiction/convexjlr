@@ -12,5 +12,6 @@ vecnorm(x, p = 2)
 \item{p}{a number greater than 1.}
 }
 \description{
-p-norm of vector representation of x.
+p-norm of vector representation of x, which is deprecated,
+use \code{norm(vec(x), p=2)} instead.
 }
