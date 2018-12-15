@@ -34,7 +34,7 @@ test_that("Results for example of second order cone programming with JuliaCall",
     ev$command("X = Variable(2, 2)")
     ev$command("y = Variable()")
     ev$command("p = minimize(vecnorm(X) + y, 2 * X <= 1, X' + y >= 1, X >= 0, y >= 0)")
-    ev$command("solve!(p)")
+    ev$command("solve!(p, SCSSolver())")
 
     ## Compare the results
 

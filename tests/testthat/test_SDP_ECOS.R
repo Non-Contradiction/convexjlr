@@ -18,13 +18,21 @@ test_that("Results for example of semidefinite programming in ECOS", {
     p <- maximize(lambdamin(y), trace(y) <= 6)
     cvx_optim(p, solver = "ECOS")
 
-    ## The R version with XRJulia directly
+    # ## The R version with XRJulia directly
+    #
+    # ev <- XRJulia::RJulia()
+    # ev$Command("using Convex")
+    # ev$Command("y = Semidefinite(2)")
+    # ev$Command("p = maximize(lambdamin(y), trace(y)<=6)")
+    # ev$Command("solve!(p, ECOSSolver())")
 
-    ev <- XRJulia::RJulia()
+    ## The R version with JuliaCall directly
+
+    ev <- JuliaCall::julia_setup()
     ev$Command("using Convex")
     ev$Command("y = Semidefinite(2)")
     ev$Command("p = maximize(lambdamin(y), trace(y)<=6)")
-    ev$Command("solve!(p)")
+    ev$Command("solve!(p, ECOSSolver())")
 
     ## Compare the results
 

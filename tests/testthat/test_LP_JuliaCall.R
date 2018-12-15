@@ -28,7 +28,7 @@ test_that("Results for example of linear programming with JuliaCall", {
     p <- minimize(sum(c * x))
     p <- addConstraint(p, A %*% x <= b)
     p <- addConstraint(p, x >= 1, x <= 10, x[2] <= 5, x[1] + x[4] - x[2] <= 10)
-    cvx_optim(p)
+    cvx_optim(p, solver = "SCS")
 
     ## The R verion through XRJulia directly
 
@@ -45,7 +45,7 @@ test_that("Results for example of linear programming with JuliaCall", {
     ev$command("p = minimize(dot(c, x)) # or c' * x")
     ev$command("p.constraints += A * x <= b")
     ev$command("p.constraints += [x >= 1; x <= 10; x[2] <= 5; x[1] + x[4] - x[2] <= 10]")
-    ev$command("solve!(p)")
+    ev$command("solve!(p, SCSSolver())")
 
     ## Compare the results
 
