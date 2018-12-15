@@ -35,17 +35,8 @@ once you formulate your problem as a convex problem.
 <https://julialang.org/> on your computer, and then you can install `convexjlr` just like
 any other R packages.
 
-Note: `convexjlr` supports multiple ways to connect to `julia`, one way is through package `XRJulia` and the other way is to use package `JuliaCall`. The differences are as follows:
-
-- `XRJulia` connects to `julia`, which is the default way for `convexjlr`,
-  the advantage is the simplicity of the installation process, once you have a working
-  R and working `julia`, it should be okay to use `convexjlr` in this way.
-
-- `JuliaCall` embeds `julia` in R,
-  the advantage is the performance, for example, if your convex problem involves large matrice or long vectors, you may wish to use `JuliaCall` backend for `convexjlr`;
-  the disadvantage is the installation process, since embedding `julia` needs 
-  compilations, on some types of machines the installation process may be more
-  complicated than `XRJulia`.
+Note: `convexjlr` used to support multiple ways to connect to `julia`, one way was through package `XRJulia` and the other way was to use package `JuliaCall`. The latter approach was more performant and thus the default approach. 
+But due to the fact that `XRJulia` doesn't support `julia` v0.7 and v1.0 yet, only `JuliaCall` backend is supported currently.
 
 We hope you use `convexjlr` to solve your own problems.
 If you would like to share your experience on using `convexjlr` or have any questions about `convexjlr`, 

@@ -26,21 +26,12 @@ DCP-compliant convex programs through `Convex.jl`.
 to install Julia <https://julialang.org/> on your computer, and then you
 can install `convexjlr` just like any other R packages.
 
-Note: `convexjlr` supports multiple ways to connect to `julia`, one way
-is through package `XRJulia` and the other way is to use package
-`JuliaCall`. The differences are as follows:
-
-  - `XRJulia` connects to `julia`, which is the default way for
-    `convexjlr`, the advantage is the simplicity of the installation
-    process, once you have a working R and working `julia`, it should be
-    okay to use `convexjlr` in this way.
-
-  - `JuliaCall` embeds `julia` in R, the advantage is the performance,
-    for example, if your convex problem involves large matrice or long
-    vectors, you may wish to use `JuliaCall` backend for `convexjlr`;
-    the disadvantage is the installation process, since embedding
-    `julia` needs compilations, on some types of machines the
-    installation process may be more complicated than `XRJulia`.
+Note: `convexjlr` used to support multiple ways to connect to `julia`,
+one way was through package `XRJulia` and the other way was to use
+package `JuliaCall`. The latter approach was more performant and thus
+the default approach. But due to the fact that `XRJulia` doesn’t support
+`julia` v0.7 and v1.0 yet, only `JuliaCall` backend is supported
+currently.
 
 We hope you use `convexjlr` to solve your own problems. If you would
 like to share your experience on using `convexjlr` or have any questions
@@ -62,9 +53,7 @@ library(convexjlr)
 ## If you wish to use JuliaCall backend for performance
 convex_setup(backend = "JuliaCall")
 #> Doing initialization. It may take some time. Please wait.
-#> Julia version 0.6.2 at location /Applications/Julia-0.6.app/Contents/Resources/julia/bin will be used.
-#> Julia initiation...
-#> Finish Julia initiation.
+#> Julia version 1.0.2 at location /Applications/Julia-1.0.app/Contents/Resources/julia/bin will be used.
 #> Loading setup script for JuliaCall...
 #> Finish loading setup script for JuliaCall.
 #> [1] TRUE
@@ -111,11 +100,11 @@ y <- x %*% beta0 + 0.2 * rnorm(n)
 
 linear_regression(x, y)$coef
 #>              [,1]
-#> [1,]  5.003240727
-#> [2,]  0.991592939
-#> [3,] -0.013119040
-#> [4,]  2.008251896
-#> [5,]  0.004306522
+#> [1,]  5.003248799
+#> [2,]  0.991593361
+#> [3,] -0.013118929
+#> [4,]  2.008255127
+#> [5,]  0.004305963
 ```
 
 ## More Examples
