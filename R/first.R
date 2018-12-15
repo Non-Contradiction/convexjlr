@@ -118,4 +118,8 @@ def_func <- function(){
             end;"
 
     .convex$ev$Command(cmd)
+
+    cmd <- '@static if VERSION > v"0.6.5" const trace = tr end;'
+
+    .convex$ev$Command(cmd)
 }
