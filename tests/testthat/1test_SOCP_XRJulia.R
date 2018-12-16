@@ -25,7 +25,7 @@ test_that("Results for example of second order cone programming with XRJulia", {
 
     ## The R version with XRJulia directly
 
-    ev <- XRJulia::RJulia()
+    ## ev <- XRJulia::RJulia()
     ev$Command("using Convex")
     ev$Command("X = Variable(2, 2)")
     ev$Command("y = Variable()")

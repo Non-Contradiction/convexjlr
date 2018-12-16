@@ -32,7 +32,7 @@ test_that("Results for example of linear programming with XRJulia", {
 
     ## The R verion through XRJulia directly
 
-    ev <- XRJulia::RJulia()
+    ## ev <- XRJulia::RJulia()
     ev$Command("using Convex")
     ev$Command("x = Variable(4)")
     ev$Command("c = [1; 2; 3; 4]")

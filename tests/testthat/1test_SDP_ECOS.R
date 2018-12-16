@@ -28,7 +28,7 @@ test_that("Results for example of semidefinite programming in ECOS", {
 
     ## The R version with JuliaCall directly
 
-    ev <- JuliaCall::julia_setup()
+    ## ev <- JuliaCall::julia_setup()
     ev$Command("using Convex")
     ev$Command("y = Semidefinite(2)")
     ev$Command("p = maximize(lambdamin(y), trace(y)<=6)")

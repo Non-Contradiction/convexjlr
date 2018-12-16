@@ -20,7 +20,7 @@ test_that("Results for example of semidefinite programming with XRJulia", {
 
     ## The R version with XRJulia directly
 
-    ev <- XRJulia::RJulia()
+    ## ev <- XRJulia::RJulia()
     ev$Command("using Convex")
     ev$Command("y = Semidefinite(2)")
     ev$Command("p = maximize(lambdamin(y), trace(y)<=6)")
