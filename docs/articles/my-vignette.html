@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">convexjlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
       <h1>Convex Optimization by convexjlr</h1>
                         <h4 class="author">Changcheng Li</h4>
             
-            <h4 class="date">2018-12-15</h4>
+            <h4 class="date">2018-12-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/Non-Contradiction/convexjlr/blob/master/vignettes/my-vignette.Rmd"><code>vignettes/my-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>my-vignette.Rmd</code></div>
@@ -106,8 +106,6 @@
 <ul>
 <li>
 <a href="https://en.wikipedia.org/wiki/Convex_optimization">Wikipedia page for convex optimization</a> is a good starting point.</li>
-<li>
-<a href="http://dcp.stanford.edu/">The page for Disciplined Convex Programming</a> can teach you more about DCP, which is the basis for <code>Convex.jl</code> and thus <code>convexjlr</code>.</li>
 <li>
 <a href="https://github.com/JuliaOpt/Convex.jl">Github page for <code>Convex.jl</code></a> can give you more imformation for <code>Convex.jl</code>, which <code>convexjlr</code> is built upon.</li>
 </ul>
@@ -203,8 +201,7 @@ all(betahat[5:p] == 0)
     value(beta)
 }</code></pre>
 <p>In the function, <code>x</code> is the predictor matrix, <code>y</code> is the binary response we have (we assume it to be 0-1 valued).</p>
-<p>We first construct the log-likelihood of the logistic regression, and then we use <code>cvx_optim</code> to maximize it. Note that in formulating the log-likelihood, there is a little trick: we use <code><a href="../reference/logisticloss.html">logisticloss(x %*% beta)</a></code> instead of <code><a href="https://www.rdocumentation.org/packages/base/topics/Log">log(1+exp(x %*% beta))</a></code>, that is because <code><a href="../reference/logisticloss.html">logisticloss(.)</a></code> is a convex function but by rule of Disciplined Convex Programming (DCP), we are not sure whether <code><a href="https://www.rdocumentation.org/packages/base/topics/Log">log(1+exp(.))</a></code> is convex or not.</p>
-<p>Interested readers can check <a href="http://dcp.stanford.edu/rules" class="uri">http://dcp.stanford.edu/rules</a> for more information about the rule of DCP, and use <code>?operations</code> or check <a href="http://convexjl.readthedocs.io/en/stable/operations.html" class="uri">http://convexjl.readthedocs.io/en/stable/operations.html</a> for a full list of supported operations.</p>
+<p>We first construct the log-likelihood of the logistic regression, and then we use <code>cvx_optim</code> to maximize it. Note that in formulating the log-likelihood, there is a little trick: we use <code><a href="../reference/logisticloss.html">logisticloss(x %*% beta)</a></code> instead of <code><a href="https://www.rdocumentation.org/packages/base/topics/Log">log(1+exp(x %*% beta))</a></code>, that is because <code><a href="../reference/logisticloss.html">logisticloss(.)</a></code> is a convex function but by rule of Disciplined Convex Programming (DCP), we are not sure whether <code><a href="https://www.rdocumentation.org/packages/base/topics/Log">log(1+exp(.))</a></code> is convex or not. Interested readers can use <code>?operations</code> or check <a href="http://convexjl.readthedocs.io/en/stable/operations.html" class="uri">http://convexjl.readthedocs.io/en/stable/operations.html</a> for a full list of supported operations.</p>
 <p>Now we can see a little example using the <code>logistic_regression</code> function we have just built.</p>
 <pre><code>n &lt;- 500
 p &lt;- 2
