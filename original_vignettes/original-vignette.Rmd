@@ -8,28 +8,28 @@ output:
 
 
 The aim of package `convexjlr` is to provide optimization results rapidly and reliably in `R` once you formulate your problem as a convex problem.
-Having this in mind, we write this vignette in a problem-oriented style. The vignette will walk you through several examples using package `convexjlr`: 
+Having this in mind, we write this vignette in a problem-oriented style. The vignette will walk you through several examples using package `convexjlr`:
 
 - Lasso;
 - Logistic regression;
 - Support Vector Machine (SVM);
-- Smallest circle covering multiple points. 
+- Smallest circle covering multiple points.
 
-Although these problems already have mature solutions, the purpose here is to show the wide application of convex optimization and how you can use `convexjlr` to deal with them easily and extendably.
+Although these problems already have mature solutions, the purpose here is to show the wide application of convex optimization and how you can use `convexjlr` to deal with them easily.
 
 Some of the examples here are of statistics nature (like Lasso and logistic regression),
 and some of the examples here are of machine-learning nature (like SVM), they may be appealing to readers with certain backgrounds.
 If you don't know either of this, don't be afraid, the smallest circle problem requires no certain background knowledge.
 
 We hope you can get ideas for how to use `convexjlr` to solve your own problems by reading these examples.
-If you would like to share your experience on using `convexjlr`, 
+If you would like to share your experience on using `convexjlr`,
 don't hesitate to contact me: <cxl508@psu.edu>.
 
-Knowledge for convex optimization is not neccessary for using `convexjlr`, but it will help you a lot in formulating convex optimization problems and in using `convexjlr`.
+Knowledge for convex optimization is not necessary for using `convexjlr`, but it will help you a lot in formulating convex optimization problems and in using `convexjlr`.
 
 - [Wikipedia page for convex optimization](https://en.wikipedia.org/wiki/Convex_optimization)
 is a good starting point.
-- [Github page for `Convex.jl`](https://github.com/JuliaOpt/Convex.jl) can give you more imformation for `Convex.jl`, which `convexjlr` is built upon.
+- [Github page for `Convex.jl`](https://github.com/JuliaOpt/Convex.jl) can give you more information for `Convex.jl`, which `convexjlr` is built upon.
 
 To use package `convexjlr`, we first need to attach it and do some initial setup:
 
@@ -83,7 +83,7 @@ Now we can see a little example using the `lasso` function we have just built.
 ```{r}
 n <- 1000
 p <- 100
-## Sigma, the covariance matrix of x, is of AR-1 strcture.
+## Sigma, the covariance matrix of x, is of AR-1 structure.
 Sigma <- outer(1:p, 1:p, function(i, j) 0.5 ^ abs(i - j))
 x <- matrix(rnorm(n * p), n, p) %*% chol(Sigma)
 ## The real coefficient is all zero except the first, second and fourth elements.
@@ -123,19 +123,19 @@ logistic_regression <- function(x, y){
 }
 ```
 
-In the function, `x` is the predictor matrix, `y` is the binary response we have 
+In the function, `x` is the predictor matrix, `y` is the binary response we have
 (we assume it to be 0-1 valued).
 
-We first construct the 
+We first construct the
 log-likelihood of the logistic regression, and then we use
 `cvx_optim` to maximize it.
 Note that in formulating the log-likelihood,
 there is a little trick:
 we use `logisticloss(x %*% beta)` instead of `log(1+exp(x %*% beta))`,
 that is because `logisticloss(.)` is a convex function but
-by rule of Disciplined Convex Programming (DCP), we are not sure whether 
+by rule of Disciplined Convex Programming (DCP), we are not sure whether
 `log(1+exp(.))` is convex or not.
-Interested readers can use `?operations` or check <http://convexjl.readthedocs.io/en/stable/operations.html> 
+Interested readers can use `?operations` or check <http://convexjl.readthedocs.io/en/stable/operations.html>
 for a full list of supported operations.
 
 Now we can see a little example using the `logistic_regression` function we have just built.
@@ -158,7 +158,7 @@ logistic_regression(x, y)
 
 ## Support Vector Machine
 
-Support vector machine (SVM) is a classificaiton tool.
+Support vector machine (SVM) is a classification tool.
 In this vignette, we just focus on the soft-margin linear SVM.
 Interested reader can read more about SVM in the Wikipedia page [Support vector machine](https://en.wikipedia.org/wiki/Support_vector_machine).
 
@@ -177,7 +177,7 @@ svm <- function(x, y, lambda){
     ## w and b define the classification hyperplane <w.x> = b.
     w <- Variable(p)
     b <- Variable()
-    ## hinge_loss, note that pos(.) is the positive part function. 
+    ## hinge_loss, note that pos(.) is the positive part function.
     hinge_loss <- Expr(sum(pos(1 - y * (x %*% w - b))) / n)
     p1 <- minimize(hinge_loss + lambda * sumsquares(w))
     cvx_optim(p1)
@@ -186,19 +186,19 @@ svm <- function(x, y, lambda){
 ```
 
 
-In the function, `x` is the predictor matrix, `y` is the binary response we have 
+In the function, `x` is the predictor matrix, `y` is the binary response we have
 (we assume it to be of negative one or one in this section).
-`lambda` is the positive tuning parameter which determines the tradeoff between the margin-size and classification error rate. 
+`lambda` is the positive tuning parameter which determines the tradeoff between the margin-size and classification error rate.
 As `lambda` becomes smaller, the classification error rate is more important.
-And the `svm` function will return the `w` and `b` which define 
-the classification hyperplance as `<w, x> = b`.
+And the `svm` function will return the `w` and `b` which define
+the classification hyperplane as `<w, x> = b`.
 
 Now we can see a little example using the `svm` function we have just built.
 
 ```{r}
 n <- 100
 p <- 2
-## Sigma, the covariance matrix of x, is of AR-1 strcture.
+## Sigma, the covariance matrix of x, is of AR-1 structure.
 Sigma <- outer(1:p, 1:p, function(i, j) 0.5 ^ abs(i - j))
 ## We generate two groups of points with same covariance and different mean.
 x1 <- 0.2 * matrix(rnorm(n / 2 * p), n / 2, p) %*% chol(Sigma) + outer(rep(1, n / 2), rep(0, p))
@@ -210,7 +210,7 @@ y <- c(rep(1, n / 2), rep(-1, n / 2))
 r <- svm(x, y, 0.5)
 r
 
-## We can scatter-plot the points and 
+## We can scatter-plot the points and
 ## draw the classification hyperplane returned by the function svm.
 plot(x, col = c(rep("red", n / 2), rep("blue", n / 2)))
 abline(r$b / r$w[2], -r$w[1] / r$w[2])
@@ -218,7 +218,7 @@ abline(r$b / r$w[2], -r$w[1] / r$w[2])
 
 ## Smallest Circle
 
-In the last section of the vignette, let us see an example without any background knowledge requirement. 
+In the last section of the vignette, let us see an example without any background knowledge requirement.
 
 Suppose we have a set of points on the plane, how can we find the smallest circle that
 covers all of them? By using `convexjlr`, the solution is quite straight-forward.
@@ -246,7 +246,7 @@ center <- function(x, y){
 ```
 
 In the function, `x` and `y` are vectors of coordinates of the points.
-And the `center` function will return the coordinates of 
+And the `center` function will return the coordinates of
 the center of the smallest circle
 that covers all the points.
 

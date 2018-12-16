@@ -90,8 +90,7 @@
 #' if the packages are not found, it tries to install them into Julia.
 #' Finally, it will try to load the Julia packages and do the necessary initial setup.
 #'
-#' @param backend the backend to use, only JuliaCall is supported currently,
-#'   for compatability with both Julia 0.6 and 1.0.
+#' @param backend the backend to use, only JuliaCall is supported currently.
 #' @param JULIA_HOME the path to julia binary,
 #'     if not set, convexjlr will try to use the julia in path.
 #'

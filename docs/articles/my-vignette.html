@@ -99,15 +99,15 @@
 <li>Support Vector Machine (SVM);</li>
 <li>Smallest circle covering multiple points.</li>
 </ul>
-<p>Although these problems already have mature solutions, the purpose here is to show the wide application of convex optimization and how you can use <code>convexjlr</code> to deal with them easily and extendably.</p>
+<p>Although these problems already have mature solutions, the purpose here is to show the wide application of convex optimization and how you can use <code>convexjlr</code> to deal with them easily.</p>
 <p>Some of the examples here are of statistics nature (like Lasso and logistic regression), and some of the examples here are of machine-learning nature (like SVM), they may be appealing to readers with certain backgrounds. If you don’t know either of this, don’t be afraid, the smallest circle problem requires no certain background knowledge.</p>
 <p>We hope you can get ideas for how to use <code>convexjlr</code> to solve your own problems by reading these examples. If you would like to share your experience on using <code>convexjlr</code>, don’t hesitate to contact me: <a href="mailto:cxl508@psu.edu">cxl508@psu.edu</a>.</p>
-<p>Knowledge for convex optimization is not neccessary for using <code>convexjlr</code>, but it will help you a lot in formulating convex optimization problems and in using <code>convexjlr</code>.</p>
+<p>Knowledge for convex optimization is not necessary for using <code>convexjlr</code>, but it will help you a lot in formulating convex optimization problems and in using <code>convexjlr</code>.</p>
 <ul>
 <li>
 <a href="https://en.wikipedia.org/wiki/Convex_optimization">Wikipedia page for convex optimization</a> is a good starting point.</li>
 <li>
-<a href="https://github.com/JuliaOpt/Convex.jl">Github page for <code>Convex.jl</code></a> can give you more imformation for <code>Convex.jl</code>, which <code>convexjlr</code> is built upon.</li>
+<a href="https://github.com/JuliaOpt/Convex.jl">Github page for <code>Convex.jl</code></a> can give you more information for <code>Convex.jl</code>, which <code>convexjlr</code> is built upon.</li>
 </ul>
 <p>To use package <code>convexjlr</code>, we first need to attach it and do some initial setup:</p>
 <pre><code><a href="https://www.rdocumentation.org/packages/base/topics/Random">## sed seed for reproduciblity
@@ -163,7 +163,7 @@ convex_setup(backend = "JuliaCall")
 <p>Now we can see a little example using the <code>lasso</code> function we have just built.</p>
 <pre><code>n &lt;- 1000
 p &lt;- 100
-## Sigma, the covariance matrix of x, is of AR-1 strcture.
+## Sigma, the covariance matrix of x, is of AR-1 structure.
 Sigma &lt;- outer(1:p, 1:p, function(i, j) 0.5 ^ abs(i - j))
 x &lt;- matrix(rnorm(n * p), n, p) %*% chol(Sigma)
 ## The real coefficient is all zero except the first, second and fourth elements.
@@ -223,7 +223,7 @@ logistic_regression(x, y)
 <div id="support-vector-machine" class="section level2">
 <h2 class="hasAnchor">
 <a href="#support-vector-machine" class="anchor"></a>Support Vector Machine</h2>
-<p>Support vector machine (SVM) is a classificaiton tool. In this vignette, we just focus on the soft-margin linear SVM. Interested reader can read more about SVM in the Wikipedia page <a href="https://en.wikipedia.org/wiki/Support_vector_machine">Support vector machine</a>.</p>
+<p>Support vector machine (SVM) is a classification tool. In this vignette, we just focus on the soft-margin linear SVM. Interested reader can read more about SVM in the Wikipedia page <a href="https://en.wikipedia.org/wiki/Support_vector_machine">Support vector machine</a>.</p>
 <p>Let us first see the <code>svm</code> function using <code>convexjlr</code>:</p>
 <pre><code>svm &lt;- function(x, y, lambda){
     p &lt;- ncol(x)
@@ -237,17 +237,17 @@ logistic_regression(x, y)
     ## w and b define the classification hyperplane &lt;w.x&gt; = b.
     w &lt;- Variable(p)
     b &lt;- Variable()
-    ## hinge_loss, note that pos(.) is the positive part function. 
+    ## hinge_loss, note that pos(.) is the positive part function.
     hinge_loss &lt;- Expr(sum(pos(1 - y * (x %*% w - b))) / n)
     p1 &lt;- minimize(hinge_loss + lambda * sumsquares(w))
     cvx_optim(p1)
     list(w = value(w), b = value(b))
 }</code></pre>
-<p>In the function, <code>x</code> is the predictor matrix, <code>y</code> is the binary response we have (we assume it to be of negative one or one in this section). <code>lambda</code> is the positive tuning parameter which determines the tradeoff between the margin-size and classification error rate. As <code>lambda</code> becomes smaller, the classification error rate is more important. And the <code>svm</code> function will return the <code>w</code> and <code>b</code> which define the classification hyperplance as <code>&lt;w, x&gt; = b</code>.</p>
+<p>In the function, <code>x</code> is the predictor matrix, <code>y</code> is the binary response we have (we assume it to be of negative one or one in this section). <code>lambda</code> is the positive tuning parameter which determines the tradeoff between the margin-size and classification error rate. As <code>lambda</code> becomes smaller, the classification error rate is more important. And the <code>svm</code> function will return the <code>w</code> and <code>b</code> which define the classification hyperplane as <code>&lt;w, x&gt; = b</code>.</p>
 <p>Now we can see a little example using the <code>svm</code> function we have just built.</p>
 <pre><code>n &lt;- 100
 p &lt;- 2
-## Sigma, the covariance matrix of x, is of AR-1 strcture.
+## Sigma, the covariance matrix of x, is of AR-1 structure.
 Sigma &lt;- outer(1:p, 1:p, function(i, j) 0.5 ^ abs(i - j))
 ## We generate two groups of points with same covariance and different mean.
 x1 &lt;- 0.2 * matrix(rnorm(n / 2 * p), n / 2, p) %*% chol(Sigma) + outer(rep(1, n / 2), rep(0, p))
@@ -267,7 +267,7 @@ r
 ## $b
 ## [1] -0.4261342
 
-## We can scatter-plot the points and 
+## We can scatter-plot the points and
 ## draw the classification hyperplane returned by the function svm.
 plot(x, col = c(rep("red", n / 2), rep("blue", n / 2)))
 abline(r$b / r$w[2], -r$w[1] / r$w[2])</code></pre>

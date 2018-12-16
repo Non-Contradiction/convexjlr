@@ -7,8 +7,7 @@
 convex_setup(backend = c("JuliaCall"), JULIA_HOME = NULL)
 }
 \arguments{
-\item{backend}{the backend to use, only JuliaCall is supported currently,
-for compatability with both Julia 0.6 and 1.0.}
+\item{backend}{the backend to use, only JuliaCall is supported currently.}
 
 \item{JULIA_HOME}{the path to julia binary,
 if not set, convexjlr will try to use the julia in path.}
