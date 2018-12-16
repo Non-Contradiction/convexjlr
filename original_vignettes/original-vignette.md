@@ -160,10 +160,8 @@ log-likelihood, there is a little trick: we use
 `logisticloss(x %*% beta)` instead of `log(1+exp(x %*% beta))`, that is
 because `logisticloss(.)` is a convex function but by rule of
 Disciplined Convex Programming (DCP), we are not sure whether
-`log(1+exp(.))` is convex or not.
-
-Interested readers can check <http://dcp.stanford.edu/rules> for more
-information about the rule of DCP, and use `?operations` or check
+`log(1+exp(.))` is convex or not. Interested readers can use
+`?operations` or check
 <http://convexjl.readthedocs.io/en/stable/operations.html> for a full
 list of supported operations.
 
