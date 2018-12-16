@@ -32,9 +32,6 @@ optimization problems and in using `convexjlr`.
 -   [Wikipedia page for convex
     optimization](https://en.wikipedia.org/wiki/Convex_optimization) is
     a good starting point.
--   [The page for Disciplined Convex
-    Programming](http://dcp.stanford.edu/) can teach you more about DCP,
-    which is the basis for `Convex.jl` and thus `convexjlr`.
 -   [Github page for `Convex.jl`](https://github.com/JuliaOpt/Convex.jl)
     can give you more imformation for `Convex.jl`, which `convexjlr` is
     built upon.
