@@ -11,13 +11,13 @@ Status](https://ci.appveyor.com/api/projects/status/github/Non-Contradiction/con
 [![](http://cranlogs.r-pkg.org/badges/convexjlr)](https://cran.r-project.org/package=convexjlr)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/convexjlr)](https://cran.r-project.org/package=convexjlr)
 
-`convexjlr` is an `R` package for [Disciplined Convex Programming
-(DCP)](http://dcp.stanford.edu/) by providing a high level wrapper for
-Julia package [Convex.jl](https://github.com/JuliaOpt/Convex.jl). The
-aim is to provide optimization results rapidly and reliably in `R` once
-you formulate your problem as a convex problem. `convexjlr` can solve
-linear programs, second order cone programs, semidefinite programs,
-exponential cone programs, mixed-integer linear programs, and some other
+`convexjlr` is an `R` package for *Disciplined Convex Programming (DCP)*
+by providing a high level wrapper for Julia package
+[Convex.jl](https://github.com/JuliaOpt/Convex.jl). The aim is to
+provide optimization results rapidly and reliably in `R` once you
+formulate your problem as a convex problem. `convexjlr` can solve linear
+programs, second order cone programs, semidefinite programs, exponential
+cone programs, mixed-integer linear programs, and some other
 DCP-compliant convex programs through `Convex.jl`.
 
 ## Installation

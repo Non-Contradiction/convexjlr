@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 set.seed(123)
 ```
 
-`convexjlr` is an `R` package for [Disciplined Convex Programming (DCP)](http://dcp.stanford.edu/) by providing
+`convexjlr` is an `R` package for *Disciplined Convex Programming (DCP)* by providing
 a high level wrapper for Julia package [Convex.jl](https://github.com/JuliaOpt/Convex.jl). 
 The aim is to provide optimization results rapidly and reliably in `R` 
 once you formulate your problem as a convex problem.
