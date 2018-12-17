@@ -42,6 +42,6 @@ before_install:
 
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export R_LD_LIBRARY_PATH="$(R RHOME)/lib:$HOME/julia/lib/julia"; fi
 
-  - julia -e 'if VERSION > v"0.6.5" using Pkg; end; Pkg.add("ECOS"); Pkg.add("SCS")'
+  # - julia -e 'if VERSION > v"0.6.5" using Pkg; end; Pkg.add("ECOS"); Pkg.add("SCS")'
 
   # - if [ $JULIA == "10" ]; then julia -e 'using Pkg; pkg"add RCall#master"'; fi
