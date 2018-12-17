@@ -1,4 +1,11 @@
+# convexjlr 0.81.9000
+
+# convexjlr 0.8.1
+
+* The fourth release on CRAN.
+
 # convexjlr 0.8.0.9000
+
 * Updates for `Julia` v0.7 and v1.0.
 * Drop `XRJulia` support, as it does not work with `Julia` v0.7 and v1.0.
 
@@ -15,6 +22,7 @@
 
 # convexjlr 0.7.0
 
+* The third release on CRAN.
 * Remove deprecated `setup` function.
 * Use `JuliaCall` as the default backend.
 
